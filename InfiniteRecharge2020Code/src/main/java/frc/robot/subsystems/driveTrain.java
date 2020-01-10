@@ -16,9 +16,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class driveTrain extends SubsystemBase {
 
     private DifferentialDrive robotBase;
-    private Joystick joystick;
     private Talon rightF, leftF, rightB, leftB;
     private SpeedControllerGroup right, left;
+    private int moveValue;
+    private int move
 
     public driveTrain() {
     rightF = new Talon(0);
@@ -26,7 +27,7 @@ public class driveTrain extends SubsystemBase {
     leftF = new Talon(2);
     leftB = new Talon(3);    
     right = new SpeedControllerGroup(rightF, rightB);
-    left = new SpeedControllerGroup(leftF, rightB);
+    left = new SpeedControllerGroup(leftF, leftB);
     robotBase = new DifferentialDrive(left, right);
   }
 
@@ -35,9 +36,23 @@ public class driveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void move(double speed)
+  public void drive(Joystick joy)
   {
-      robotBase.arcadeDrive(speed, 0);
+    moveValue = joy.getRawAxis(1);
+    rotateValue = joy.getRawAxis(2);
+
+    //Dead zone on y axis value
+    if (Math.abs(moveValue) < .005)
+      moveValue = 0;
+    
+    //Dead zone on x axis only if y value is small
+    if (Math.abs(rotateValue) < .005 && Math.abs(moveValue) < .1)
+      rotateValue = 0;
+    
+    
+  
+  
+    robotBase.arcadeDrive(moveValue, rotateValue);
   }
 
 
