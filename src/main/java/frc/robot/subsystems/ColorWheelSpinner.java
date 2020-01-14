@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import java.util.Arrays;
+
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -12,7 +14,7 @@ import frc.robot.game_elements.ColorWheelColor;
 public class ColorWheelSpinner extends SubsystemBase {
 
     
-    WPI_TalonSRX spinnerMotor = new WPI_TalonSRX(4);
+
     
     
     
@@ -34,15 +36,15 @@ public class ColorWheelSpinner extends SubsystemBase {
             directionOfSpin = 0;
         }
         spinnerTimer.start();
-    if(spinnerTimer.get() < 0.2)
-    {
-        spinnerMotor.set(0.75 * directionOfSpin);
-    }
-    spinnerTimer.reset();
+        if(spinnerTimer.get() < 0.2)
+        {
+            spinnerMotor.set(0.75 * directionOfSpin);
+        }
+        spinnerTimer.reset();
 
     }
 
-    public ColorWheelColor goToColor()
+    public ColorWheelColor toColor()
     {
         String color = DriverStation.getInstance().getGameSpecificMessage();
         ColorWheelColor nextColor = Arrays.stream(ColorWheelColor.values()).filter(c -> c.string.equals(color)).toArray(ColorWheelColor[]::new)[0];
