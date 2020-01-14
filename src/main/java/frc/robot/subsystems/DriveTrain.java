@@ -4,12 +4,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 /**
  * the DriveTrain, aka the thing that moves the robot
  */
-public class DriveTrain {
+public class DriveTrain extends SubsystemBase {
     private final DifferentialDrive robotDrive;
 
     public DriveTrain() {
