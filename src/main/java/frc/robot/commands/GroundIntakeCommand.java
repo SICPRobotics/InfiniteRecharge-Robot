@@ -6,18 +6,14 @@ import frc.robot.subsystems.GroundIntake;
 public class GroundIntakeCommand extends CommandBase {
     GroundIntake groundIntakeSubsystem;
     public GroundIntakeCommand(GroundIntake groundIntakeSubsystem) {
-        groundIntakeSubsystem = groundIntakeSubsystem;
+        this.groundIntakeSubsystem = groundIntakeSubsystem;
     }
 
     public void initialize() {
-        
-    }
-
-    public void execute() {
-
+        groundIntakeSubsystem.start();
     }
 
     public void end() {
-
+        groundIntakeSubsystem.stop();
     }
 }
