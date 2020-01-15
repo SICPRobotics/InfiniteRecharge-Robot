@@ -3,6 +3,8 @@ package frc.robot.commands;
 import frc.robot.game_elements.ColorWheel;
 import frc.robot.game_elements.ColorWheelColor;
 import frc.robot.subsystems.ColorWheelSpinner;
+import frc.robot.subsystems.ExampleSubsystem;
+
 import java.util.Arrays;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
