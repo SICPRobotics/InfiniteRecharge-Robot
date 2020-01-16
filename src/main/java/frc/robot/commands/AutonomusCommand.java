@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 
+<<<<<<< Updated upstream
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Timer;
@@ -16,6 +17,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /**
  * An example command that uses an example subsystem.
  */
+=======
+
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes
 public class AutonomusCommand extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final DriveTrain drive;
