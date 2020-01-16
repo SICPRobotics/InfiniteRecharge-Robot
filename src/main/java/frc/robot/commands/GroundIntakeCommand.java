@@ -10,10 +10,16 @@ public class GroundIntakeCommand extends CommandBase {
     }
 
     public void initialize() {
+        System.out.println("Ground intake command start!");
         groundIntakeSubsystem.start();
     }
 
     public void end() {
+        System.out.println("Ground intake command stop!");
         groundIntakeSubsystem.stop();
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }

@@ -1,20 +1,25 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class GroundIntake extends SubsystemBase {
 
-    private VictorSP intakeMotor;
+    private VictorSPX intakeMotor;
     public GroundIntake() {
-        intakeMotor = new VictorSP(4);
+        intakeMotor = new VictorSPX(9);
     }
 
     public void start() {
-        intakeMotor.set(0.5);
+        intakeMotor.set(ControlMode.PercentOutput, -0.5);
+        System.out.println("Ground intake subsystem start!");
     }
 
     public void stop() {
-        intakeMotor.set(0);
+        intakeMotor.set(ControlMode.Disabled, 0);
+        System.out.println("Ground intake subsystem end!");
     }
 }
