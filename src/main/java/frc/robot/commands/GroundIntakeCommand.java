@@ -9,17 +9,20 @@ public class GroundIntakeCommand extends CommandBase {
         this.groundIntakeSubsystem = groundIntakeSubsystem;
     }
 
+    @Override
     public void initialize() {
         System.out.println("Ground intake command start!");
         groundIntakeSubsystem.start();
     }
-
-    public void end() {
+    
+    @Override
+    public void end(boolean interrupted) {
         System.out.println("Ground intake command stop!");
         groundIntakeSubsystem.stop();
     }
 
+    @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

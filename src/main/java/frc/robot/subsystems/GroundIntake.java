@@ -14,7 +14,7 @@ public class GroundIntake extends SubsystemBase {
     }
 
     public void start() {
-        intakeMotor.set(ControlMode.PercentOutput, -0.5);
+        intakeMotor.set(ControlMode.PercentOutput, -1);
         System.out.println("Ground intake subsystem start!");
     }
 
