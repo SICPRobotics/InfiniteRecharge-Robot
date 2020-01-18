@@ -13,15 +13,15 @@ public class ColorWheel {
         ColorWheelColor.GREEN
     }));
 
-    private int distanceToWithoutWrapping(ColorWheelColor fromColor, ColorWheelColor toColor) {
+    private static int distanceToWithoutWrapping(ColorWheelColor fromColor, ColorWheelColor toColor) {
         return ColorWheel.order.indexOf(toColor) - ColorWheel.order.indexOf(fromColor);
     }
 
-    private int distanceWrappedTo(ColorWheelColor fromColor, ColorWheelColor toColor) {
+    private static int distanceWrappedTo(ColorWheelColor fromColor, ColorWheelColor toColor) {
         return (ColorWheel.order.indexOf(toColor) - ColorWheel.order.size()) - ColorWheel.order.indexOf(toColor);
     }
 
-    public int distanceTo(ColorWheelColor fromColor, ColorWheelColor toColor) {
+    public static int distanceTo(ColorWheelColor fromColor, ColorWheelColor toColor) {
         return Math.abs(distanceToWithoutWrapping(fromColor, toColor)) < Math.abs(distanceWrappedTo(fromColor, toColor)) ? distanceToWithoutWrapping(fromColor, toColor) : distanceWrappedTo(fromColor, toColor);
     }
 }

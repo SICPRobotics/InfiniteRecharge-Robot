@@ -35,7 +35,7 @@ public class ColorWheelSpinner extends SubsystemBase {
      * Returns a negative number if the closest slice is behind.
      */
     public int getSlicesTo(ColorWheelColor targetColor) {
-        return ColorWheelColor.distanceTo(getCurrentColor(), targetColor);
+        return ColorWheel.distanceTo(getCurrentColor(), targetColor);
     }
 
     /**
