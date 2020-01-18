@@ -1,20 +1,6 @@
 package frc.robot.commands;
 
-import frc.robot.game_elements.ColorWheel;
-import frc.robot.game_elements.ColorWheelColor;
 import frc.robot.subsystems.ColorWheelSpinner;
-import frc.robot.subsystems.ExampleSubsystem;
-
-import java.util.Arrays;
-
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorSensorV3;
-
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -37,6 +23,8 @@ public class SpinToColor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("Got target color " + spinner.getTargetColor() + " from FMS");
+    System.out.println("Currently on color " + spinner.getCurrentColor());
     spinner.set(spinner.getSlicesTo(spinner.getTargetColor()) * 0.1);
   }
 
