@@ -10,9 +10,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GroundIntakeCommand;
+import frc.robot.commands.TankDriveWithJoysticks;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.GroundIntake;
@@ -29,6 +31,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Joystick joystick = new Joystick(0);
+  private final Joystick secondJoystick = new Joystick(1);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
 
@@ -37,7 +40,17 @@ public class RobotContainer {
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
+    
+    SmartDashboard.putBoolean("Tank Drive", false);
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
+    SmartDashboard.getEntry("Tank Drive").addListener(event -> {
+      if (event.getEntry().getBoolean(false)) {
+        driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
+      } else {
+        driveTrain.setDefaultCommand(new TankDriveWithJoysticks(this::getJoystickY, this::getSecondJoystickY, driveTrain));
+      }
+    }, 0);
+
     groundIntake = new GroundIntake();
 
     // Configure the button bindings
@@ -60,6 +73,14 @@ public class RobotContainer {
 
   public double getJoystickY() {
     return this.joystick.getRawAxis(1);
+  }
+
+  public double getSecondJoystickX() {
+    return this.secondJoystick.getRawAxis(0);
+  }
+
+  public double getSecondJoystickY() {
+    return this.secondJoystick.getRawAxis(1);
   }
 
   /**

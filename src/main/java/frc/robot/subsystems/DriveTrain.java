@@ -47,4 +47,8 @@ public class DriveTrain extends SubsystemBase {
             true
         );
     }
+
+    public void tankDrive(final double left, final double right) {
+        this.robotDrive.tankDrive(left, right);
+    }
 }
