@@ -13,8 +13,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GroundIntakeCommand;
-import frc.robot.commands.SpinToColor;
-import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.GroundIntake;
@@ -33,7 +31,6 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
-  private final ColorWheelSpinner colorWheelSpinner;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -42,7 +39,6 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     groundIntake = new GroundIntake();
-    colorWheelSpinner = new ColorWheelSpinner();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -55,8 +51,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(this.joystick, 0).whenHeld(new GroundIntakeCommand(groundIntake));
-    new JoystickButton(this.joystick, 1).whenPressed(new SpinToColor(colorWheelSpinner));
+    new JoystickButton(this.joystick, 1).whileHeld(new GroundIntakeCommand(groundIntake));
   }
 
   public double getJoystickX() {
@@ -71,9 +66,10 @@ public class RobotContainer {
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
-   */
+   *
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return autoCommand;
   }
+  */
 }
