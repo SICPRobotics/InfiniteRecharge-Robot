@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.color_wheel.by_color;
 
 import frc.robot.subsystems.ColorWheelSpinner;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /**
  * An example command that uses an example subsystem.
  */
-public class SpinToColor extends CommandBase {
+public class SpinToColorByColor extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ColorWheelSpinner spinner;
 
-  public SpinToColor(ColorWheelSpinner spinner) {
+  public SpinToColorByColor(ColorWheelSpinner spinner) {
     this.spinner = spinner;
   }
 
