@@ -41,8 +41,8 @@ public class ColorWheel {
         return Math.min(slicesUp(fromColor, toColor),slicesDown(fromColor, toColor)) * (slicesUp(fromColor, toColor) < slicesDown(fromColor, toColor) ? 1 : -1);
     }
 
-    public static ColorWheelColor getNextColor(ColorWheelColor currentColor) {
-        return order.get((order.indexOf(currentColor) + 1) % order.size());
+    public static ColorWheelColor getRelativeColor(ColorWheelColor currentColor, int distance) {
+        return order.get((order.indexOf(currentColor) + distance) % order.size());
     }
 
     /**
