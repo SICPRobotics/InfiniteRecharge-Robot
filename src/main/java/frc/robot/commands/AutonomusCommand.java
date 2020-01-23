@@ -7,28 +7,13 @@
 
 package frc.robot.commands;
 
-
-<<<<<<< Updated upstream
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.RangeFinder;
 
-/**
- * An example command that uses an example subsystem.
- */
-=======
-
-
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes
 public class AutonomusCommand extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final DriveTrain drive;
@@ -55,6 +40,7 @@ public class AutonomusCommand extends CommandBase {
   public void execute() {
     Timer timer = new Timer();
 
+    // super boring timing auton
     timer.start();
     if(timer.get() < 3.0)
     {
@@ -62,15 +48,23 @@ public class AutonomusCommand extends CommandBase {
     }
     else
     {
-        drive.cheesyDrive(0.0, -1.0);
-        timer.reset();
-        isFinished();
+        drive.cheesyDrive(0.2, 0.0);
     }
+    timer.reset();
+
+    // way cooler sonar/Ultrasound? auton
 
     
+    RangeFinder ultrasonic = new RangeFinder();
 
-
-
+    if(ultrasonic.getCmDistance() < 4)
+    {
+      drive.cheesyDrive(1.0, 0.0);
+    }
+    else
+    {
+      drive.cheesyDrive(0.0, 0.0);
+    }
 }
 
   // Called once the command ends or is interrupted.

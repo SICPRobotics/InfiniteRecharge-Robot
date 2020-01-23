@@ -21,4 +21,6 @@ public final class Constants {
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
+        
+		public static final double VOLT_TO_CM = 0.00977;
 }
