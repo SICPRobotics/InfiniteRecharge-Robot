@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.AutonomusCommand;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GroundIntakeCommand;
@@ -42,7 +43,7 @@ public class RobotContainer {
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     groundIntake = new GroundIntake();
     RangeFinder ultrasonic = new RangeFinder();
-    SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance())
+    SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance());
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -72,6 +73,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return AutonomusCommand;
+    return new AutonomusCommand(driveTrain);
   }
 }
