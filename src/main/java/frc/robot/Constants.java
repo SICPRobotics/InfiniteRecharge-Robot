@@ -24,4 +24,5 @@ public final class Constants {
     public final class PastaPuller {
         public static final int ID = 0;
     }
+    public static final double VOLT_TO_CM = 0.00977;
 }
