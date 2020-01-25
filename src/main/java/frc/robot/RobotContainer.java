@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.GroundIntakeCommand;
+import frc.robot.commands.color_wheel.SpinToColor;
+import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,6 +31,7 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
+  private final ColorWheelSpinner colorWheelSpinner;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -37,6 +40,7 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     groundIntake = new GroundIntake();
+    colorWheelSpinner = new ColorWheelSpinner();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -50,6 +54,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(this.joystick, 1).whileHeld(new GroundIntakeCommand(groundIntake));
+    new JoystickButton(this.joystick, 2).toggleWhenPressed(new SpinToColor(colorWheelSpinner));
+    //new JoystickButton(this.joystick, 3).toggleWhenPressed(new SpinNumberOfTimes(colorWheelSpinner));
   }
 
   public double getJoystickX() {
