@@ -14,6 +14,16 @@ public class SpinNumberOfTimes extends CommandBase {
 
     @Override
     public void execute() {
-        this.spinner.set(this.spinner.getSlicesSpun());
+        this.spinner.set(1 - (this.spinner.getSlicesSpun() / this.minSpins));
+    }
+
+    @Override
+    public boolean isFinished() {
+        return this.spinner.getSlicesSpun() > this.minSpins;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        this.spinner.stop();
     }
 }
