@@ -21,4 +21,9 @@ public final class Constants {
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
+    public final class ColorWheel {
+        public static final int MIN_SPINS = 3 * 8;
+        public static final int MAX_SPINS = 5 * 8;
+        public static final int SPINS_TARGET = MIN_SPINS + 2;
+    }
 }
