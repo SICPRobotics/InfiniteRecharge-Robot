@@ -19,8 +19,8 @@ public class DriveTrain extends SubsystemBase {
         WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
 
-        WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
-        WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
+        WPI_TalonSRX frontLeft = new WPI_TalonSRX(2);
+        WPI_TalonSRX rearLeft = new WPI_TalonSRX(3);
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
 
         this.robotDrive = new DifferentialDrive(left, right);
@@ -41,7 +41,7 @@ public class DriveTrain extends SubsystemBase {
             Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue,
 
             //Deadzone on x axis only if y value is small
-            Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN ? 0 : rotateValue,
+            0,//Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN ? 0 : rotateValue,
 
             //idk what this one means lol
             true
