@@ -7,9 +7,13 @@
 
 package frc.robot;
 
+import java.text.DecimalFormat;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.RangeFinder;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,9 +23,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private RangeFinder ultrasonic = new RangeFinder();
   private RobotContainer m_robotContainer;
-
+  private DecimalFormat distanceInCm = new DecimalFormat("#.00");
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -42,6 +46,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance());
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -58,6 +63,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+  
+   
   }
 
   /**

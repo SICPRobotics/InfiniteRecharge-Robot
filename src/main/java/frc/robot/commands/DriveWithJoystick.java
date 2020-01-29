@@ -15,6 +15,7 @@ public class DriveWithJoystick extends CommandBase {
         this.driveTrain = driveTrain;
         this.moveValueGetter = moveValueGetter;
         this.rotateValueGetter = rotateValueGetter;
+        addRequirements(driveTrain);
     }
 
     @Override

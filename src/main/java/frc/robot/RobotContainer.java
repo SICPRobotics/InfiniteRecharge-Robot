@@ -42,8 +42,8 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     groundIntake = new GroundIntake();
-    RangeFinder ultrasonic = new RangeFinder();
-    SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance());
+ 
+   
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -55,7 +55,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(this.joystick, 0).whenHeld(new GroundIntakeCommand(groundIntake));
+    new JoystickButton(this.joystick, 1).whenHeld(new GroundIntakeCommand(groundIntake));
   }
 
   public double getJoystickX() {
