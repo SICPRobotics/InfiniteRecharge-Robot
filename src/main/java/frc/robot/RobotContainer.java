@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GroundIntakeCommand;
-import frc.robot.commands.LinearActulatorCommand;
+import frc.robot.commands.LinearActuatorCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.GroundIntake;
-import frc.robot.subsystems.LinearActulator;
+import frc.robot.subsystems.LinearActuator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -33,7 +33,7 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
-  private final LinearActulator actuator;
+  private final LinearActuator actuator;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -42,7 +42,7 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     groundIntake = new GroundIntake();
-    actuator = new LinearActulator();
+    actuator = new LinearActuator();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -56,7 +56,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(this.joystick, 1).whileHeld(new GroundIntakeCommand(groundIntake));
-    new JoystickButton(this.joystick, 2).whenPressed(new LinearActulatorCommand(actuator));
+    new JoystickButton(this.joystick, 2).toggleWhenPressed(new LinearActuatorCommand(actuator));
   }
 
   public double getJoystickX() {

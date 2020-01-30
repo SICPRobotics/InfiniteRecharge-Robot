@@ -2,13 +2,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LinearActulator;
+import frc.robot.subsystems.LinearActuator;
 
-public class LinearActulatorCommand extends CommandBase {
+public class LinearActuatorCommand extends CommandBase {
 
-    private LinearActulator actuator;
+    private LinearActuator actuator;
 
-    public LinearActulatorCommand(LinearActulator linearActulator) {
+    public LinearActuatorCommand(LinearActuator linearActulator) {
         actuator = linearActulator;
 
         addRequirements(linearActulator);
@@ -25,6 +25,6 @@ public class LinearActulatorCommand extends CommandBase {
     }
 
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }
