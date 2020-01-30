@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LinearActulator extends SubsystemBase {
-    private Servo actuator = new Servo(0);
+    private final Servo actuator;
     public LinearActulator() {
-        //actuator = new Servo(0);
+        actuator = new Servo(0);
     }
 
     public void start() {

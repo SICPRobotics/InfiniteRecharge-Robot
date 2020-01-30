@@ -9,25 +9,22 @@ public class LinearActulatorCommand extends CommandBase {
     private LinearActulator actuator;
 
     public LinearActulatorCommand(LinearActulator linearActulator) {
-        actuator = new LinearActulator();
+        actuator = linearActulator;
 
         addRequirements(linearActulator);
     }
 
     @Override
     public void initialize() {
-            System.out.println("**** Initializing Actuator ****");
-            actuator.start();
-        
+        actuator.start();
     }
 
     @Override
     public void end(boolean interupted) {
-            actuator.stop();
-            
+        actuator.stop();
     }
 
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }
