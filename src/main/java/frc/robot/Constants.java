@@ -21,4 +21,9 @@ public final class Constants {
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
+    public final class PastaPuller {
+        public static final int IDR = 0;
+        public static final int IDL = 1;
+        
+    }
 }

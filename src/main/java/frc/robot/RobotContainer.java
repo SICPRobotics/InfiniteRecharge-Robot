@@ -12,10 +12,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.GroundIntakeCommand;
+import frc.robot.commands.PullHangerUp;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.GroundIntake;
+import frc.robot.subsystems.Hanger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -31,7 +34,7 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
-
+  private final Hanger hanger;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -39,7 +42,7 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     groundIntake = new GroundIntake();
-
+    hanger = new Hanger();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -52,6 +55,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(this.joystick, 0).whenHeld(new GroundIntakeCommand(groundIntake));
+    new JoystickButton(this.joystick, 2).whileHeld(new PullHangerUp(hanger));
+    new JoystickButton(this.joystick,3).whenPressed(new ExtendHangerArm(hanger));
   }
 
   public double getJoystickX() {
