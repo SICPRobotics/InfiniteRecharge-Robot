@@ -42,7 +42,7 @@ public class ColorWheelSpinner extends SubsystemBase {
     }
 
     public void retract() {
-        solenoid.set(Value.kBackward);
+        solenoid.set(Value.kReverse);
     }
 
     /**
