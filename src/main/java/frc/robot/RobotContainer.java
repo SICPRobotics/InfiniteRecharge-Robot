@@ -10,13 +10,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.GroundIntakeCommand;
+import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -28,7 +25,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Joystick joystick = new Joystick(0);
-  private final XboxController xboxController = new XboxController(1);
+  private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
 
@@ -52,8 +49,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //new JoystickButton(this.joystick, 1).whileHeld(new GroundIntakeCommand(groundIntake));
-    groundIntake.setDefaultCommand(new GroundIntakeCommand(groundIntake, () -> xboxController.getTriggerAxis(Hand.kRight)));
+
   }
 
   public double getJoystickX() {
