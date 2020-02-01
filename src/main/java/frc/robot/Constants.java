@@ -23,14 +23,13 @@ public final class Constants {
     }
     public final class PastaPuller {
         public static final int ID = 0;
+        public static final int IDR = 0;
+        public static final int IDL = 1;
     }
     public static final double VOLT_TO_CM = 0.00977;
     public final class ColorWheel {
         public static final int MIN_SPINS = 3 * 8;
         public static final int MAX_SPINS = 5 * 8;
         public static final int SPINS_TARGET = MIN_SPINS + 2;
-        public static final int IDR = 0;
-        public static final int IDL = 1;
-        
     }
 }
