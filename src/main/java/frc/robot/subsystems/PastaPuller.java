@@ -9,17 +9,23 @@ import frc.robot.Constants;
 
 public class PastaPuller extends SubsystemBase {
     
-    private VictorSPX motor;
+    private VictorSPX motorR;
+    private VictorSPX motorL;
 
     public PastaPuller() {
-        motor = new VictorSPX(Constants.PastaPuller.ID);
+        motorR = new VictorSPX(Constants.PastaPuller.IDR);
+        motorL = new VictorSPX(Constants.PastaPuller.IDL);
+        
     }
     
     public void startPulling() {
-        motor.set(ControlMode.PercentOutput, 1);
+        motorR.set(ControlMode.PercentOutput, 1);
+        motorL.set(ControlMode.PercentOutput, -1);
     }
 
     public void stopPulling() {
-        motor.set(ControlMode.PercentOutput, 0);
+        motorR.set(ControlMode.PercentOutput, 0);
+        motorL.set(ControlMode.PercentOutput, 0);
+        
     }
 }
