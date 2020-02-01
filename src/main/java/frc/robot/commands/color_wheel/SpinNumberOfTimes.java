@@ -18,7 +18,7 @@ public class SpinNumberOfTimes extends CommandBase {
 
     @Override
     public void execute() {
-        this.spinner.set(1.1 - (this.spinner.getSlicesSpun() / (Constants.ColorWheel.SPINS_TARGET)));
+        this.spinner.setMotor(1.1 - (this.spinner.getSlicesSpun() / (Constants.ColorWheel.SPINS_TARGET)));
     }
 
     @Override

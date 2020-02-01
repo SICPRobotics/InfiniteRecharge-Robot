@@ -67,7 +67,7 @@ public class SpinNumberOfTimesByColor extends CommandBase {
             consistentTimes = 0;
         }
 
-        spinner.set(((minSpins + 2) - currentSpins) / minSpins);
+        spinner.setMotor(((minSpins + 2) - currentSpins) / minSpins);
         //System.out.println("Wheel position: " + currentSpins);
 
         colorLastTick = colorThisTick;

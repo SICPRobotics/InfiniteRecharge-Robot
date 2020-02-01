@@ -25,13 +25,13 @@ public class SpinToColorByColor extends CommandBase {
   public void execute() {
     System.out.println("Got target color " + spinner.getTargetColor() + " from FMS");
     System.out.println("Currently on color " + spinner.getCurrentColor());
-    spinner.set(spinner.getSlicesTo(spinner.getTargetColor()) * 0.1);
+    spinner.setMotor(spinner.getSlicesTo(spinner.getTargetColor()) * 0.1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    spinner.set(0);
+    spinner.setMotor(0);
   }
 
   // Returns true when the command should end.
