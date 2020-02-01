@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.game_elements.ColorWheel;
 import frc.robot.game_elements.ColorWheelColor;
 
-public class ColorWheelSpinner extends SubsystemBase {
+public class ColorWheelSpinner extends SubsystemBase implements MotorSubsystem {
     private final TalonSRX spinnerMotor = new TalonSRX(4);
     private final ColorMatch colorMatcher = new ColorMatch();
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -94,7 +94,7 @@ public class ColorWheelSpinner extends SubsystemBase {
         return match.confidence;
     }
 
-    public void set(double val) {
+    public void setMotor(double val) {
         spinnerMotor.set(ControlMode.PercentOutput, 1);
     }
 

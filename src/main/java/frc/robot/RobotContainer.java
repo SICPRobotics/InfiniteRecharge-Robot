@@ -52,7 +52,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
+    operatorController.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
+    operatorController.LB.whenPressed(new SpinToColor(colorWheelSpinner));
   }
 
   public double getJoystickX() {
