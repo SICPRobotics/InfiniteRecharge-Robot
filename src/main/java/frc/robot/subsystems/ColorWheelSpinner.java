@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import java.util.Arrays;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -25,12 +26,13 @@ public class ColorWheelSpinner extends SubsystemBase {
     private final ColorMatch colorMatcher = new ColorMatch();
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    private final Encoder encoder = new Encoder(1, 0);
     
     public ColorWheelSpinner() {
         Arrays.stream(ColorWheelColor.values()).forEach(colorWheelColor -> {
             colorMatcher.addColorMatch(colorWheelColor.targetColor);
         });
+
+        spinnerMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
     }
 
     /**
@@ -94,12 +96,14 @@ public class ColorWheelSpinner extends SubsystemBase {
      * Gets the distance the encoder has spun.
      */
     private double getEncoderDistance() {
-        return this.encoder.getDistance();
+        System.out.println(spinnerMotor.getSelectedSensorPosition() / 4096 / 50);
+        //return this.encoder.getDistance();
+        return spinnerMotor.getSelectedSensorPosition();
     }
 
     private double toSlices(double distanceInEncoderUnits) {
         //Arc length of control panel is 4pi inches and wheel circumference is also 4pi inches!
-        return distanceInEncoderUnits;
+        return distanceInEncoderUnits / 4096 / 50;
     }
 
     /**
@@ -113,7 +117,8 @@ public class ColorWheelSpinner extends SubsystemBase {
      * Resets the distance count on the encoder.
      */
     public void resetDistance() {
-        encoder.reset();
+        //encoder.reset();
+        spinnerMotor.setSelectedSensorPosition(0);
     }
 
 }
