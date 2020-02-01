@@ -29,5 +29,8 @@ public final class Constants {
         public static final int MIN_SPINS = 3 * 8;
         public static final int MAX_SPINS = 5 * 8;
         public static final int SPINS_TARGET = MIN_SPINS + 2;
+        public static final int IDR = 0;
+        public static final int IDL = 1;
+        
     }
 }

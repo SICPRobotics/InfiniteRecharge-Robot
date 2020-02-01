@@ -18,10 +18,14 @@ import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
 import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.commands.PullPasta;
+import frc.robot.commands.ExtendHangerArm;
+import frc.robot.commands.GroundIntakeCommand;
+import frc.robot.commands.PullHangerUp;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.RangeFinder;
 import frc.robot.subsystems.PastaPuller;
+import frc.robot.subsystems.Hanger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -40,6 +44,7 @@ public class RobotContainer {
   private final ColorWheelSpinner colorWheelSpinner;
   private final PastaPuller pastaPuller;
 
+  private final Hanger hanger;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -52,6 +57,7 @@ public class RobotContainer {
 
     RangeFinder ultrasonic = new RangeFinder();
     SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance());
+    hanger = new Hanger();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -67,6 +73,9 @@ public class RobotContainer {
     new JoystickButton(this.joystick, 2).toggleWhenPressed(new SpinToColor(colorWheelSpinner));
     new JoystickButton(this.joystick, 3).toggleWhenPressed(new SpinNumberOfTimes(colorWheelSpinner));
     new JoystickButton(this.joystick, 2).whileHeld(new PullPasta(pastaPuller));
+    new JoystickButton(this.joystick, 0).whenHeld(new GroundIntakeCommand(groundIntake));
+    new JoystickButton(this.joystick, 2).whileHeld(new PullHangerUp(hanger));
+    new JoystickButton(this.joystick,3).whenPressed(new ExtendHangerArm(hanger));
   }
 
   public double getJoystickX() {
