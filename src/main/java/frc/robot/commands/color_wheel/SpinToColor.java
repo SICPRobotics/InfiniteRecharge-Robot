@@ -21,7 +21,7 @@ public class SpinToColor extends CommandBase {
 
     @Override
     public void execute() {
-        this.spinner.set(slicesToSpin - this.spinner.getSlicesSpun());
+        this.spinner.set(1.1 - (this.spinner.getSlicesSpun() / slicesToSpin));
     }
 
     @Override
