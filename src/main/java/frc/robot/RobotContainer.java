@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutonomusCommand;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.GroundIntakeCommand;
 import frc.robot.commands.color_wheel.SpinNumberOfTimes;
@@ -39,6 +40,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Joystick joystick = new Joystick(0);
+  private final XboxController xboxController = new XboxController(1);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
   private final ColorWheelSpinner colorWheelSpinner;
@@ -54,6 +56,7 @@ public class RobotContainer {
     groundIntake = new GroundIntake();
     colorWheelSpinner = new ColorWheelSpinner();
     pastaPuller = new PastaPuller();
+    
 
     RangeFinder ultrasonic = new RangeFinder();
     SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance());
@@ -69,13 +72,15 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(this.joystick, 1).whileHeld(new GroundIntakeCommand(groundIntake));
+    //new JoystickButton(this.joystick, 1).whileHeld(new GroundIntakeCommand(groundIntake));
     new JoystickButton(this.joystick, 2).toggleWhenPressed(new SpinToColor(colorWheelSpinner));
     new JoystickButton(this.joystick, 3).toggleWhenPressed(new SpinNumberOfTimes(colorWheelSpinner));
     new JoystickButton(this.joystick, 2).whileHeld(new PullPasta(pastaPuller));
-    new JoystickButton(this.joystick, 0).whenHeld(new GroundIntakeCommand(groundIntake));
+    //new JoystickButton(this.joystick, 0).whenHeld(new GroundIntakeCommand(groundIntake));
     new JoystickButton(this.joystick, 2).whileHeld(new PullHangerUp(hanger));
     new JoystickButton(this.joystick,3).whenPressed(new ExtendHangerArm(hanger));
+    //new JoystickButton(this.joystick, 1).whileHeld(new GroundIntakeCommand(groundIntake));
+    groundIntake.setDefaultCommand(new GroundIntakeCommand(groundIntake, () -> xboxController.getTriggerAxis(Hand.kRight)));
   }
 
   public double getJoystickX() {
