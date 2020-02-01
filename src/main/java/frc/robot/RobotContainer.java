@@ -10,7 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.GroundIntakeCommand;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
@@ -49,7 +51,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    new Trigger(() -> operatorController.getRightTriggerAxis() > 0.1).whileActiveContinuous(new GroundIntakeCommand(groundIntake));
   }
 
   public double getJoystickX() {
