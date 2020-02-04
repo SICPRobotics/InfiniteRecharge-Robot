@@ -51,7 +51,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new Trigger(() -> operatorController.getRightTriggerAxis() > 0.1).whileActiveContinuous(new GroundIntakeCommand(groundIntake));
+    new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new GroundIntakeCommand(groundIntake));
   }
 
   public double getJoystickX() {
