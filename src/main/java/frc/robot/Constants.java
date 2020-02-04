@@ -21,4 +21,8 @@ public final class Constants {
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
+    public final class Gate {
+        public static final int FORWARD_SOLENOID_ID = 0;
+        public static final int REVERSE_SOLENOID_ID = 1;
+    }
 }

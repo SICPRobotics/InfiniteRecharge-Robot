@@ -10,10 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Gate;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -27,6 +29,7 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
+  private final Gate gate;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -34,7 +37,7 @@ public class RobotContainer {
   public RobotContainer() {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
-    
+    gate = new Gate();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -47,7 +50,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
+    operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, ()-> {}, b -> gate.retract(), () -> false, gate));
   }
 
   public double getJoystickX() {
