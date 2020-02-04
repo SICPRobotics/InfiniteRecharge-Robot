@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.Nudge;
 import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
 import frc.robot.subsystems.ColorWheelSpinner;
@@ -52,9 +53,19 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    //COLOR WHEEL
+    //Rotate to color / rotate a number of times
     operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
     operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
+    
+    //Manual left/right of color wheel
+    operatorController.buttons.dPad.left.whileActiveContinuous(new Nudge(colorWheelSpinner, -0.1).perpetually());
+    operatorController.buttons.dPad.right.whileActiveContinuous(new Nudge(colorWheelSpinner, 0.1).perpetually());
 
+    //Extend up/down (toggle color wheel position)
+    operatorController.buttons.dPad.up.whenPressed(colorWheelSpinner::extend);
+    operatorController.buttons.dPad.up.whenReleased(colorWheelSpinner::retract);
   }
 
   public double getJoystickX() {
