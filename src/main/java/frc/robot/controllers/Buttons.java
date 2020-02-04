@@ -15,6 +15,7 @@ public class Buttons {
     public final Button start     ;
     public final Button LS        ;
     public final Button RS        ;
+    public final DPad dPad;
     public Buttons(GenericHID controller) {
         A               = new JoystickButton(controller, 1); 
         B               = new JoystickButton(controller, 2); 
@@ -26,5 +27,7 @@ public class Buttons {
         start           = new JoystickButton(controller, 8);
         LS              = new JoystickButton(controller, 9); 
         RS              = new JoystickButton(controller, 10);
+        
+        dPad = new DPad(controller);
     }
 }
