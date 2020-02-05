@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.SetMotorContinuous;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 
@@ -27,6 +28,7 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
+  private final GroundIntake groundIntake;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -34,7 +36,7 @@ public class RobotContainer {
   public RobotContainer() {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
-    
+    groundIntake = new GroundIntake();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -47,8 +49,9 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new GroundIntakeCommand(groundIntake));
-    
+    //GROUND INTAKE
+    //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new GroundIntakeCommand(groundIntake));
+    groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
   }
 
   public double getJoystickX() {
