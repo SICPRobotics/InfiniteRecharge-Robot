@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -28,6 +28,4 @@ public final class Constants {
     public final class Compressor {
          public static final int COMPRESSOR_ID = 0;
     }
-   
-
 }
