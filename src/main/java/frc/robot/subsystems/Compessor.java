@@ -7,12 +7,12 @@ import frc.robot.Constants;
 
 public class Compessor extends SubsystemBase
 {
-    Compressor c;
+    Compressor compressor;
     
     public Compessor()
     {
-        c = new Compressor(Constants.Compressor.COMPRESSOR_ID);
+        compressor = new Compressor(Constants.Compressor.COMPRESSOR_ID);
        
-        c.setClosedLoopControl(true);
+        compressor.setClosedLoopControl(true);
     }
 }
