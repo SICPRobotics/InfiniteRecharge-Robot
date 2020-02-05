@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.PullPasta;
+import frc.robot.commands.SetMotorContinuous;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.PastaPuller;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,7 +44,6 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     pastaPuller = new PastaPuller();
-    
 
     // Configure the button bindings
     configureButtonBindings();
@@ -56,8 +56,9 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
-    
+    //PASTA PULLER
+    //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
+    pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.triggers.right::get));
   }
 
   public double getJoystickX() {
