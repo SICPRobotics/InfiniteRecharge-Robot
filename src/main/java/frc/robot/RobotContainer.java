@@ -58,7 +58,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     //PASTA PULLER
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
-    pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.triggers.right::get));
+    pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
   }
 
   public double getJoystickX() {
