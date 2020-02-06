@@ -17,13 +17,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final class Encoders {
-        public static final int ENCODER_REVOLUTION = 4096;
-        public static final int ENCODER_GEARING = 50;
-    }
-    public static final class Spinner {
-        public static final int SPINNING_MOTOR_TALON = 4;
-        public static final int SOLENOID_PORT1 = 0;
-        public static final int SOLENOID_PORT2 = 1;
+        public static final int ONE_ENCODER_REVOLUTION = 4096;
     }
     public static final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
@@ -31,8 +25,16 @@ public final class Constants {
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
     public static final class ColorWheel {
+        public static final int MOTOR_ID = 4;
+        public static final int DOUBLE_SOLENOID_FORWARD_ID = 0;
+        public static final int DOUBLE_SOLENOID_REVERSE_ID = 1;
+
+        public static final int SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION = 50;
         public static final int MIN_SPINS = 3 * 8;
         public static final int MAX_SPINS = 5 * 8;
         public static final int SPINS_TARGET = MIN_SPINS + 2;
+        
+        public static final double MAX_SPEED = 1.0;
+        public static final double MANUAL_SPEED = 0.5;
     }
 }
