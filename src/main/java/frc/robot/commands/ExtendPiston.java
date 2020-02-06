@@ -4,18 +4,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.PistonSubsystem;
 
-public class ExtendPiston extends CommandBase {
-
-    private PistonSubsystem elevator;
-
-    @Override
-    public void initialize() {
-        elevator.pistonForward();
+public final class ExtendPiston extends CommandBase {
+    private final PistonSubsystem piston;
+    public ExtendPiston(final PistonSubsystem piston) {
+        this.piston = piston;
     }
 
     @Override
-    public void end(boolean interrupted) {
-        elevator.pistonReverse();
+    public void initialize() {
+        piston.pistonForward();
+    }
+
+    @Override
+    public void end(final boolean interrupted) {
+        piston.pistonReverse();
     }
 
 }
