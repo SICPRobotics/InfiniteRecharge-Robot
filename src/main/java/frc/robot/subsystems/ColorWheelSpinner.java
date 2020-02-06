@@ -20,15 +20,16 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.game_elements.ColorWheel;
 import frc.robot.game_elements.ColorWheelColor;
 
 public class ColorWheelSpinner extends SubsystemBase implements MotorSubsystem {
-    private final TalonSRX spinnerMotor = new TalonSRX(4);
+    private final TalonSRX spinnerMotor = new TalonSRX(Constants.Spinner.SPINNING_MOTOR_TALON);
     private final ColorMatch colorMatcher = new ColorMatch();
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    private final DoubleSolenoid solenoid = new DoubleSolenoid(0, 1);
+    private final DoubleSolenoid solenoid = new DoubleSolenoid(Constants.Spinner.SOLENOID_PORT1, Constants.Spinner.SOLENOID_PORT2);
     public ColorWheelSpinner() {
         Arrays.stream(ColorWheelColor.values()).forEach(colorWheelColor -> {
             colorMatcher.addColorMatch(colorWheelColor.targetColor);
@@ -106,14 +107,14 @@ public class ColorWheelSpinner extends SubsystemBase implements MotorSubsystem {
      * Gets the distance the encoder has spun.
      */
     private double getEncoderDistance() {
-        System.out.println(spinnerMotor.getSelectedSensorPosition() / 4096 / 50);
+        System.out.println(spinnerMotor.getSelectedSensorPosition() / Constants.Encoders.ENCODER_REVOLUTION / Constants.Encoders.ENCODER_GEARING);
         //return this.encoder.getDistance();
         return spinnerMotor.getSelectedSensorPosition();
     }
 
     private double toSlices(double distanceInEncoderUnits) {
         //Arc length of control panel is 4pi inches and wheel circumference is also 4pi inches!
-        return distanceInEncoderUnits / 4096 / 50;
+        return distanceInEncoderUnits / Constants.Encoders.ENCODER_REVOLUTION / Constants.Encoders.ENCODER_GEARING;
     }
 
     /**

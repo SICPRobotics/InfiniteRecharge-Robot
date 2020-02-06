@@ -16,6 +16,16 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public final class Encoders{
+        public static final int ENCODER_REVOLUTION = 4096;
+        public static final int ENCODER_GEARING = 50;
+    }
+    public final class Spinner{
+        public static final int SPINNING_MOTOR_TALON = 4;
+        public static final int SOLENOID_PORT1 = 0;
+        public static final int SOLENOID_PORT2 = 1;
+    }
     public final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
