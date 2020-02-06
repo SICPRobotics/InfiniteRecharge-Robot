@@ -20,7 +20,7 @@ package frc.robot;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public final class CheesyDrive {
+    public static final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
