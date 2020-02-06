@@ -10,7 +10,7 @@ import frc.robot.Constants;
 /**
  * the DriveTrain, aka the thing that moves the robot
  */
-public class DriveTrain extends SubsystemBase {
+public final class DriveTrain extends SubsystemBase {
     private final DifferentialDrive robotDrive;
 
     public DriveTrain() {
@@ -41,7 +41,9 @@ public class DriveTrain extends SubsystemBase {
             Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue,
 
             //Deadzone on x axis only if y value is small
-            Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN ? 0 : rotateValue,
+            Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE
+                    && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
+                ? 0 : rotateValue,
 
             //idk what this one means lol
             true
