@@ -19,7 +19,6 @@ public final class Constants {
 
     public final class Sensors{
         public static final int ULTRASONIC = 0;
-
     }
 
 
