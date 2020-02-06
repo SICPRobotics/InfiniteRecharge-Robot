@@ -11,5 +11,7 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-  }
+  },
+  "java.checkstyle.configuration": "${workspaceFolder}\\style.xml",
+  "java.checkstyle.version": "8.29"
 }
