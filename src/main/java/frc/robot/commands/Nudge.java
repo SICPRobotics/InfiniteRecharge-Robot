@@ -7,11 +7,11 @@ import frc.robot.subsystems.MotorSubsystem;
 /**
  * Sets the motor of the subsystem to the nudgeAmount for one tick.
  */
-public class Nudge extends CommandBase {
+public final class Nudge extends CommandBase {
     private final MotorSubsystem subsystem;
     private final double nudgeAmount;
 
-    public Nudge(MotorSubsystem subsystem, double nudgeAmount) {
+    public Nudge(final MotorSubsystem subsystem, final double nudgeAmount) {
         this.subsystem = subsystem;
         this.nudgeAmount = nudgeAmount;
     }
@@ -27,7 +27,7 @@ public class Nudge extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(final boolean interrupted) {
         this.subsystem.setMotor(0);
     }
 }
