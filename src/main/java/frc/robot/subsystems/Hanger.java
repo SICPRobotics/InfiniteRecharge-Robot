@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
+import frc.robot.Constants;
 
 public class Hanger {
     private final TalonSRX armMotor;
@@ -14,9 +15,9 @@ public class Hanger {
     private final Encoder encoder;
 
     public Hanger() {
-        armMotor = new TalonSRX(4);
-        winchMotor1 = new VictorSPX(2);
-        winchMotor2 = new VictorSPX(3);
+        armMotor = new TalonSRX(Constants.HangerMotors.ARM_TALON);
+        winchMotor1 = new VictorSPX(Constants.HangerMotors.WINCH_TALON1);
+        winchMotor2 = new VictorSPX(Constants.HangerMotors.WINCH_TALON2);
         encoder = new Encoder(0, 1);
     }
 
