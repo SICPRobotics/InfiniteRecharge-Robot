@@ -54,11 +54,11 @@ public class RobotContainer {
   }
 
   public double getJoystickX() {
-    return this.joystick.getRawAxis(0);
+    return this.joystick.getRawAxis(Constants.Joystick.X_AXIS);
   }
 
   public double getJoystickY() {
-    return this.joystick.getRawAxis(1);
+    return this.joystick.getRawAxis(Constants.Joystick.Y_AXIS);
   }
 
   /**

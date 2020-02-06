@@ -16,6 +16,23 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public final class Motors{
+        public static final int FRONT_RIGHT_TALON = 0;
+        public static final int FRONT_LEFT_TALON = 3;
+        public static final int BACK_RIGHT_TALON = 1;
+        public static final int BACK_LEFT_TALON = 2;
+    }
+
+    public final class Joystick{
+
+        public static final int X_AXIS = 0;
+        public static final int Y_AXIS = 1;
+        
+
+
+    }
+
     public final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
@@ -26,3 +43,5 @@ public final class Constants {
         public static final int REVERSE_SOLENOID_ID = 1;
     }
 }
+
+
