@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ColorWheelSpinner;
 
-public class SpinNumberOfTimes extends CommandBase {
+public final class SpinNumberOfTimes extends CommandBase {
     private final ColorWheelSpinner spinner;
 
-    public SpinNumberOfTimes(ColorWheelSpinner spinner) {
+    public SpinNumberOfTimes(final ColorWheelSpinner spinner) {
         this.spinner = spinner;
     }
 
@@ -27,7 +27,7 @@ public class SpinNumberOfTimes extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(final boolean interrupted) {
         this.spinner.stop();
     }
 }
