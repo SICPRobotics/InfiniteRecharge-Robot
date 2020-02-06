@@ -7,14 +7,13 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.GroundIntakeCommand;
 import frc.robot.commands.PullHangerUp;
+import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.GroundIntake;
@@ -28,10 +27,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public final class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Joystick joystick = new Joystick(0);
+  private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
   private final Hanger hanger;
@@ -56,7 +56,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(this.joystick, 0).whenHeld(new GroundIntakeCommand(groundIntake));
     new JoystickButton(this.joystick, 2).whileHeld(new PullHangerUp(hanger));
-    new JoystickButton(this.joystick,3).whenPressed(new ExtendHangerArm(hanger));
+    new JoystickButton(this.joystick, 3).whenPressed(new ExtendHangerArm(hanger));
   }
 
   public double getJoystickX() {
@@ -67,7 +67,7 @@ public class RobotContainer {
     return this.joystick.getRawAxis(1);
   }
 
-  /**
+  /* *
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
