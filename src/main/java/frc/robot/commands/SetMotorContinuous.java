@@ -6,10 +6,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.MotorSubsystem;
 
-public class SetMotorContinuous extends CommandBase {
+public final class SetMotorContinuous extends CommandBase {
     private final MotorSubsystem subsystem;
     private final DoubleSupplier valueGetter;
-    public SetMotorContinuous(MotorSubsystem subsystem, DoubleSupplier valueGetter) {
+    public SetMotorContinuous(final MotorSubsystem subsystem, final DoubleSupplier valueGetter) {
         this.subsystem = subsystem;
         this.valueGetter = valueGetter;
         addRequirements((SubsystemBase) this.subsystem);

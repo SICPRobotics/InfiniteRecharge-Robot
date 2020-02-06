@@ -3,15 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.MotorSubsystem;
 
-
 /**
  * Sets the motor of the subsystem to the nudgeAmount for one tick.
  */
-public class Nudge extends CommandBase {
+public final class NudgeMotor extends CommandBase {
     private final MotorSubsystem subsystem;
     private final double nudgeAmount;
 
-    public Nudge(MotorSubsystem subsystem, double nudgeAmount) {
+    public NudgeMotor(final MotorSubsystem subsystem, final double nudgeAmount) {
         this.subsystem = subsystem;
         this.nudgeAmount = nudgeAmount;
     }
@@ -27,7 +26,7 @@ public class Nudge extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(final boolean interrupted) {
         this.subsystem.setMotor(0);
     }
 }
