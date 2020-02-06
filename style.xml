@@ -80,6 +80,13 @@
     <!-- See https://checkstyle.org/config_whitespace.html -->
     <module name="FileTabCharacter"/>
 
+    <!-- Check for unnecessary consecutive empty lines -->
+    <module name="RegexpMultiline">
+      <property name="format" value="\r?\n[\t ]*\r?\n[\t ]*\r?\n"/>
+      <property name="fileExtensions" value="java,xml,properties"/>
+      <property name="message" value="Unnecessary consecutive lines"/>
+    </module>
+
     <!-- Miscellaneous other checks.                   -->
     <!-- See https://checkstyle.org/config_misc.html -->
     <!--<module name="RegexpSingleline">
@@ -145,6 +152,13 @@
         <module name="TypecastParenPad"/>
         <module name="WhitespaceAfter"/>
         <module name="WhitespaceAround"/>
+
+        <!-- One empty line after methods -->
+        <!--<module name="EmptyLineSeparator">
+          <property name="allowNoEmptyLineBetweenFields" value="true">
+          <property name="allowMultipleEmptyLines" value="false">
+          <property name="allowMultipleEmptyLinesInsideClassMembers" value="false">
+        </module>-->
 
         <!-- Modifier Checks                                    -->
         <!-- See https://checkstyle.org/config_modifiers.html -->
