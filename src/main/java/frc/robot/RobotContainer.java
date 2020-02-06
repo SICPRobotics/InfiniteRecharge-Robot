@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.ExtendPiston;
 import frc.robot.commands.NudgeMotor;
 import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
@@ -55,12 +56,13 @@ public final class RobotContainer {
     operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
     
     //Manual left/right of color wheel
-    operatorController.buttons.dPad.left.whileActiveContinuous(new NudgeMotor(colorWheelSpinner, -0.1).perpetually());
-    operatorController.buttons.dPad.right.whileActiveContinuous(new NudgeMotor(colorWheelSpinner, 0.1).perpetually());
+    operatorController.buttons.dPad.left
+        .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, -1 * Constants.ColorWheel.MANUAL_SPEED).perpetually());
+    operatorController.buttons.dPad.right
+        .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, Constants.ColorWheel.MANUAL_SPEED).perpetually());
 
     //Extend up/down (toggle color wheel position)
-    operatorController.buttons.dPad.up.whenPressed(colorWheelSpinner::extend);
-    operatorController.buttons.dPad.up.whenReleased(colorWheelSpinner::retract);
+    operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
   }
 
   public double getJoystickX() {
