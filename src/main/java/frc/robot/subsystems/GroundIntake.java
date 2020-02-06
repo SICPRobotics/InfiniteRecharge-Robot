@@ -5,12 +5,13 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class GroundIntake extends SubsystemBase implements MotorSubsystem {
 
     private VictorSPX intakeMotor;
     public GroundIntake() {
-        intakeMotor = new VictorSPX(9);
+        intakeMotor = new VictorSPX(Constants.Intake.INTAKE_TALON);
     }
 
     public void start() {
