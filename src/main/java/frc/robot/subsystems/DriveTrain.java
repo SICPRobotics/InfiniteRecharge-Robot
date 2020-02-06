@@ -15,12 +15,12 @@ public class DriveTrain extends SubsystemBase {
 
     public DriveTrain() {
         // Motors
-        WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
-        WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
+        WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.Motors.FRONT_RIGHT_TALON);
+        WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.Motors.BACK_RIGHT_TALON);
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
 
-        WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
-        WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
+        WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.Motors.FRONT_LEFT_TALON);
+        WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.Motors.BACK_LEFT_TALON);
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
 
         this.robotDrive = new DifferentialDrive(left, right);

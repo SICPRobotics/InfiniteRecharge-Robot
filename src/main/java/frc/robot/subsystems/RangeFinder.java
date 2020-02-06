@@ -13,7 +13,7 @@ import frc.robot.Constants;
 
 public class RangeFinder extends SubsystemBase {
     
-    AnalogInput ultrasonicInput = new AnalogInput(0);
+    AnalogInput ultrasonicInput = new AnalogInput(Constants.Sensors.ULTRASONIC);
    
     public RangeFinder() {
 
