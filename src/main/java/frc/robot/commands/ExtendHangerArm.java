@@ -1,12 +1,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Hanger;
+import frc.robot.subsystems.HangerArm;
 
 public final class ExtendHangerArm extends CommandBase {
-    private final Hanger hanger;
+    private final HangerArm hanger;
 
-    public ExtendHangerArm(final Hanger hanger) {
+    public ExtendHangerArm(final HangerArm hanger) {
         this.hanger = hanger;
     }
 

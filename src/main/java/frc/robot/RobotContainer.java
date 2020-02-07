@@ -13,7 +13,8 @@ import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.PullHangerUp;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Hanger;
+import frc.robot.subsystems.HangerArm;
+import frc.robot.subsystems.HangerWhinch;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -27,14 +28,16 @@ public final class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
-  private final Hanger hanger;
+  private final HangerWhinch hangerWhinch;
+  private final HangerArm hangerArm;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
-    hanger = new Hanger();
+    hangerWhinch = new HangerWhinch();
+    hangerArm = new HangerArm();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -46,8 +49,8 @@ public final class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
-    operatorController.buttons.A.toggleWhenPressed(new ExtendHangerArm(hanger));
+    operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hangerWhinch));
+    operatorController.buttons.A.toggleWhenPressed(new ExtendHangerArm(hangerArm));
     
   }
 
