@@ -15,14 +15,14 @@ public final class Hanger implements MotorSubsystem {
     private final Encoder encoder;
 
     public Hanger() {
-        armMotor = new TalonSRX(Constants.Hanger.ARM_MOTOR);
-        winchMotor1 = new VictorSPX(Constants.Hanger.WINCH_MOTOR1);
-        winchMotor2 = new VictorSPX(Constants.Hanger.WINCH_MOTOR2);
+        armMotor = new TalonSRX(Constants.Hanger.ARM_MOTOR_ID);
+        winchMotor1 = new VictorSPX(Constants.Hanger.RIGHT_WINCH_MOTOR_ID);
+        winchMotor2 = new VictorSPX(Constants.Hanger.LEFT_WINCH_MOTOR_ID);
         encoder = new Encoder(Constants.Hanger.ENCODER_ID_A, Constants.Hanger.ENCODER_ID_B);
     }
 
     public void setMotor(final double value) {
-        winchMotor1.set(ControlMode.PercentOutput, value);
+        winchMotor1.set(ControlMode.PercentOutput, -value);
         winchMotor2.set(ControlMode.PercentOutput, value);
     }
 
