@@ -34,6 +34,19 @@ public final class Constants {
         public static final int RIGHT_WINCH_MOTOR_ID = 2;
         public static final int LEFT_WINCH_MOTOR_ID = 3;
     }
+
+    public static final class Motors {
+        public static final int FRONT_RIGHT_TALON = 0;
+        public static final int FRONT_LEFT_TALON = 3;
+        public static final int BACK_RIGHT_TALON = 1;
+        public static final int BACK_LEFT_TALON = 2;
+    }
+
+    public static final class Joystick {
+        public static final int X_AXIS = 0;
+        public static final int Y_AXIS = 1;
+    }
+
     public static final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
@@ -61,5 +74,10 @@ public final class Constants {
     public static final class PastaPuller {
         public static final int LEFT_MOTOR_ID = 0;
         public static final int RIGHT_MOTOR_ID = 0;
+    }
+
+    public static final class Gate {
+        public static final int FORWARD_SOLENOID_ID = 0;
+        public static final int REVERSE_SOLENOID_ID = 1;
     }
 }

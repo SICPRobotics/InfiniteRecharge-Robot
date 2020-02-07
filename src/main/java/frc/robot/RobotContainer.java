@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.SetMotorContinuous;
 import frc.robot.commands.ExtendPiston;
@@ -23,6 +24,7 @@ import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.PullHangerUp;
 import frc.robot.subsystems.Hanger;
 import frc.robot.subsystems.PastaPuller;
+import frc.robot.subsystems.Gate;
 
 /** 
  *  This class is where the bulk of the robot should be de
@@ -42,6 +44,7 @@ public final class RobotContainer {
   private final Hanger hanger;
   private final PastaPuller pastaPuller;
   private final ColorWheelPiston colorWheelPiston;
+  private final Gate gate;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -53,6 +56,7 @@ public final class RobotContainer {
     colorWheelSpinner = new ColorWheelSpinner();
     hanger = new Hanger();
     pastaPuller = new PastaPuller();
+    gate = new Gate();
 
     colorWheelPiston = new ColorWheelPiston();
     
@@ -93,14 +97,17 @@ public final class RobotContainer {
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
     
+    //GATE
+    //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
+    new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
   }
 
   public double getJoystickX() {
-    return this.joystick.getRawAxis(0);
+    return this.joystick.getRawAxis(Constants.Joystick.X_AXIS);
   }
 
   public double getJoystickY() {
-    return this.joystick.getRawAxis(1);
+    return this.joystick.getRawAxis(Constants.Joystick.Y_AXIS);
   }
 
   /* *
