@@ -7,14 +7,17 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 
 import frc.robot.Constants;
+import frc.robot.SubsystemBaseWrapper;
 
-public final class Hanger implements MotorSubsystem {
+public final class Hanger extends SubsystemBaseWrapper implements MotorSubsystem {
     private final TalonSRX armMotor;
     private final VictorSPX winchMotor1;
     private final VictorSPX winchMotor2;
     private final Encoder encoder;
 
     public Hanger() {
+        super();
+        
         armMotor = new TalonSRX(Constants.Hanger.ARM_MOTOR_ID);
         winchMotor1 = new VictorSPX(Constants.Hanger.RIGHT_WINCH_MOTOR_ID);
         winchMotor2 = new VictorSPX(Constants.Hanger.LEFT_WINCH_MOTOR_ID);
