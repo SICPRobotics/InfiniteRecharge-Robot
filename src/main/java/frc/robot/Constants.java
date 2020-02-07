@@ -21,12 +21,32 @@ public final class Constants {
     public static final class GroundIntake {
         public static final int MOTOR_ID = 9;
     }
+    
+    public static final class Encoders {
+        public static final int ONE_ENCODER_REVOLUTION = 4096;
+    }
+
     public static final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
+
     public static final class Compressor {
          public static final int COMPRESSOR_ID = 0;
+    }
+
+    public static final class ColorWheel {
+        public static final int MOTOR_ID = 4;
+        public static final int DOUBLE_SOLENOID_FORWARD_ID = 0;
+        public static final int DOUBLE_SOLENOID_REVERSE_ID = 1;
+
+        public static final int SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION = 50;
+        public static final int MIN_SPINS = 3 * 8;
+        public static final int MAX_SPINS = 5 * 8;
+        public static final int SPINS_TARGET = MIN_SPINS + 2;
+        
+        public static final double MAX_SPEED = 1.0;
+        public static final double MANUAL_SPEED = 0.5;
     }
 }

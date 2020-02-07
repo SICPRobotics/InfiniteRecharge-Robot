@@ -10,6 +10,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.SetMotorContinuous;
+import frc.robot.commands.ExtendPiston;
+import frc.robot.commands.NudgeMotor;
+import frc.robot.commands.color_wheel.SpinNumberOfTimes;
+import frc.robot.commands.color_wheel.SpinToColor;
+import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
@@ -28,8 +33,8 @@ public final class RobotContainer {
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
+  private final ColorWheelSpinner colorWheelSpinner;
 
-  private final Hanger hanger;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -37,10 +42,8 @@ public final class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     groundIntake = new GroundIntake();
-
-    RangeFinder ultrasonic = new RangeFinder();
-    SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance());
-    hanger = new Hanger();
+    colorWheelSpinner = new ColorWheelSpinner();
+    
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -55,6 +58,19 @@ public final class RobotContainer {
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
     groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
+    //COLOR WHEEL
+    //Rotate to color / rotate a number of times
+    operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
+    operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
+    
+    //Manual left/right of color wheel
+    operatorController.buttons.dPad.left
+        .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, -1 * Constants.ColorWheel.MANUAL_SPEED).perpetually());
+    operatorController.buttons.dPad.right
+        .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, Constants.ColorWheel.MANUAL_SPEED).perpetually());
+
+    //Extend up/down (toggle color wheel position)
+    operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
   }
 
   public double getJoystickX() {

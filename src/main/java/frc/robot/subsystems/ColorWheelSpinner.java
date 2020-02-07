@@ -5,43 +5,54 @@ import java.util.Arrays;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.SubsystemBaseWrapper;
 import frc.robot.game_elements.ColorWheel;
 import frc.robot.game_elements.ColorWheelColor;
 
-public class ColorWheelSpinner extends SubsystemBase {
-    private final TalonSRX spinnerMotor = new TalonSRX(4);
+public final class ColorWheelSpinner extends SubsystemBaseWrapper implements MotorSubsystem, PistonSubsystem, ToggleSubsystem {
+    private final TalonSRX spinnerMotor = new TalonSRX(Constants.ColorWheel.MOTOR_ID);
     private final ColorMatch colorMatcher = new ColorMatch();
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    private final DoubleSolenoid solenoid = new DoubleSolenoid(0, 1);
+    private final DoubleSolenoid solenoid = 
+            new DoubleSolenoid(Constants.ColorWheel.DOUBLE_SOLENOID_FORWARD_ID, Constants.ColorWheel.DOUBLE_SOLENOID_REVERSE_ID);
     public ColorWheelSpinner() {
+        super();
+
         Arrays.stream(ColorWheelColor.values()).forEach(colorWheelColor -> {
             colorMatcher.addColorMatch(colorWheelColor.targetColor);
         });
 
-        spinnerMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
+        spinnerMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     }
 
-    public void extend() {
+    public void setMotor(final double val) {
+        spinnerMotor.set(ControlMode.PercentOutput, val);
+    }
+
+    public void start() {
+        setMotor(1);
+    }
+
+    public void stop() {
+        setMotor(0);
+    }
+
+    public void pistonForward() {
         solenoid.set(Value.kForward);
     }
 
-    public void retract() {
+    public void pistonReverse() {
         solenoid.set(Value.kReverse);
     }
 
@@ -49,7 +60,7 @@ public class ColorWheelSpinner extends SubsystemBase {
      * Gets the number of slices between the current color and the closest slice of the target color.
      * Returns a negative number if the closest slice is down (aka behind).
      */
-    public int getSlicesTo(ColorWheelColor targetColor) {
+    public int getSlicesTo(final ColorWheelColor targetColor) {
         return ColorWheel.slicesToClosest(getCurrentColor(), targetColor);
     }
 
@@ -57,7 +68,7 @@ public class ColorWheelSpinner extends SubsystemBase {
      * Gets the number of slices up (aka in front) from the current color to the targetColor.
      * @return the number of slices up
      */
-    public int getSlicesUpTo(ColorWheelColor targetColor) {
+    public int getSlicesUpTo(final ColorWheelColor targetColor) {
         return ColorWheel.slicesUp(getCurrentColor(), targetColor);
     }
 
@@ -65,7 +76,7 @@ public class ColorWheelSpinner extends SubsystemBase {
      * Gets the number of slices down (aka behind) from the current color to the targetColor.
      * @return the number of slices down
      */
-    public int getSlicesDownTo(ColorWheelColor targetColor) {
+    public int getSlicesDownTo(final ColorWheelColor targetColor) {
         return ColorWheel.slicesUp(getCurrentColor(), targetColor);
     }
 
@@ -74,7 +85,11 @@ public class ColorWheelSpinner extends SubsystemBase {
      */
     public ColorWheelColor getTargetColor() {
         String color = DriverStation.getInstance().getGameSpecificMessage();
-        ColorWheelColor nextColor = Arrays.stream(ColorWheelColor.values()).filter(c -> c.string.equals(color)).toArray(ColorWheelColor[]::new)[0];
+        ColorWheelColor nextColor = 
+                Arrays.stream(ColorWheelColor.values())
+                .filter(c -> c.string.equals(color))
+                .toArray(ColorWheelColor[]::new)[0];
+                
         return nextColor;
     }
 
@@ -85,7 +100,11 @@ public class ColorWheelSpinner extends SubsystemBase {
     public ColorWheelColor getCurrentColor() {
         Color detectedColor = colorSensor.getColor();
         ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
-        return ColorWheel.getRelativeColor(Arrays.stream(ColorWheelColor.values()).filter(colorWheelColor -> colorWheelColor.targetColor == match.color).toArray(ColorWheelColor[]::new)[0], 3);
+        return ColorWheel.getRelativeColor(
+                Arrays.stream(ColorWheelColor.values())
+                .filter(colorWheelColor -> colorWheelColor.targetColor == match.color)
+                .toArray(ColorWheelColor[]::new)[0],
+        3);
     }
 
     public double getConfidence() {
@@ -94,26 +113,20 @@ public class ColorWheelSpinner extends SubsystemBase {
         return match.confidence;
     }
 
-    public void set(double val) {
-        spinnerMotor.set(ControlMode.PercentOutput, 1);
-    }
-
-    public void stop() {
-        spinnerMotor.set(ControlMode.PercentOutput, 0);
-    }
-
     /**
      * Gets the distance the encoder has spun.
      */
     private double getEncoderDistance() {
-        System.out.println(spinnerMotor.getSelectedSensorPosition() / 4096 / 50);
+        System.out.println(spinnerMotor.getSelectedSensorPosition()
+                / Constants.Encoders.ONE_ENCODER_REVOLUTION / Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION);
         //return this.encoder.getDistance();
         return spinnerMotor.getSelectedSensorPosition();
     }
 
-    private double toSlices(double distanceInEncoderUnits) {
+    private double toSlices(final double distanceInEncoderUnits) {
         //Arc length of control panel is 4pi inches and wheel circumference is also 4pi inches!
-        return distanceInEncoderUnits / 4096 / 50;
+        return distanceInEncoderUnits / Constants.Encoders.ONE_ENCODER_REVOLUTION
+                / Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION;
     }
 
     /**
