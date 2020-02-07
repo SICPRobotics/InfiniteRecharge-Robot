@@ -3,10 +3,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.SubsystemBaseWrapper;
 
-public final class GroundIntake extends SubsystemBase implements MotorSubsystem, ToggleSubsystem {
+public final class GroundIntake extends SubsystemBaseWrapper implements MotorSubsystem, ToggleSubsystem {
 
     private VictorSPX intakeMotor;
     public GroundIntake() {
