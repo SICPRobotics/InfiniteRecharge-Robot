@@ -9,6 +9,7 @@ public class Compessor extends SubsystemBaseWrapper {
     private final Compressor compressor;
     
     public Compessor() {
+        super();
         compressor = new Compressor(Constants.Compressor.COMPRESSOR_ID);
        
         compressor.setClosedLoopControl(true);
