@@ -2,12 +2,14 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.SubsystemBaseWrapper;
 
-public final class Gate extends SubsystemBase implements PistonSubsystem {
+public final class Gate extends SubsystemBaseWrapper implements PistonSubsystem {
     private DoubleSolenoid solenoid;
     public Gate() {
+        super();
+
         solenoid = new DoubleSolenoid(Constants.Gate.FORWARD_SOLENOID_ID, Constants.Gate.REVERSE_SOLENOID_ID);
     }
 
