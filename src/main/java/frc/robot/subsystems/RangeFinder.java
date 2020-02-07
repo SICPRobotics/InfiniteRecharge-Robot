@@ -13,7 +13,7 @@ import frc.robot.Constants;
 
 public class RangeFinder extends SubsystemBase {
     
-    AnalogInput ultrasonicInput = new AnalogInput(Constants.Sensors.ULTRASONIC);
+    private AnalogInput ultrasonicInput = new AnalogInput(Constants.Sensors.ULTRASONIC);
    
     public RangeFinder() {
 
@@ -21,16 +21,11 @@ public class RangeFinder extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
   }
 
- 
-
-  public double getCmDistance()
-  {
-      
+  public final double getCmDistance()
+  {   
       return ultrasonicInput.getVoltage() / Constants.VOLT_TO_CM;
   }
-
-
 }

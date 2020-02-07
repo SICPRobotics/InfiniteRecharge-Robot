@@ -8,18 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.AutonomusCommand;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.GroundIntake;
-import frc.robot.subsystems.RangeFinder;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -39,11 +30,7 @@ public final class RobotContainer {
   public RobotContainer() {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
-    groundIntake = new GroundIntake();
- 
-   
-    // Configure the button bindings
-    configureButtonBindings();
+   configureButtonBindings();
   }
 
   /**
@@ -53,7 +40,7 @@ public final class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(this.joystick, 1).whenHeld(new GroundIntakeCommand(groundIntake));
+   
   }
 
   public double getJoystickX() {
