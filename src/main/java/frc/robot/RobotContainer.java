@@ -49,7 +49,7 @@ public final class RobotContainer {
    */
   private void configureButtonBindings() {
     //GROUND INTAKE
-    //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new GroundIntakeCommand(groundIntake));
+    //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
     groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
   }
 
