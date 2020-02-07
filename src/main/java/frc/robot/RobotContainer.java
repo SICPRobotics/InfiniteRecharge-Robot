@@ -18,6 +18,11 @@ import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
+import frc.robot.commands.ExtendHangerArm;
+import frc.robot.commands.PullHangerUp;
+import frc.robot.controllers.OperatorController;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Hanger;
 
 /** 
  *  This class is where the bulk of the robot should be de
@@ -35,6 +40,7 @@ public final class RobotContainer {
   private final GroundIntake groundIntake;
   private final ColorWheelSpinner colorWheelSpinner;
 
+  private final Hanger hanger;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -43,6 +49,7 @@ public final class RobotContainer {
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     groundIntake = new GroundIntake();
     colorWheelSpinner = new ColorWheelSpinner();
+    hanger = new Hanger();
     
     // Configure the button bindings
     configureButtonBindings();
@@ -71,6 +78,11 @@ public final class RobotContainer {
 
     //Extend up/down (toggle color wheel position)
     operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
+
+    //HANGER
+    operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
+    operatorController.buttons.A.toggleWhenPressed(new ExtendHangerArm(hanger));
+    
   }
 
   public double getJoystickX() {

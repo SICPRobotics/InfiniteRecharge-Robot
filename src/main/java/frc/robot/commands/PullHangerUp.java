@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hanger;
 
-public class PullHangerUp extends CommandBase {
+public final class PullHangerUp extends CommandBase {
     private final Hanger hanger;
 
-    public PullHangerUp(Hanger hanger) {
+    public PullHangerUp(final Hanger hanger) {
         this.hanger = hanger;
     }
 
@@ -17,11 +17,11 @@ public class PullHangerUp extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(final boolean interrupted) {
         this.hanger.stopPullingUp();
     }
 }

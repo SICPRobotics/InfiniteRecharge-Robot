@@ -5,19 +5,28 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.VictorSP;
 
-public class Hanger {
+import frc.robot.Constants;
+import frc.robot.SubsystemBaseWrapper;
+
+public final class Hanger extends SubsystemBaseWrapper implements MotorSubsystem {
     private final TalonSRX armMotor;
     private final VictorSPX winchMotor1;
     private final VictorSPX winchMotor2;
     private final Encoder encoder;
 
     public Hanger() {
-        armMotor = new TalonSRX(4);
-        winchMotor1 = new VictorSPX(2);
-        winchMotor2 = new VictorSPX(3);
-        encoder = new Encoder(0, 1);
+        super();
+        
+        armMotor = new TalonSRX(Constants.Hanger.ARM_MOTOR_ID);
+        winchMotor1 = new VictorSPX(Constants.Hanger.RIGHT_WINCH_MOTOR_ID);
+        winchMotor2 = new VictorSPX(Constants.Hanger.LEFT_WINCH_MOTOR_ID);
+        encoder = new Encoder(Constants.Hanger.ENCODER_ID_A, Constants.Hanger.ENCODER_ID_B);
+    }
+
+    public void setMotor(final double value) {
+        winchMotor1.set(ControlMode.PercentOutput, -value);
+        winchMotor2.set(ControlMode.PercentOutput, value);
     }
 
     public void startArmExtension() {
@@ -29,13 +38,11 @@ public class Hanger {
     }
 
     public void startPullingUp() {
-        winchMotor1.set(ControlMode.PercentOutput, 0.5);
-        winchMotor2.set(ControlMode.PercentOutput, 0.5);
+      setMotor(0.5);
     }
 
     public void stopPullingUp() {
-        winchMotor1.set(ControlMode.PercentOutput, 0);
-        winchMotor2.set(ControlMode.PercentOutput, 0);
+       setMotor(0);
     }
 
     public double getArmDistance() {
