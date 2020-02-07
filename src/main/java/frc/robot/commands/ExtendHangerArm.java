@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hanger;
 
-public class ExtendHangerArm extends CommandBase {
+public final class ExtendHangerArm extends CommandBase {
     private final Hanger hanger;
 
-    public ExtendHangerArm(Hanger hanger) {
+    public ExtendHangerArm(final Hanger hanger) {
         this.hanger = hanger;
     }
 
@@ -21,7 +21,7 @@ public class ExtendHangerArm extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(final boolean interrupted) {
         this.hanger.stopArmExtension();
     }
 }

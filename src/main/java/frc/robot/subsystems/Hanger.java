@@ -5,10 +5,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.VictorSP;
+
 import frc.robot.Constants;
 
-public class Hanger {
+public final class Hanger {
     private final TalonSRX armMotor;
     private final VictorSPX winchMotor1;
     private final VictorSPX winchMotor2;
