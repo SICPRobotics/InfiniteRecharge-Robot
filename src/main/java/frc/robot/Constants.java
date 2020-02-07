@@ -40,5 +40,3 @@ public final class Constants {
         public static final int REVERSE_SOLENOID_ID = 1;
     }
 }
-
-
