@@ -13,8 +13,8 @@ public class PastaPuller extends SubsystemBase implements MotorSubsystem {
     private VictorSPX motorLeft;
 
     public PastaPuller() {
-        motorRight = new VictorSPX(Constants.PastaPuller.MOTOR_ID_RIGHT);
-        motorLeft = new VictorSPX(Constants.PastaPuller.MOTOR_ID_LEFT);
+        motorRight = new VictorSPX(Constants.PastaPuller.RIGHT_MOTOR_ID);
+        motorLeft = new VictorSPX(Constants.PastaPuller.LEFT_MOTOR_ID);
     }
     
     public void startPulling() {
