@@ -14,7 +14,7 @@ import frc.robot.commands.PullHangerUp;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.HangerArm;
-import frc.robot.subsystems.HangerWhinch;
+import frc.robot.subsystems.HangerWinch;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -28,7 +28,7 @@ public final class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
-  private final HangerWhinch hangerWhinch;
+  private final HangerWinch hangerWhinch;
   private final HangerArm hangerArm;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -36,7 +36,7 @@ public final class RobotContainer {
   public RobotContainer() {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
-    hangerWhinch = new HangerWhinch();
+    hangerWhinch = new HangerWinch();
     hangerArm = new HangerArm();
     // Configure the button bindings
     configureButtonBindings();
