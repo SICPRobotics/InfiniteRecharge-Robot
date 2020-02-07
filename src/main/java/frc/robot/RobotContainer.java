@@ -14,7 +14,6 @@ import frc.robot.commands.PullHangerUp;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hanger;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -47,9 +46,8 @@ public final class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-  
-
-
+    operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
+    operatorController.buttons.A.toggleWhenPressed(new ExtendHangerArm(hanger));
     
   }
 
