@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.SubsystemBaseWrapper;
 import frc.robot.game_elements.ColorWheel;
 import frc.robot.game_elements.ColorWheelColor;
 
-public final class ColorWheelSpinner extends SubsystemBase implements MotorSubsystem, PistonSubsystem, ToggleSubsystem {
+public final class ColorWheelSpinner extends SubsystemBaseWrapper implements MotorSubsystem, PistonSubsystem, ToggleSubsystem {
     private final TalonSRX spinnerMotor = new TalonSRX(Constants.ColorWheel.MOTOR_ID);
     private final ColorMatch colorMatcher = new ColorMatch();
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -27,6 +27,8 @@ public final class ColorWheelSpinner extends SubsystemBase implements MotorSubsy
     private final DoubleSolenoid solenoid = 
             new DoubleSolenoid(Constants.ColorWheel.DOUBLE_SOLENOID_FORWARD_ID, Constants.ColorWheel.DOUBLE_SOLENOID_REVERSE_ID);
     public ColorWheelSpinner() {
+        super();
+
         Arrays.stream(ColorWheelColor.values()).forEach(colorWheelColor -> {
             colorMatcher.addColorMatch(colorWheelColor.targetColor);
         });
