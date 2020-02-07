@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -25,7 +23,7 @@ public final class Constants {
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
-    public final class Compressor {
+    public static final class Compressor {
          public static final int COMPRESSOR_ID = 0;
     }
 }
