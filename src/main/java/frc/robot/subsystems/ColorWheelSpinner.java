@@ -33,7 +33,7 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
     }
 
     public void setMotor(final double val) {
-        spinnerMotor.set(ControlMode.PercentOutput, val);
+        spinnerMotor.set(ControlMode.PercentOutput, val * Constants.ColorWheel.SPEED);
     }
 
     public void start() {
