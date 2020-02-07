@@ -20,6 +20,7 @@ package frc.robot;
 public final class Constants {
     public static final class GroundIntake {
         public static final int MOTOR_ID = 9;
+        public static final double SPEED = 1.0;
     }
     
     public static final class Encoders {
