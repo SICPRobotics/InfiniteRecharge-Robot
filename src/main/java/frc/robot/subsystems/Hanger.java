@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Encoder;
 
 import frc.robot.Constants;
 
-public final class Hanger {
+public final class Hanger implements MotorSubsystem {
     private final TalonSRX armMotor;
     private final VictorSPX winchMotor1;
     private final VictorSPX winchMotor2;
@@ -21,6 +21,11 @@ public final class Hanger {
         encoder = new Encoder(Constants.Hanger.ENCODER_ID_A, Constants.Hanger.ENCODER_ID_B);
     }
 
+    public void setMotor(final double value) {
+        winchMotor1.set(ControlMode.PercentOutput, value);
+        winchMotor2.set(ControlMode.PercentOutput, value);
+    }
+
     public void startArmExtension() {
         armMotor.set(ControlMode.PercentOutput, 0.5);
     }
@@ -30,13 +35,11 @@ public final class Hanger {
     }
 
     public void startPullingUp() {
-        winchMotor1.set(ControlMode.PercentOutput, 0.5);
-        winchMotor2.set(ControlMode.PercentOutput, 0.5);
+      setMotor(0.5);
     }
 
     public void stopPullingUp() {
-        winchMotor1.set(ControlMode.PercentOutput, 0);
-        winchMotor2.set(ControlMode.PercentOutput, 0);
+       setMotor(0);
     }
 
     public double getArmDistance() {
