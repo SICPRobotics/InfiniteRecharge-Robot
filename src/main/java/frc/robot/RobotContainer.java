@@ -20,8 +20,6 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.PullHangerUp;
-import frc.robot.controllers.OperatorController;
-import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hanger;
 
 /** 
@@ -39,7 +37,6 @@ public final class RobotContainer {
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
   private final ColorWheelSpinner colorWheelSpinner;
-
   private final Hanger hanger;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
