@@ -4,16 +4,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.SubsystemBaseWrapper;
 
 /**
  * the DriveTrain, aka the thing that moves the robot
  */
-public final class DriveTrain extends SubsystemBase {
+public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
 
     public DriveTrain() {
+        super();
         // Motors
         WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.Motors.FRONT_RIGHT_TALON);
         WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.Motors.BACK_RIGHT_TALON);
