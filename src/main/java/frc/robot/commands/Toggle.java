@@ -12,7 +12,8 @@ public class Toggle extends FunctionalCommand {
         super(subsystem::start, () -> { }, (b) -> subsystem.stop(), () -> false);
         addRequirements((Subsystem) subsystem);
     }
-    public Toggle(final Runnable start, final Runnable stop) {
+    public Toggle(final Subsystem subsystem, final Runnable start, final Runnable stop) {
         super(start, () -> { }, (b) -> stop.run(), () -> false);
+        addRequirements((Subsystem) subsystem);
     }
 }
