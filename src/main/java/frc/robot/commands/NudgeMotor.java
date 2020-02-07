@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.MotorSubsystem;
 
 /**
@@ -13,6 +14,7 @@ public final class NudgeMotor extends CommandBase {
     public NudgeMotor(final MotorSubsystem subsystem, final double nudgeAmount) {
         this.subsystem = subsystem;
         this.nudgeAmount = nudgeAmount;
+        addRequirements((Subsystem) subsystem);
     }
 
     @Override
