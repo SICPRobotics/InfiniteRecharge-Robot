@@ -15,10 +15,10 @@ public final class Hanger {
     private final Encoder encoder;
 
     public Hanger() {
-        armMotor = new TalonSRX(Constants.HangerMotors.ARM_TALON);
-        winchMotor1 = new VictorSPX(Constants.HangerMotors.WINCH_TALON1);
-        winchMotor2 = new VictorSPX(Constants.HangerMotors.WINCH_TALON2);
-        encoder = new Encoder(0, 1);
+        armMotor = new TalonSRX(Constants.Hanger.ARM_MOTOR);
+        winchMotor1 = new VictorSPX(Constants.Hanger.WINCH_MOTOR1);
+        winchMotor2 = new VictorSPX(Constants.Hanger.WINCH_MOTOR2);
+        encoder = new Encoder(Constants.Hanger.ENCODER_ID_A, Constants.Hanger.ENCODER_ID_B);
     }
 
     public void startArmExtension() {

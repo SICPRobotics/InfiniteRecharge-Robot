@@ -17,7 +17,7 @@ public final class PullHangerUp extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override

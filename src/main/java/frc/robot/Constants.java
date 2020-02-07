@@ -17,10 +17,12 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final class HangerMotors {
-        public static final int ARM_TALON = 4;
-        public static final int WINCH_TALON1 = 2;
-        public static final int WINCH_TALON2 = 3;
+    public static final class Hanger {
+        public static final int ENCODER_ID_A = 0;
+        public static final int ENCODER_ID_B = 1;
+        public static final int ARM_MOTOR = 4;
+        public static final int WINCH_MOTOR1 = 2;
+        public static final int WINCH_MOTOR2 = 3;
     }
     public static final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
