@@ -11,22 +11,22 @@ import frc.robot.SubsystemBaseWrapper;
 
 public final class Hanger extends SubsystemBaseWrapper implements MotorSubsystem {
     private final TalonSRX armMotor;
-    private final VictorSPX winchMotor1;
-    private final VictorSPX winchMotor2;
+    private final VictorSPX rightWinchMotor;
+    private final VictorSPX leftWinchMotor;
     private final Encoder encoder;
 
     public Hanger() {
         super();
         
         armMotor = new TalonSRX(Constants.Hanger.ARM_MOTOR_ID);
-        winchMotor1 = new VictorSPX(Constants.Hanger.RIGHT_WINCH_MOTOR_ID);
-        winchMotor2 = new VictorSPX(Constants.Hanger.LEFT_WINCH_MOTOR_ID);
+        rightWinchMotor = new VictorSPX(Constants.Hanger.RIGHT_WINCH_MOTOR_ID);
+        leftWinchMotor = new VictorSPX(Constants.Hanger.LEFT_WINCH_MOTOR_ID);
         encoder = new Encoder(Constants.Hanger.ENCODER_ID_A, Constants.Hanger.ENCODER_ID_B);
     }
 
     public void setMotor(final double value) {
-        winchMotor1.set(ControlMode.PercentOutput, -value);
-        winchMotor2.set(ControlMode.PercentOutput, value);
+        rightWinchMotor.set(ControlMode.PercentOutput, -value);
+        leftWinchMotor.set(ControlMode.PercentOutput, value);
     }
 
     public void startArmExtension() {
