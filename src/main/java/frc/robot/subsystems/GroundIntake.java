@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public final class GroundIntake extends SubsystemBase implements MotorSubsystem {
+public final class GroundIntake extends SubsystemBase implements MotorSubsystem, ToggleSubsystem {
 
     private VictorSPX intakeMotor;
     public GroundIntake() {
