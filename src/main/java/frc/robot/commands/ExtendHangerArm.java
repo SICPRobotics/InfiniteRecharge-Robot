@@ -8,6 +8,7 @@ public final class ExtendHangerArm extends CommandBase {
 
     public ExtendHangerArm(final Hanger hanger) {
         this.hanger = hanger;
+        addRequirements(hanger);
     }
 
     @Override
