@@ -13,6 +13,7 @@ import frc.robot.commands.ExtendPiston;
 import frc.robot.commands.NudgeMotor;
 import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
+import frc.robot.subsystems.ColorWheelPiston;
 import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
@@ -30,6 +31,7 @@ public final class RobotContainer {
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
   private final ColorWheelSpinner colorWheelSpinner;
+  private final ColorWheelPiston colorWheelPiston;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -38,6 +40,7 @@ public final class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     colorWheelSpinner = new ColorWheelSpinner();
+    colorWheelPiston = new ColorWheelPiston();
     
     // Configure the button bindings
     configureButtonBindings();
@@ -62,7 +65,7 @@ public final class RobotContainer {
         .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, Constants.ColorWheel.MANUAL_SPEED).perpetually());
 
     //Extend up/down (toggle color wheel position)
-    operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
+    operatorController.buttons.dPad.up.toggleWhenPressed(new ExtendPiston(colorWheelPiston));
   }
 
   public double getJoystickX() {
