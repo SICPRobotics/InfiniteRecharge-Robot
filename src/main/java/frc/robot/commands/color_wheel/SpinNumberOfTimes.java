@@ -9,6 +9,7 @@ public final class SpinNumberOfTimes extends CommandBase {
 
     public SpinNumberOfTimes(final ColorWheelSpinner spinner) {
         this.spinner = spinner;
+        addRequirements(spinner);
     }
 
     @Override

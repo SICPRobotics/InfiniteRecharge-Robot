@@ -4,12 +4,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.game_elements.ColorWheelColor;
 import frc.robot.subsystems.ColorWheelSpinner;
 
-public class SpinToColor extends CommandBase {
+public final class SpinToColor extends CommandBase {
     private final ColorWheelSpinner spinner;
     private double slicesToSpin;
     private ColorWheelColor targetColor;
-    public SpinToColor(ColorWheelSpinner spinner) {
+    public SpinToColor(final ColorWheelSpinner spinner) {
         this.spinner = spinner;
+        addRequirements(spinner);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class SpinToColor extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(final boolean interrupted) {
         this.spinner.stop();
     }
 }
