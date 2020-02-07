@@ -3,15 +3,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class GroundIntake extends SubsystemBase implements MotorSubsystem {
+public final class GroundIntake extends SubsystemBase implements MotorSubsystem {
 
     private VictorSPX intakeMotor;
     public GroundIntake() {
-        intakeMotor = new VictorSPX(Constants.Intake.INTAKE_TALON);
+        intakeMotor = new VictorSPX(Constants.GroundIntake.MOTOR_ID);
     }
 
     public void start() {
@@ -24,7 +23,7 @@ public class GroundIntake extends SubsystemBase implements MotorSubsystem {
         System.out.println("Ground intake subsystem end!");
     }
 
-    public void setMotor(double value) {
+    public void setMotor(final double value) {
         intakeMotor.set(ControlMode.PercentOutput, value);
     }
 }
