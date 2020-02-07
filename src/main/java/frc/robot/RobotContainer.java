@@ -21,6 +21,7 @@ import frc.robot.subsystems.GroundIntake;
 import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.PullHangerUp;
 import frc.robot.subsystems.Hanger;
+import frc.robot.subsystems.PastaPuller;
 
 /** 
  *  This class is where the bulk of the robot should be de
@@ -38,6 +39,8 @@ public final class RobotContainer {
   private final GroundIntake groundIntake;
   private final ColorWheelSpinner colorWheelSpinner;
   private final Hanger hanger;
+  private final PastaPuller pastaPuller;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -47,7 +50,8 @@ public final class RobotContainer {
     groundIntake = new GroundIntake();
     colorWheelSpinner = new ColorWheelSpinner();
     hanger = new Hanger();
-    
+    pastaPuller = new PastaPuller();
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -80,6 +84,9 @@ public final class RobotContainer {
     operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
     operatorController.buttons.A.toggleWhenPressed(new ExtendHangerArm(hanger));
     
+    //PASTA PULLER
+    //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
+    pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
   }
 
   public double getJoystickX() {

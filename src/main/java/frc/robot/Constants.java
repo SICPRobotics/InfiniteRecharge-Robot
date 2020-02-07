@@ -56,4 +56,9 @@ public final class Constants {
         public static final double MAX_SPEED = 1.0;
         public static final double MANUAL_SPEED = 0.5;
     }
+    
+    public static final class PastaPuller {
+        public static final int LEFT_MOTOR_ID = 0;
+        public static final int RIGHT_MOTOR_ID = 0;
+    }
 }
