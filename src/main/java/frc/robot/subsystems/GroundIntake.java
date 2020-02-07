@@ -10,6 +10,7 @@ public final class GroundIntake extends SubsystemBaseWrapper implements MotorSub
 
     private VictorSPX intakeMotor;
     public GroundIntake() {
+        super();
         intakeMotor = new VictorSPX(Constants.GroundIntake.MOTOR_ID);
     }
 
