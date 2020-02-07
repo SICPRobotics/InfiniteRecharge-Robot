@@ -4,16 +4,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.SubsystemBaseWrapper;
 
 /**
  * the DriveTrain, aka the thing that moves the robot
  */
-public class DriveTrain extends SubsystemBase {
+public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
 
     public DriveTrain() {
+        super();
         // Motors
         WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
         WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
@@ -41,7 +42,9 @@ public class DriveTrain extends SubsystemBase {
             Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue,
 
             //Deadzone on x axis only if y value is small
-            Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN ? 0 : rotateValue,
+            Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE
+                    && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
+                ? 0 : rotateValue,
 
             //idk what this one means lol
             true
