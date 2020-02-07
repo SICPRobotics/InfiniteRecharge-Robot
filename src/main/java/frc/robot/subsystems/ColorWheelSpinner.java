@@ -9,23 +9,19 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 import frc.robot.SubsystemBaseWrapper;
 import frc.robot.game_elements.ColorWheel;
 import frc.robot.game_elements.ColorWheelColor;
 
-public final class ColorWheelSpinner extends SubsystemBaseWrapper implements MotorSubsystem, PistonSubsystem, ToggleSubsystem {
+public final class ColorWheelSpinner extends SubsystemBaseWrapper implements MotorSubsystem, ToggleSubsystem {
     private final TalonSRX spinnerMotor = new TalonSRX(Constants.ColorWheel.MOTOR_ID);
     private final ColorMatch colorMatcher = new ColorMatch();
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    private final DoubleSolenoid solenoid = 
-            new DoubleSolenoid(Constants.ColorWheel.DOUBLE_SOLENOID_FORWARD_ID, Constants.ColorWheel.DOUBLE_SOLENOID_REVERSE_ID);
     public ColorWheelSpinner() {
         super();
 
@@ -37,7 +33,7 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
     }
 
     public void setMotor(final double val) {
-        spinnerMotor.set(ControlMode.PercentOutput, val);
+        spinnerMotor.set(ControlMode.PercentOutput, val * Constants.ColorWheel.SPEED);
     }
 
     public void start() {
@@ -46,14 +42,6 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
 
     public void stop() {
         setMotor(0);
-    }
-
-    public void pistonForward() {
-        solenoid.set(Value.kForward);
-    }
-
-    public void pistonReverse() {
-        solenoid.set(Value.kReverse);
     }
 
     /**

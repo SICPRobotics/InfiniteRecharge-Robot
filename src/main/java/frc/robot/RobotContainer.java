@@ -14,6 +14,7 @@ import frc.robot.commands.ExtendPiston;
 import frc.robot.commands.NudgeMotor;
 import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
+import frc.robot.subsystems.ColorWheelPiston;
 import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
@@ -40,6 +41,7 @@ public final class RobotContainer {
   private final ColorWheelSpinner colorWheelSpinner;
   private final Hanger hanger;
   private final PastaPuller pastaPuller;
+  private final ColorWheelPiston colorWheelPiston;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -52,6 +54,8 @@ public final class RobotContainer {
     hanger = new Hanger();
     pastaPuller = new PastaPuller();
 
+    colorWheelPiston = new ColorWheelPiston();
+    
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -78,7 +82,8 @@ public final class RobotContainer {
         .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, Constants.ColorWheel.MANUAL_SPEED).perpetually());
 
     //Extend up/down (toggle color wheel position)
-    operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
+    //operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
+    operatorController.buttons.dPad.up.toggleWhenPressed(new ExtendPiston(colorWheelPiston));
 
     //HANGER
     operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
@@ -87,6 +92,7 @@ public final class RobotContainer {
     //PASTA PULLER
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
+    
   }
 
   public double getJoystickX() {

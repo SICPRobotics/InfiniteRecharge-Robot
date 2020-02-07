@@ -53,7 +53,7 @@ public final class Constants {
         public static final int MAX_SPINS = 5 * 8;
         public static final int SPINS_TARGET = MIN_SPINS + 2;
         
-        public static final double MAX_SPEED = 1.0;
+        public static final double SPEED = 1.0;
         public static final double MANUAL_SPEED = 0.5;
     }
     
