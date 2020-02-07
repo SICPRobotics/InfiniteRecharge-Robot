@@ -7,10 +7,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-public class PastaPuller extends SubsystemBase implements MotorSubsystem {
-    
-    private VictorSPX motorRight;
-    private VictorSPX motorLeft;
+public final class PastaPuller extends SubsystemBase implements MotorSubsystem {
+    private final VictorSPX motorRight;
+    private final VictorSPX motorLeft;
 
     public PastaPuller() {
         motorRight = new VictorSPX(Constants.PastaPuller.RIGHT_MOTOR_ID);
@@ -25,7 +24,7 @@ public class PastaPuller extends SubsystemBase implements MotorSubsystem {
         setMotor(0);
     }
 
-    public void setMotor(double value) {
+    public void setMotor(final double value) {
         motorRight.set(ControlMode.PercentOutput, value);
         motorLeft.set(ControlMode.PercentOutput, value * -1);
     }
