@@ -24,14 +24,12 @@ public final class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
-
     // Configure the button bindings
     configureButtonBindings();
   }

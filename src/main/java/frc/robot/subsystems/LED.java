@@ -1,11 +1,12 @@
-package frc.robot;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.SubsystemBaseWrapper;
 
-public final class LED {
+public final class LED extends SubsystemBaseWrapper {
     private AddressableLED ledStrip;
     private AddressableLEDBuffer ledBuffer;
     public LED() {
@@ -32,6 +33,11 @@ public final class LED {
             for (int i = 0; i < ledBuffer.getLength(); i++) {
                 ledBuffer.setRGB(i, 255, 0, 255);
             }
+        }   
+    }
+    public void blue() {
+        for (int i = 0; i < ledBuffer.getLength(); i++) {
+           ledBuffer.setRGB(i, 0, 0, 255); 
         }   
     }
 }

@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.LEDBlue;
+import frc.robot.subsystems.LED;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -50,7 +52,7 @@ public final class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    led.allainceColor();
+    
   }
 
   /**
@@ -90,8 +92,10 @@ public final class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    new LEDBlue(led);
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
+      
     }
   }
 
@@ -100,8 +104,7 @@ public final class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-  }
-
+  } 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
