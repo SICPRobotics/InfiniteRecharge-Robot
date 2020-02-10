@@ -23,13 +23,11 @@ public final class LED extends SubsystemBaseWrapper {
             for (int i = 0; i < ledBuffer.getLength(); i++) {
                 ledBuffer.setRGB(i, 0, 0, 255);
             }
-        }
-        else if (DriverStation.getInstance().getAlliance() == Alliance.Red) {
+        } else if (DriverStation.getInstance().getAlliance() == Alliance.Red) {
             for (int i = 0; i < ledBuffer.getLength(); i++) {
                 ledBuffer.setRGB(i, 255, 0, 0);
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < ledBuffer.getLength(); i++) {
                 ledBuffer.setRGB(i, 255, 0, 255);
             }
