@@ -22,7 +22,7 @@ public final class SpinToColor extends CommandBase {
 
     @Override
     public void execute() {
-        this.spinner.setMotor(1.1 - (this.spinner.getSlicesSpun() / slicesToSpin));
+        this.spinner.setMotor(0.5/*1.1 - (this.spinner.getSlicesSpun() / slicesToSpin)*/);
     }
 
     @Override

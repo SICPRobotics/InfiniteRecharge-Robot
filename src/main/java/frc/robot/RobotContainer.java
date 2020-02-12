@@ -55,8 +55,8 @@ public final class RobotContainer {
   private void configureButtonBindings() {
     //COLOR WHEEL
     //Rotate to color / rotate a number of times
-    operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
-    operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
+    operatorController.buttons.RB.toggleWhenPressed(new SpinNumberOfTimes(colorWheelSpinner));
+    operatorController.buttons.LB.toggleWhenPressed(new SpinToColor(colorWheelSpinner));
     
     //Manual left/right of color wheel
     operatorController.buttons.dPad.left

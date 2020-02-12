@@ -33,11 +33,11 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
     }
 
     public void setMotor(final double val) {
-        spinnerMotor.set(ControlMode.PercentOutput, val * Constants.ColorWheel.SPEED);
+        spinnerMotor.set(ControlMode.PercentOutput, Math.min(val, 1.0) * Constants.ColorWheel.SPEED * -1.0);
     }
 
     public void start() {
-        setMotor(1);
+        setMotor(Constants.ColorWheel.SPEED);
     }
 
     public void stop() {
@@ -92,7 +92,7 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
                 Arrays.stream(ColorWheelColor.values())
                 .filter(colorWheelColor -> colorWheelColor.targetColor == match.color)
                 .toArray(ColorWheelColor[]::new)[0],
-        3);
+        Constants.ColorWheel.FIELD_SENSOR_OFFSET);
     }
 
     public double getConfidence() {
