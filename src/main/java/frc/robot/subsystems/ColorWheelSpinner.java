@@ -29,7 +29,12 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
             colorMatcher.addColorMatch(colorWheelColor.targetColor);
         });
 
+        // Welcome to  M O T O R L A N D
+        //Prevent unexpected behavior
+        spinnerMotor.configFactoryDefault();
         spinnerMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+        spinnerMotor.configMotionCruiseVelocity((int) toEncoderUnits(Constants.ColorWheel.SPEED) / 10);
+        spinnerMotor.configMotionAcceleration((int) toEncoderUnits(Constants.ColorWheel.SPEED) / 10);
     }
 
     public void setMotor(final double val) {
@@ -42,6 +47,10 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
 
     public void stop() {
         setMotor(0);
+    }
+
+    public void setToPosition(final double slices) {
+        spinnerMotor.set(ControlMode.MotionMagic, toEncoderUnits(slices));
     }
 
     /**
@@ -115,6 +124,11 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
         //Arc length of control panel is 4pi inches and wheel circumference is also 4pi inches!
         return distanceInEncoderUnits / Constants.Encoders.ONE_ENCODER_REVOLUTION
                 / Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION;
+    }
+
+    private double toEncoderUnits(final double distanceInSlices) {
+        return distanceInSlices * Constants.Encoders.ONE_ENCODER_REVOLUTION
+                * Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION;
     }
 
     /**
