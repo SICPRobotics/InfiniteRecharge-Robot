@@ -11,25 +11,37 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
-import frc.robot.SubsystemBaseWrapper;
 import frc.robot.game_elements.ColorWheel;
 import frc.robot.game_elements.ColorWheelColor;
 
-public final class ColorWheelSpinner extends SubsystemBaseWrapper implements MotorSubsystem, ToggleSubsystem {
+public final class ColorWheelSpinner extends PIDSubsystem implements MotorSubsystem, ToggleSubsystem {
     private final TalonSRX spinnerMotor = new TalonSRX(Constants.ColorWheel.MOTOR_ID);
+    private final SimpleMotorFeedforward spinnerFeedforward = new SimpleMotorFeedforward();
     private final ColorMatch colorMatcher = new ColorMatch();
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     public ColorWheelSpinner() {
-        super();
+        //super("Color wheel spinner", 1.0, 0.0, 0.0);
+        super(new PIDController(1.0, 0.0, 0.0));
 
         Arrays.stream(ColorWheelColor.values()).forEach(colorWheelColor -> {
             colorMatcher.addColorMatch(colorWheelColor.targetColor);
         });
 
         spinnerMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+    }
+
+    public void useOutput(final double output, final double setpoint) {
+        setMotor(setpoint - )
+    }
+
+    public double getMeasurement() {
+        return getSlicesSpun();
     }
 
     public void setMotor(final double val) {
@@ -113,7 +125,7 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
 
     private double toSlices(final double distanceInEncoderUnits) {
         //Arc length of control panel is 4pi inches and wheel circumference is also 4pi inches!
-        return distanceInEncoderUnits / Constants.Encoders.ONE_ENCODER_REVOLUTION
+        return ((double) distanceInEncoderUnits) / Constants.Encoders.ONE_ENCODER_REVOLUTION
                 / Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION;
     }
 
