@@ -77,7 +77,7 @@ public final class Constants {
     }
 
     public static final class Gate {
-        public static final int FORWARD_SOLENOID_ID = 0;
-        public static final int REVERSE_SOLENOID_ID = 1;
+        public static final int FORWARD_SOLENOID_ID = 2;
+        public static final int REVERSE_SOLENOID_ID = 3;
     }
 }
