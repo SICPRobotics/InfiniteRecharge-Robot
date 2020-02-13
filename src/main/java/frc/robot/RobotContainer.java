@@ -42,8 +42,7 @@ public final class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    
+  private void configureButtonBindings() { 
   }
 
   public double getJoystickX() {
@@ -52,6 +51,9 @@ public final class RobotContainer {
 
   public double getJoystickY() {
     return this.joystick.getRawAxis(1);
+  }
+  public double getJoystickZ() {
+    return this.joystick.getRawAxis(2);
   }
 
   /* *
