@@ -19,7 +19,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final class GroundIntake {
-        public static final int MOTOR_ID = 0;
+        public static final int MOTOR_ID = 9;
         public static final double SPEED = 1.0;
     }
     
@@ -30,9 +30,9 @@ public final class Constants {
     public static final class Hanger {
         public static final int ENCODER_ID_A = 0;
         public static final int ENCODER_ID_B = 1;
-        public static final int ARM_MOTOR_ID = 6;
-        public static final int RIGHT_WINCH_MOTOR_ID = 7;
-        public static final int LEFT_WINCH_MOTOR_ID = 6;
+        public static final int ARM_MOTOR_ID = 4;
+        public static final int RIGHT_WINCH_MOTOR_ID = 2;
+        public static final int LEFT_WINCH_MOTOR_ID = 3;
     }
 
     public static final class Motors {
@@ -45,7 +45,6 @@ public final class Constants {
     public static final class Joystick {
         public static final int X_AXIS = 0;
         public static final int Y_AXIS = 1;
-        public static final int SLIDER = 3;
     }
 
     public static final class CheesyDrive {
@@ -59,7 +58,7 @@ public final class Constants {
     }
 
     public static final class ColorWheel {
-        public static final int MOTOR_ID = 7;
+        public static final int MOTOR_ID = 4;
         public static final int DOUBLE_SOLENOID_FORWARD_ID = 0;
         public static final int DOUBLE_SOLENOID_REVERSE_ID = 1;
 
@@ -73,7 +72,8 @@ public final class Constants {
     }
     
     public static final class PastaPuller {
-        public static final int LEFT_MOTOR_ID = 1;
+        public static final int LEFT_MOTOR_ID = 0;
+        public static final int RIGHT_MOTOR_ID = 0;
     }
 
     public static final class Gate {
