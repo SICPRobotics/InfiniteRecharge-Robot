@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.game_elements.ColorWheel;
+import frc.robot.game_elements.ColorWheelColor;
 
 /**
  * Do NOT add any static variables to this class, or any initialization at all. Unless you know what
