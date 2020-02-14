@@ -16,11 +16,12 @@ public final class DriveWithJoystickForward extends CommandBase {
         this.moveValueGetter = moveValueGetter;
         this.rotateValueGetter = rotateValueGetter;
         this.adjustValueGetter = adjustValueGetter;
+        addRequirements(driveTrain);
     }
 
     @Override
     public void execute() {
-        this.driveTrain.cheesyDrive(-this.moveValueGetter.getAsDouble(), -this.rotateValueGetter.getAsDouble(), this.adjustValueGetter.getAsDouble());
+        this.driveTrain.cheesyDrive(-this.moveValueGetter.getAsDouble(), this.rotateValueGetter.getAsDouble(), this.adjustValueGetter.getAsDouble());
     }
 
 }

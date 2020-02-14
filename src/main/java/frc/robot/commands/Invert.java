@@ -10,6 +10,7 @@ public final class Invert extends CommandBase {
 
     public Invert(final DriveTrain driveTrain) {
         this.driveTrain = driveTrain;
+        addRequirements(driveTrain);
     }
 
     @Override
