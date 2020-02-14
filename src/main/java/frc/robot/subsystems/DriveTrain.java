@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -12,19 +13,22 @@ import frc.robot.SubsystemBaseWrapper;
  */
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
+    private final TalonSRX frontRight, frontLeft;
+
+    // SEE : https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/VelocityClosedLoop_ArbFeedForward/src/main/java/frc/robot/Robot.java
 
     public DriveTrain() {
         super();
         // Motors
-        WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
-        WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
-        SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
+        frontRight = new WPI_TalonSRX(0);
+        TalonSRX rearRight = new WPI_TalonSRX(1);
+        rearRight.follow(frontRight);
+        rearRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
-        WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
-        WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
-        SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
-
-        this.robotDrive = new DifferentialDrive(left, right);
+        frontLeft = new WPI_TalonSRX(3);
+        TalonSRX rearLeft = new WPI_TalonSRX(2);
+        rearLeft.follow(frontLeft);
+        rearLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     }
 
     //Mostly taken from last year's robot
@@ -36,18 +40,6 @@ public final class DriveTrain extends SubsystemBaseWrapper {
      * little flap thing on the bottom of the joystick, Joystick rawAxis 3)
      */
     public void cheesyDrive(final double moveValue, final double rotateValue) {
-        this.robotDrive.arcadeDrive(
-
-            //Deadzone on y axis value
-            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue,
-
-            //Deadzone on x axis only if y value is small
-            Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE
-                    && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
-                ? 0 : rotateValue,
-
-            //idk what this one means lol
-            true
-        );
+        
     }
 }
