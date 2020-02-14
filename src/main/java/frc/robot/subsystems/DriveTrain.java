@@ -40,12 +40,12 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         this.robotDrive.arcadeDrive(
 
             //Deadzone on y axis value
-            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue * inverted() * ((adjustValue + 1) / 2),
+            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue * inverted() * ((-adjustValue + 1) / 2),
 
             //Deadzone on x axis only if y value is small
             Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE
                     && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
-                ? 0 : rotateValue * inverted() * ((adjustValue + 1) / 2),
+                ? 0 : rotateValue * ((-adjustValue + 1) / 2),
 
             //idk what this one means lol
             true
