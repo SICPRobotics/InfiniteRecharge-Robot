@@ -32,12 +32,14 @@ public class AutonomusCommand extends CommandBase {
     }
     else {
       drive.cheesyDrive(0.0, 0.0);
+      
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(final boolean interrupted) {
+    timer.reset();
   }
 
   // Returns true when the command should end.
