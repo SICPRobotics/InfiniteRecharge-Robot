@@ -18,6 +18,7 @@ import frc.robot.commands.color_wheel.SpinToColor;
 import frc.robot.subsystems.ColorWheelPiston;
 import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.subsystems.Compessor;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.DriveWithoutJoystickInverted;
@@ -50,7 +51,7 @@ public final class RobotContainer {
   // private final Hanger hanger;
    private final PastaPuller pastaPuller;
   // private final ColorWheelPiston colorWheelPiston;
-  // private final Gate gate;
+   private final Gate gate;
   private final JoystickButton thumbButton;
 
   /**
@@ -63,7 +64,7 @@ public final class RobotContainer {
     // colorWheelSpinner = new ColorWheelSpinner();
     // hanger = new Hanger();
      pastaPuller = new PastaPuller();
-    // gate = new Gate();
+     gate = new Gate();
     compressor = new Compessor();
     // colorWheelPiston = new ColorWheelPiston();
     
@@ -107,7 +108,7 @@ public final class RobotContainer {
     
     //GATE
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
-    //new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
+    new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
     thumbButton.toggleWhenActive(new DriveWithoutJoystickInverted(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickS));
   }
 
