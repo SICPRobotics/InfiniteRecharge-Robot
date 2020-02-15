@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AutonomusCommand;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.SetMotorContinuous;
 import frc.robot.commands.ExtendPiston;
@@ -18,6 +19,7 @@ import frc.robot.commands.color_wheel.SpinToColor;
 import frc.robot.subsystems.ColorWheelPiston;
 import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.subsystems.Compessor;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
@@ -67,7 +69,6 @@ public final class RobotContainer {
      gate = new Gate();
     compressor = new Compessor();
     // colorWheelPiston = new ColorWheelPiston();
-    
     thumbButton = new JoystickButton(joystick, 2);
     // Configure the button bindings
     configureButtonBindings();
@@ -124,14 +125,11 @@ public final class RobotContainer {
   public double getJoystickS() {
     return this.joystick.getRawAxis(Constants.Joystick.S_AXIS);
   }
-  /* *
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   *
+  
+  // * @return the command to run in autonomous
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return new AutonomusCommand(driveTrain);
   }
-  */
+  
 }

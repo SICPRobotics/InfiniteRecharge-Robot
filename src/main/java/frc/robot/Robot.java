@@ -9,9 +9,13 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import java.text.DecimalFormat;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.RangeFinder;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,10 +23,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public final class Robot extends TimedRobot {
+public class Robot extends TimedRobot {
   private Command autonomousCommand;
+  private RangeFinder ultrasonic = new RangeFinder();
   private RobotContainer robotContainer;
-
+  private DecimalFormat distanceInCm = new DecimalFormat("#.00");
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -47,6 +52,7 @@ public final class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance());
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -63,6 +69,7 @@ public final class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+  
   }
 
   /**
@@ -86,7 +93,7 @@ public final class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopInit() {
+  public final void teleopInit() {
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -104,7 +111,7 @@ public final class Robot extends TimedRobot {
   }
 
   @Override
-  public void testInit() {
+  public final void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }

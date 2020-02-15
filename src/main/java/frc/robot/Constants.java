@@ -34,8 +34,10 @@ public final class Constants {
         public static final int RIGHT_WINCH_MOTOR_ID = 2;
         public static final int LEFT_WINCH_MOTOR_ID = 3;
     }
-
-    public static final class Motors {
+    public final class Sensors{
+        public static final int ULTRASONIC = 0;
+    }
+    public final class Motors{
         public static final int FRONT_RIGHT_TALON = 0;
         public static final int FRONT_LEFT_TALON = 3;
         public static final int BACK_RIGHT_TALON = 1;
@@ -81,4 +83,10 @@ public final class Constants {
         public static final int FORWARD_SOLENOID_ID = 2;
         public static final int REVERSE_SOLENOID_ID = 3;
     }
+        
+    public final class UltraSonic{
+            public static final double VOLT_TO_CM = 0.00977;
+        public static final double AUTON_STOPPING_DISTANCE = 40;
+    }
 }
+
