@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
@@ -12,6 +14,7 @@ import frc.robot.SubsystemBaseWrapper;
  */
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
+    private final ADXRS450_Gyro gyro;
 
     public DriveTrain() {
         super();
@@ -23,6 +26,9 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.Motors.FRONT_LEFT_TALON);
         WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.Motors.BACK_LEFT_TALON);
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
+
+        gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+        gyro.calibrate();
 
         this.robotDrive = new DifferentialDrive(left, right);
     }
@@ -49,5 +55,10 @@ public final class DriveTrain extends SubsystemBaseWrapper {
             //idk what this one means lol
             true
         );
+    }
+
+    @Override
+    public void periodic() {
+        System.out.println("Rotation: " + gyro.getAngle());
     }
 }
