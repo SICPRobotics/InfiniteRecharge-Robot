@@ -17,6 +17,7 @@ import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
 import frc.robot.subsystems.ColorWheelPiston;
 import frc.robot.subsystems.ColorWheelSpinner;
+import frc.robot.subsystems.Compessor;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.DriveWithoutJoystickInverted;
@@ -44,6 +45,7 @@ public final class RobotContainer {
   private final OperatorController operatorController = new OperatorController(1);
   private final DriveTrain driveTrain;
    private final GroundIntake groundIntake;
+   private final Compessor compressor;
   // private final ColorWheelSpinner colorWheelSpinner;
   // private final Hanger hanger;
    private final PastaPuller pastaPuller;
@@ -56,13 +58,13 @@ public final class RobotContainer {
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
-    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
+    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickS));
      groundIntake = new GroundIntake();
     // colorWheelSpinner = new ColorWheelSpinner();
     // hanger = new Hanger();
      pastaPuller = new PastaPuller();
     // gate = new Gate();
-
+    compressor = new Compessor();
     // colorWheelPiston = new ColorWheelPiston();
     
     thumbButton = new JoystickButton(joystick, 2);
@@ -106,7 +108,7 @@ public final class RobotContainer {
     //GATE
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
-    thumbButton.toggleWhenActive(new DriveWithoutJoystickInverted(driveTrain, this::getJoystickY, this::getJoystickX));
+    thumbButton.toggleWhenActive(new DriveWithoutJoystickInverted(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickS));
   }
 
   public double getJoystickX() {
@@ -117,6 +119,10 @@ public final class RobotContainer {
     return this.joystick.getRawAxis(Constants.Joystick.Y_AXIS);
   }
 
+  
+  public double getJoystickS() {
+    return this.joystick.getRawAxis(Constants.Joystick.S_AXIS);
+  }
   /* *
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

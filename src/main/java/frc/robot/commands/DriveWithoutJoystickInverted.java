@@ -9,17 +9,19 @@ public final class DriveWithoutJoystickInverted extends CommandBase {
     private final DriveTrain driveTrain;
     private final DoubleSupplier moveValueGetter;
     private final DoubleSupplier rotateValueGetter;
+    private final DoubleSupplier adjustValueGetter;
 
-    public DriveWithoutJoystickInverted(final DriveTrain driveTrain, final DoubleSupplier moveValueGetter,
-            final DoubleSupplier rotateValueGetter) {
+    public DriveWithoutJoystickInverted(final DriveTrain driveTrain, final DoubleSupplier moveValueGetter, final DoubleSupplier rotateValueGetter,
+     final DoubleSupplier adjustValueGetter) {
         this.driveTrain = driveTrain;
         this.moveValueGetter = moveValueGetter;
         this.rotateValueGetter = rotateValueGetter;
+        this.adjustValueGetter = adjustValueGetter;
         addRequirements(driveTrain);
     }
 
     @Override
     public void execute() {
-        this.driveTrain.cheesyDrive(-this.moveValueGetter.getAsDouble(), this.rotateValueGetter.getAsDouble());
+        this.driveTrain.cheesyDrive(-this.moveValueGetter.getAsDouble(), this.rotateValueGetter.getAsDouble(), this.adjustValueGetter.getAsDouble());
     }
 }

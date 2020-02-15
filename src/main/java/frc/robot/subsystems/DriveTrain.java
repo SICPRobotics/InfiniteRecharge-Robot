@@ -35,16 +35,16 @@ public final class DriveTrain extends SubsystemBaseWrapper {
      * @param scaleValue the amount that everything should be scaled by (usually given by the
      * little flap thing on the bottom of the joystick, Joystick rawAxis 3)
      */
-    public void cheesyDrive(final double moveValue, final double rotateValue) {
+    public void cheesyDrive(final double moveValue, final double rotateValue, final double adjustValue) {
         this.robotDrive.arcadeDrive(
 
             //Deadzone on y axis value
-            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue,
+            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue *adjustValue,
 
             //Deadzone on x axis only if y value is small
             Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE
                     && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
-                ? 0 : rotateValue,
+                ? 0 : rotateValue * adjustValue,
 
             //idk what this one means lol
             true
