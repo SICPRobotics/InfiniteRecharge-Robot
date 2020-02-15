@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
@@ -26,11 +27,11 @@ https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/
     public DriveTrain() {
         super();
         // Motors
-        frontRight = new WPI_TalonSRX(0);
-        TalonSRX rearRight = new WPI_TalonSRX(1);
+        frontRight = new TalonSRX(0);
+        TalonSRX rearRight = new TalonSRX(1);
 
-        frontLeft = new WPI_TalonSRX(3);
-        TalonSRX rearLeft = new WPI_TalonSRX(2);
+        frontLeft = new TalonSRX(3);
+        TalonSRX rearLeft = new TalonSRX(2);
 
         //Disable and wipe them
         frontRight.set(ControlMode.PercentOutput, 0);
@@ -64,6 +65,7 @@ https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/
      * little flap thing on the bottom of the joystick, Joystick rawAxis 3)
      */
     public void cheesyDrive(final double moveValue, final double rotateValue) {
-        
+        frontLeft.set(ControlMode.PercentOutput, moveValue, DemandType.ArbitraryFeedForward, rotateValue);
+        frontRight.set(ControlMode.PercentOutput, moveValue, DemandType.ArbitraryFeedForward, rotateValue * -1);
     }
 }
