@@ -11,6 +11,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.DriveWithoutJoystickInverted;
+import frc.robot.commands.PullPasta;
+import frc.robot.commands.SetMotorContinuous;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.PastaPuller;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.controllers.OperatorController;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 /**
@@ -27,6 +35,7 @@ public final class RobotContainer {
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
   private final JoystickButton thumbButton;
+  private final PastaPuller pastaPuller;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -35,6 +44,8 @@ public final class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     thumbButton = new JoystickButton(joystick, 2);
+    pastaPuller = new PastaPuller();
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -47,6 +58,9 @@ public final class RobotContainer {
    */
   private void configureButtonBindings() {
     thumbButton.toggleWhenActive(new DriveWithoutJoystickInverted(driveTrain, this::getJoystickY, this::getJoystickX));
+    //PASTA PULLER
+    //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
+    pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
   }
 
   public double getJoystickX() {
