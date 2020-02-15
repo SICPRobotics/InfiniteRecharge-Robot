@@ -18,11 +18,17 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         // Motors
         WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
         WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
+        frontRight.configFactoryDefault();
+        rearRight.configFactoryDefault();
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
 
         WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
         WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
+        frontLeft.configFactoryDefault();
+        rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
+
+        
 
         this.robotDrive = new DifferentialDrive(left, right);
     }
