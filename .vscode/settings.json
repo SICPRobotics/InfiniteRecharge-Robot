@@ -13,5 +13,6 @@
     "**/.factorypath": true
   },
   "java.checkstyle.configuration": "${workspaceFolder}\\style.xml",
-  "java.checkstyle.version": "8.29"
+  "java.checkstyle.version": "8.29",
+  "wpilib.autoSaveOnDeploy": true
 }

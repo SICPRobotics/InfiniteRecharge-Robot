@@ -22,6 +22,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.PullHangerUp;
+import frc.robot.commands.PullPasta;
 import frc.robot.subsystems.Hanger;
 import frc.robot.subsystems.PastaPuller;
 import frc.robot.subsystems.Gate;
@@ -37,14 +38,14 @@ public final class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Joystick joystick = new Joystick(0);
-  private final OperatorController operatorController = new OperatorController(2);
+  private final OperatorController operatorController = new OperatorController(1);
   private final DriveTrain driveTrain;
-  private final GroundIntake groundIntake;
-  private final ColorWheelSpinner colorWheelSpinner;
-  private final Hanger hanger;
-  private final PastaPuller pastaPuller;
-  private final ColorWheelPiston colorWheelPiston;
-  private final Gate gate;
+   private final GroundIntake groundIntake;
+  // private final ColorWheelSpinner colorWheelSpinner;
+  // private final Hanger hanger;
+   private final PastaPuller pastaPuller;
+  // private final ColorWheelPiston colorWheelPiston;
+  // private final Gate gate;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -52,13 +53,13 @@ public final class RobotContainer {
   public RobotContainer() {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
-    groundIntake = new GroundIntake();
-    colorWheelSpinner = new ColorWheelSpinner();
-    hanger = new Hanger();
-    pastaPuller = new PastaPuller();
-    gate = new Gate();
+     groundIntake = new GroundIntake();
+    // colorWheelSpinner = new ColorWheelSpinner();
+    // hanger = new Hanger();
+     pastaPuller = new PastaPuller();
+    // gate = new Gate();
 
-    colorWheelPiston = new ColorWheelPiston();
+    // colorWheelPiston = new ColorWheelPiston();
     
     // Configure the button bindings
     configureButtonBindings();
@@ -76,30 +77,30 @@ public final class RobotContainer {
     groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
     //COLOR WHEEL
     //Rotate to color / rotate a number of times
-    operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
-    operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
+    //operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
+    //operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
     
     //Manual left/right of color wheel
-    operatorController.buttons.dPad.left
-        .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, -1 * Constants.ColorWheel.MANUAL_SPEED).perpetually());
-    operatorController.buttons.dPad.right
-        .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, Constants.ColorWheel.MANUAL_SPEED).perpetually());
+    //operatorController.buttons.dPad.left
+      //  .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, -1 * Constants.ColorWheel.MANUAL_SPEED).perpetually());
+    //operatorController.buttons.dPad.right
+     //   .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, Constants.ColorWheel.MANUAL_SPEED).perpetually());
 
     //Extend up/down (toggle color wheel position)
     //operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
-    operatorController.buttons.dPad.up.toggleWhenPressed(new ExtendPiston(colorWheelPiston));
+    //operatorController.buttons.dPad.up.toggleWhenPressed(new ExtendPiston(colorWheelPiston));
 
     //HANGER
-    operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
-    operatorController.buttons.A.toggleWhenPressed(new ExtendHangerArm(hanger));
+    //operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
+    //operatorController.buttons.A.toggleWhenPressed(new ExtendHangerArm(hanger));
     
     //PASTA PULLER
-    //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
+    // new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
     
     //GATE
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
-    new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
+    //new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
   }
 
   public double getJoystickX() {

@@ -19,7 +19,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final class GroundIntake {
-        public static final int MOTOR_ID = 4;
+        public static final int MOTOR_ID = 8;
         public static final double SPEED = 1.0;
     }
     
@@ -72,7 +72,7 @@ public final class Constants {
     }
     
     public static final class PastaPuller {
-        public static final int LEFT_MOTOR_ID = 5;
+        public static final int LEFT_MOTOR_ID = 6;
     }
 
     public static final class Gate {

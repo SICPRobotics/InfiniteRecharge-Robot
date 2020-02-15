@@ -12,6 +12,6 @@ public class Stick {
         return this.getXSupplier.getAsDouble();
     }
     public double getY() {
-        return this.getYSupplier.getAsDouble();
+        return -this.getYSupplier.getAsDouble();
     }
 }
