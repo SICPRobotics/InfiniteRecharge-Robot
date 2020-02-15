@@ -17,6 +17,9 @@ import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
 import frc.robot.subsystems.ColorWheelPiston;
 import frc.robot.subsystems.ColorWheelSpinner;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.DriveWithoutJoystickInverted;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
@@ -46,9 +49,10 @@ public final class RobotContainer {
    private final PastaPuller pastaPuller;
   // private final ColorWheelPiston colorWheelPiston;
   // private final Gate gate;
+  private final JoystickButton thumbButton;
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
@@ -61,15 +65,16 @@ public final class RobotContainer {
 
     // colorWheelPiston = new ColorWheelPiston();
     
+    thumbButton = new JoystickButton(joystick, 2);
     // Configure the button bindings
     configureButtonBindings();
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     //GROUND INTAKE
@@ -101,6 +106,7 @@ public final class RobotContainer {
     //GATE
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
+    thumbButton.toggleWhenActive(new DriveWithoutJoystickInverted(driveTrain, this::getJoystickY, this::getJoystickX));
   }
 
   public double getJoystickX() {
