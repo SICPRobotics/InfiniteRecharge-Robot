@@ -26,6 +26,6 @@ public class RangeFinder extends SubsystemBase {
 
   public final double getCmDistance()
   {   
-      return ultrasonicInput.getVoltage() / Constants.VOLT_TO_CM;
+      return ultrasonicInput.getVoltage() / Constants.UltraSonic.VOLT_TO_CM;
   }
 }

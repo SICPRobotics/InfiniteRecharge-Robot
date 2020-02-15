@@ -37,6 +37,5 @@ public final class Constants {
     }
         public final class PastaPuller {
         public static final int LEFT_MOTOR_ID = 0;
-        public static final int RIGHT_MOTOR_ID = 0;
     }
 }

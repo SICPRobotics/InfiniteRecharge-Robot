@@ -27,12 +27,11 @@ public class AutonomusCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public final void execute() {
-    if (ultrasonic.getCmDistance() < Constants.AUTON_STOPPING_DISTANCE) {
+    if (ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE) {
       drive.cheesyDrive(0.5, 0.0);
     }
     else {
       drive.cheesyDrive(0.0, 0.0);
-      
     }
   }
 
@@ -45,6 +44,6 @@ public class AutonomusCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public final boolean isFinished() {
-    return ultrasonic.getCmDistance() > Constants.AUTON_STOPPING_DISTANCE;
+    return ultrasonic.getCmDistance() > Constants.UltraSonic.AUTON_STOPPING_DISTANCE;
   }
 }
