@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.LEDBlue;
 import frc.robot.subsystems.LED;
 
 /**
@@ -61,11 +60,7 @@ public final class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
 
     CommandScheduler.getInstance().run();
-<<<<<<< HEAD
-    // led.allainceColor();
-=======
-    
->>>>>>> 85ad9180a8da40065fad1ed745c722dc834bb2ad
+    led.allainceColor();
   }
 
   /**
@@ -86,7 +81,6 @@ public final class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // autonomousCommand = robotContainer.getAutonomousCommand();
-    led.allainceColor();
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
@@ -106,11 +100,7 @@ public final class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-<<<<<<< HEAD
     
-=======
-    new LEDBlue(led);
->>>>>>> 85ad9180a8da40065fad1ed745c722dc834bb2ad
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
       
@@ -122,14 +112,8 @@ public final class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-<<<<<<< HEAD
-    //led.smartDashboard();
-    led.joystickLED(joystick);
   }
 
-=======
-  } 
->>>>>>> 85ad9180a8da40065fad1ed745c722dc834bb2ad
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
