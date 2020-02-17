@@ -8,10 +8,16 @@ public class Stick {
         this.getXSupplier = getX;
         this.getYSupplier = getY;
     }
+
     public double getX() {
-        return this.getXSupplier.getAsDouble();
+        return deadzone(this.getXSupplier.getAsDouble());
     }
+
     public double getY() {
-        return -this.getYSupplier.getAsDouble();
+        return - deadzone(this.getYSupplier.getAsDouble());
+    }
+
+    public double deadzone(double value) {
+        return Math.abs(value) < 0.05 ? 0 : value;
     }
 }
