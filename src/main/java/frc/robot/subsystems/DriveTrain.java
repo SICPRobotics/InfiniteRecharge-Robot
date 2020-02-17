@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.SubsystemBaseWrapper;
 
@@ -12,23 +13,22 @@ import frc.robot.SubsystemBaseWrapper;
  */
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
+    
+    private final WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
+    private final WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
+    private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
+    private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
 
     public DriveTrain() {
         super();
         // Motors
-        WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
-        WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
         frontRight.configFactoryDefault();
         rearRight.configFactoryDefault();
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
 
-        WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
-        WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
         frontLeft.configFactoryDefault();
         rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
-
-        
 
         this.robotDrive = new DifferentialDrive(left, right);
     }
@@ -55,5 +55,12 @@ public final class DriveTrain extends SubsystemBaseWrapper {
             //idk what this one means lol
             true
         );
+    }
+
+    public void periodic() {
+        SmartDashboard.putNumber("TalonSRX 0 (front right) Temperature", frontRight.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 1 (rear right) Temperature", rearRight.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 2 (rear left) Temperature", rearLeft.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 3 (front left) Temperature", frontLeft.getTemperature());
     }
 }
