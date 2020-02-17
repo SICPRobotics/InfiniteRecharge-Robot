@@ -44,7 +44,6 @@ public final class RobotContainer {
     lights = new Lights();
     //Sets lights to the alliance's color
     lights.setDefaultCommand(new SetLightsToColor(lights, lights.getColorForAlliance(DriverStation.getInstance().getAlliance())).perpetually());
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -59,6 +58,7 @@ public final class RobotContainer {
     //GATE
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
     new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
+    new Trigger(gate::isUp).toggleWhenActive(new SetLightsToColor(lights, Lights.LightsColor.ORANGE).perpetually());
   }
 
   public double getJoystickX() {

@@ -20,4 +20,8 @@ public final class Gate extends SubsystemBaseWrapper implements PistonSubsystem 
     public void pistonReverse() {
         solenoid.set(Value.kReverse);
     }
+
+    public boolean isUp() {
+        return solenoid.get() == Value.kReverse;
+    }
 }
