@@ -7,10 +7,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.SetLightsToColor;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Lights;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -24,12 +27,18 @@ public final class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
+  private final Lights lights;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
+
+    lights = new Lights();
+    //Sets lights to the alliance's color
+    lights.setDefaultCommand(new SetLightsToColor(lights, lights.getColorForAlliance(DriverStation.getInstance().getAlliance())).perpetually());
+
     // Configure the button bindings
     configureButtonBindings();
   }

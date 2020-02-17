@@ -7,7 +7,7 @@ import frc.robot.SubsystemBaseWrapper;
 public final class Lights extends SubsystemBaseWrapper {
     private final Spark lightsFakeMotor;
 
-    enum LightsColor {
+    public enum LightsColor {
         HOT_PINK(0.57),
         DARK_RED(0.59),
         RED(0.61),
@@ -51,6 +51,7 @@ public final class Lights extends SubsystemBaseWrapper {
 
     public void setColor(final LightsColor color) {
         lightsFakeMotor.set(color.getValue());
+        System.out.println("Set lights color to " + color.getValue() + " (" + color + ")");
     }
 
     public void setColor(final Alliance alliance) {
