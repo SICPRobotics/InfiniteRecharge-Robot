@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.SubsystemBaseWrapper;
 
@@ -14,21 +15,22 @@ import frc.robot.SubsystemBaseWrapper;
  */
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
-    private final ADXRS450_Gyro gyro;
+    
+    private final WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
+    private final WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
+    private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
+    private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
 
     public DriveTrain() {
         super();
         // Motors
-        WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.Motors.FRONT_RIGHT_TALON);
-        WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.Motors.BACK_RIGHT_TALON);
+        frontRight.configFactoryDefault();
+        rearRight.configFactoryDefault();
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
 
-        WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.Motors.FRONT_LEFT_TALON);
-        WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.Motors.BACK_LEFT_TALON);
+        frontLeft.configFactoryDefault();
+        rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
-
-        gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
-        gyro.calibrate();
 
         this.robotDrive = new DifferentialDrive(left, right);
     }
@@ -57,9 +59,11 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         );
         //this.robotDrive.tankDrive((moveValue + rotateValue) * adjustValue, (moveValue - rotateValue) * adjustValue);
     }
-
-    @Override
+    
     public void periodic() {
-        System.out.println("Rotation: " + gyro.getAngle());
+        SmartDashboard.putNumber("TalonSRX 0 (front right) Temperature", frontRight.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 1 (rear right) Temperature", rearRight.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 2 (rear left) Temperature", rearLeft.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 3 (front left) Temperature", frontLeft.getTemperature());
     }
 }

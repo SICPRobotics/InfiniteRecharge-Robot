@@ -23,4 +23,8 @@ public final class Gate extends SubsystemBaseWrapper implements PistonSubsystem 
         solenoid.set(Value.kReverse);
         SmartDashboard.putBoolean("GATE UP?", true);
     }
+
+    public boolean isUp() {
+        return solenoid.get() == Value.kReverse;
+    }
 }

@@ -7,32 +7,24 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomusCommand;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.SetMotorContinuous;
 import frc.robot.commands.ExtendPiston;
-import frc.robot.commands.NudgeMotor;
-import frc.robot.commands.color_wheel.SpinNumberOfTimes;
-import frc.robot.commands.color_wheel.SpinToColor;
-import frc.robot.subsystems.ColorWheelPiston;
-import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.subsystems.Compessor;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.DriveWithoutJoystickInverted;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
-import frc.robot.commands.ExtendHangerArm;
-import frc.robot.commands.PullHangerUp;
-import frc.robot.commands.PullPasta;
-import frc.robot.subsystems.Hanger;
 import frc.robot.subsystems.PastaPuller;
 import frc.robot.subsystems.Gate;
+import frc.robot.commands.SetLightsToColor;
+import frc.robot.subsystems.Lights;
 
 /** 
  *  This class is where the bulk of the robot should be de
@@ -56,6 +48,7 @@ public final class RobotContainer {
    private final Gate gate;
   private final JoystickButton thumbButton;
 
+  private final Lights lights;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -66,10 +59,14 @@ public final class RobotContainer {
     // colorWheelSpinner = new ColorWheelSpinner();
     // hanger = new Hanger();
      pastaPuller = new PastaPuller();
-     gate = new Gate();
     compressor = new Compessor();
     // colorWheelPiston = new ColorWheelPiston();
     thumbButton = new JoystickButton(joystick, 2);
+    gate = new Gate();
+
+    lights = new Lights();
+    //Sets lights to the alliance's color
+    lights.setDefaultCommand(new SetLightsToColor(lights, lights.getColorForAlliance(DriverStation.getInstance().getAlliance())).perpetually());
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -112,6 +109,7 @@ public final class RobotContainer {
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
     new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
     thumbButton.toggleWhenActive(new DriveWithoutJoystickInverted(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickS));
+    new Trigger(gate::isUp).toggleWhenActive(new SetLightsToColor(lights, Lights.LightsColor.ORANGE).perpetually());
   }
 
   public double getJoystickX() {
@@ -122,6 +120,9 @@ public final class RobotContainer {
     return this.joystick.getRawAxis(Constants.Joystick.Y_AXIS);
   }
 
+  public double getJoystickZ() {
+    return this.joystick.getRawAxis(2);
+  }
   
   public double getJoystickS() {
     return this.joystick.getRawAxis(Constants.Joystick.S_AXIS);
