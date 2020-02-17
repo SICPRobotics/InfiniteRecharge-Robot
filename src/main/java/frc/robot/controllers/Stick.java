@@ -18,6 +18,6 @@ public class Stick {
     }
 
     public double deadzone(double value) {
-        return Math.abs(value) < 0.05 ? 0 : value;
+        return Math.abs(value) < 0.1 ? 0 : value;
     }
 }
