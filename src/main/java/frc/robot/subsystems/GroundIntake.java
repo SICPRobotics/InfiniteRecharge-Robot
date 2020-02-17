@@ -26,5 +26,7 @@ public final class GroundIntake extends SubsystemBaseWrapper implements MotorSub
 
     public void setMotor(final double value) {
         intakeMotor.set(ControlMode.PercentOutput, value * Constants.GroundIntake.SPEED);
+        
     }
+  
 }

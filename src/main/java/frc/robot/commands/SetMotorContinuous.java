@@ -9,9 +9,9 @@ import frc.robot.subsystems.MotorSubsystem;
 public final class SetMotorContinuous extends CommandBase {
     private final MotorSubsystem subsystem;
     private final DoubleSupplier valueGetter;
-    public SetMotorContinuous(final MotorSubsystem subsystem, final DoubleSupplier valueGetter) {
+    public SetMotorContinuous(final MotorSubsystem subsystem, final DoubleSupplier value) {
         this.subsystem = subsystem;
-        this.valueGetter = valueGetter;
+        this.valueGetter = value;
         addRequirements((SubsystemBase) this.subsystem);
     }
 

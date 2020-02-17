@@ -55,6 +55,7 @@ public final class DriveTrain extends SubsystemBaseWrapper {
             //idk what this one means lol
             true
         );
+        //this.robotDrive.tankDrive((moveValue + rotateValue) * adjustValue, (moveValue - rotateValue) * adjustValue);
     }
 
     @Override

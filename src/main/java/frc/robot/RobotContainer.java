@@ -84,6 +84,7 @@ public final class RobotContainer {
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
     groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
+    
     //COLOR WHEEL
     //Rotate to color / rotate a number of times
     //operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
@@ -129,7 +130,7 @@ public final class RobotContainer {
   // * @return the command to run in autonomous
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutonomusCommand(driveTrain);
+    return new AutonomusCommand(driveTrain, gate, pastaPuller);
   }
   
 }
