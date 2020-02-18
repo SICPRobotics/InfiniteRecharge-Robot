@@ -109,7 +109,7 @@ public final class RobotContainer {
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
     new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
     thumbButton.toggleWhenActive(new DriveWithoutJoystickInverted(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickS));
-    new Trigger(gate::isUp).toggleWhenActive(new SetLightsToColor(lights, Lights.LightsColor.ORANGE).perpetually());
+    new Trigger(gate::isUp).whileActiveContinuous(new SetLightsToColor(lights, Lights.LightsColor.ORANGE).perpetually());
   }
 
   public double getJoystickX() {
