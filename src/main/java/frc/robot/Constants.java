@@ -21,4 +21,11 @@ public final class Constants {
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
+
+    public final class DriveTrain {
+        public static final int FRONT_RIGHT_MOTOR_ID = 0;
+        public static final int FRONT_LEFT_MOTOR_ID = 3;
+        public static final int REAR_RIGHT_MOTOR_ID = 1;
+        public static final int REAR_LEFT_MOTOR_ID = 2;
+    }
 }
