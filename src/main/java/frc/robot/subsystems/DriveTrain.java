@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.SubsystemBaseWrapper;
 
@@ -12,16 +13,21 @@ import frc.robot.SubsystemBaseWrapper;
  */
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
+    
+    private final WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.DriveTrain.FRONT_RIGHT_MOTOR_ID);
+    private final WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.DriveTrain.REAR_RIGHT_MOTOR_ID);
+    private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.DriveTrain.FRONT_LEFT_MOTOR_ID);
+    private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.DriveTrain.REAR_LEFT_MOTOR_ID);
 
     public DriveTrain() {
         super();
         // Motors
-        WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.Motors.FRONT_RIGHT_TALON);
-        WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.Motors.BACK_RIGHT_TALON);
+        frontRight.configFactoryDefault();
+        rearRight.configFactoryDefault();
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
 
-        WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.Motors.FRONT_LEFT_TALON);
-        WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.Motors.BACK_LEFT_TALON);
+        frontLeft.configFactoryDefault();
+        rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
 
         this.robotDrive = new DifferentialDrive(left, right);
@@ -49,5 +55,12 @@ public final class DriveTrain extends SubsystemBaseWrapper {
             //idk what this one means lol
             true
         );
+    }
+
+    public void periodic() {
+        SmartDashboard.putNumber("TalonSRX 0 (front right) Temperature", frontRight.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 1 (rear right) Temperature", rearRight.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 2 (rear left) Temperature", rearLeft.getTemperature());
+        SmartDashboard.putNumber("TalonSRX 3 (front left) Temperature", frontLeft.getTemperature());
     }
 }

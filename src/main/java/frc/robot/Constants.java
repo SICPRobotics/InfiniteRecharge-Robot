@@ -20,22 +20,33 @@ public final class Constants {
     public final class Sensors{
         public static final int ULTRASONIC = 0;
     }
+
     public final class Motors{
         public static final int FRONT_RIGHT_TALON = 0;
         public static final int FRONT_LEFT_TALON = 3;
         public static final int BACK_RIGHT_TALON = 1;
         public static final int BACK_LEFT_TALON = 2;
     }
+
     public final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;
         public static final double X_AXIS_DEADZONE_Y_MIN = 0.1;
     }
-        public final class UltraSonic{
-            public static final double VOLT_TO_CM = 0.00977;
+    
+    public final class UltraSonic {
+        public static final double VOLT_TO_CM = 0.00977;
         public static final double AUTON_STOPPING_DISTANCE = 40;
     }
-        public final class PastaPuller {
+        
+    public final class PastaPuller {
         public static final int LEFT_MOTOR_ID = 0;
+    }
+
+    public final class DriveTrain {
+        public static final int FRONT_RIGHT_MOTOR_ID = 0;
+        public static final int FRONT_LEFT_MOTOR_ID = 3;
+        public static final int REAR_RIGHT_MOTOR_ID = 1;
+        public static final int REAR_LEFT_MOTOR_ID = 2;
     }
 }
