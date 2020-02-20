@@ -57,6 +57,9 @@ public final class RobotContainer {
   public double getJoystickY() {
     return this.joystick.getRawAxis(1);
   }
+  public double getJoystickZ() {
+    return this.joystick.getRawAxis(2);
+  }
 
   /* *
    * Use this to pass the autonomous command to the main {@link Robot} class.
