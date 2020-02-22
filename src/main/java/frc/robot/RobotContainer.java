@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.DriveWithJoystickGyro;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 
@@ -53,7 +54,7 @@ public final class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    new JoystickButton(joystick, 3).toggleWhenPressed(new DriveWithJoystickGyro(driveTrain, cheesyDriveGetters));
   }
 
   public double getJoystickX() {

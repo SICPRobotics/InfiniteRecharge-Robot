@@ -86,5 +86,7 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SmartDashboard.putNumber("TalonSRX 1 (rear right) Temperature", rearRight.getTemperature());
         SmartDashboard.putNumber("TalonSRX 2 (rear left) Temperature", rearLeft.getTemperature());
         SmartDashboard.putNumber("TalonSRX 3 (front left) Temperature", frontLeft.getTemperature());
+        SmartDashboard.putNumber("Gyro Heading", gyro.getAngle());
+        SmartDashboard.putNumber("Gyro Velocity", gyro.getRate());
     }
 }
