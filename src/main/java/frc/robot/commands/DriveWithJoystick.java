@@ -7,16 +7,10 @@ import frc.robot.subsystems.DriveTrain;
 public final class DriveWithJoystick extends CommandBase {
     private final DriveTrain driveTrain;
     private final CheesyDriveGetters cheesyDriveGetters;
-    private final boolean isInverted;
 
     public DriveWithJoystick(final DriveTrain driveTrain, final CheesyDriveGetters cheesyDriveGetters) {
-        this(driveTrain, cheesyDriveGetters, false);    
-    }
-
-    public DriveWithJoystick(final DriveTrain driveTrain, final CheesyDriveGetters cheesyDriveGetters, final boolean isInverted) {
         this.driveTrain = driveTrain;
         this.cheesyDriveGetters = cheesyDriveGetters;
-        this.isInverted = isInverted;
         addRequirements(driveTrain);
     }
 
