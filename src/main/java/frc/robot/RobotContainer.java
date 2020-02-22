@@ -18,6 +18,11 @@ import frc.robot.subsystems.Compessor;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithoutJoystickInverted;
+import frc.robot.commands.NudgeMotor;
+import frc.robot.commands.color_wheel.SpinNumberOfTimes;
+import frc.robot.commands.color_wheel.SpinToColor;
+import frc.robot.subsystems.ColorWheelPiston;
+import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.DriveTrain;
@@ -81,6 +86,8 @@ public final class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    thumbButton.toggleWhenPressed(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickSlider, true));
+    
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
     groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
