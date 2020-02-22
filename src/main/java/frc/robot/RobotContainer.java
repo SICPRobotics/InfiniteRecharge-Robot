@@ -27,13 +27,15 @@ public final class RobotContainer {
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
   private final JoystickButton thumbButton;
+  private final CheesyDriveGetters cheesyDriveGetters;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    cheesyDriveGetters = new CheesyDriveGetters(this::getJoystickY, this::getJoystickX, this::getJoystickAdjust);
     driveTrain = new DriveTrain();
-    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust));
+    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, cheesyDriveGetters));
     thumbButton = new JoystickButton(joystick, 2);
     // Configure the button bindings
     configureButtonBindings();
@@ -46,7 +48,7 @@ public final class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    thumbButton.toggleWhenActive(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust, true));
+    thumbButton.toggleWhenActive(new DriveWithJoystick(driveTrain, cheesyDriveGetters, true));
   }
 
   public double getJoystickX() {
