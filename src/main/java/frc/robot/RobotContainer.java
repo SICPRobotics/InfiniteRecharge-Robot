@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.DriveWithoutJoystickInverted;
 import frc.robot.controllers.OperatorController;
+import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -28,6 +29,7 @@ public final class RobotContainer {
   private final OperatorController operatorController = new OperatorController(2);
   private final DriveTrain driveTrain;
   private final JoystickButton thumbButton;
+  private final Cameras cameras;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -36,6 +38,7 @@ public final class RobotContainer {
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
     thumbButton = new JoystickButton(joystick, 2);
+    cameras = new Cameras();
     // Configure the button bindings
     configureButtonBindings();
   }
