@@ -34,21 +34,9 @@ public final class Constants {
         public static final int RIGHT_WINCH_MOTOR_ID = 2;
         public static final int LEFT_WINCH_MOTOR_ID = 3;
     }
+    
     public final class Sensors{
         public static final int ULTRASONIC = 0;
-    }
-    public final class Motors{
-        public static final int FRONT_RIGHT_TALON = 0;
-        public static final int FRONT_LEFT_TALON = 3;
-        public static final int BACK_RIGHT_TALON = 1;
-        public static final int BACK_LEFT_TALON = 2;
-    }
-
-    public static final class Joystick {
-        public static final int X_AXIS = 0;
-        public static final int Y_AXIS = 1;
-        public static final int Z_AXIS = 2;
-        public static final int S_AXIS = 3;
     }
 
     public static final class CheesyDrive {
@@ -88,5 +76,18 @@ public final class Constants {
             public static final double VOLT_TO_CM = 0.00977;
         public static final double AUTON_STOPPING_DISTANCE = 40;
     }
-}
 
+    public final class DriveTrain {
+        public static final int FRONT_RIGHT_MOTOR_ID = 0;
+        public static final int FRONT_LEFT_MOTOR_ID = 3;
+        public static final int REAR_RIGHT_MOTOR_ID = 1;
+        public static final int REAR_LEFT_MOTOR_ID = 2;
+    }
+
+    public static final class Joystick {
+        public static final int X_AXIS = 0;
+        public static final int Y_AXIS = 1;
+        public static final int Z_AXIS = 2;
+        public static final int ADJUST_AXIS = 3;
+    }
+}

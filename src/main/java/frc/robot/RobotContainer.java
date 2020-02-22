@@ -17,12 +17,6 @@ import frc.robot.commands.ExtendPiston;
 import frc.robot.subsystems.Compessor;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DriveWithoutJoystickInverted;
-import frc.robot.commands.NudgeMotor;
-import frc.robot.commands.color_wheel.SpinNumberOfTimes;
-import frc.robot.commands.color_wheel.SpinToColor;
-import frc.robot.subsystems.ColorWheelPiston;
-import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.DriveTrain;
@@ -61,13 +55,13 @@ public final class RobotContainer {
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
-    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickS));
      groundIntake = new GroundIntake();
     // colorWheelSpinner = new ColorWheelSpinner();
     // hanger = new Hanger();
      pastaPuller = new PastaPuller();
     compressor = new Compessor();
     // colorWheelPiston = new ColorWheelPiston();
+    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust));
     thumbButton = new JoystickButton(joystick, 2);
     gate = new Gate();
 
@@ -86,7 +80,7 @@ public final class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    thumbButton.toggleWhenPressed(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickSlider, true));
+    thumbButton.toggleWhenPressed(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust, true));
     
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
@@ -128,14 +122,15 @@ public final class RobotContainer {
   public double getJoystickY() {
     return this.joystick.getRawAxis(Constants.Joystick.Y_AXIS);
   }
-
+  
   public double getJoystickZ() {
     return this.joystick.getRawAxis(2);
   }
-  
-  public double getJoystickS() {
-    return this.joystick.getRawAxis(Constants.Joystick.S_AXIS);
+
+  public double getJoystickAdjust() {
+    return this.joystick.getRawAxis(Constants.Joystick.ADJUST_AXIS);
   }
+
   
   // * @return the command to run in autonomous
   public Command getAutonomousCommand() {
