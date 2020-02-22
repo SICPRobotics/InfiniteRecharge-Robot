@@ -12,7 +12,7 @@ public class DriveWithJoystickGyro extends CommandBase {
     private final CheesyDriveGetters cheesyDriveGetters;
     private final PIDController pidController;
     public DriveWithJoystickGyro(final DriveTrain driveTrain, final CheesyDriveGetters cheesyDriveGetters) {
-        pidController = new PIDController(0, 0, 0);
+        pidController = new PIDController(1, 0, 10);
         this.cheesyDriveGetters = cheesyDriveGetters;
         this.driveTrain = driveTrain;
         addRequirements(driveTrain);
