@@ -10,10 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.DriveWithJoystickForward;
+import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.SetMotorContinuous;
 import frc.robot.commands.ExtendPiston;
-import frc.robot.commands.Invert;
 import frc.robot.commands.NudgeMotor;
 import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
@@ -53,7 +52,7 @@ public final class RobotContainer {
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
-    driveTrain.setDefaultCommand(new DriveWithJoystickForward(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickSlider));
+    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickSlider));
     groundIntake = new GroundIntake();
     colorWheelSpinner = new ColorWheelSpinner();
     hanger = new Hanger();
@@ -72,7 +71,7 @@ public final class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    thumbButton.whenPressed(new Invert(driveTrain));
+    thumbButton.toggleWhenPressed(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickSlider, true));
     
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));

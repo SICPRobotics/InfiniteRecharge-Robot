@@ -12,10 +12,8 @@ import frc.robot.SubsystemBaseWrapper;
  */
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
-    public boolean invert;
     public DriveTrain() {
         super();
-        invert = false;
         // Motors
         WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.Motors.FRONT_RIGHT_TALON);
         WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.Motors.BACK_RIGHT_TALON);
@@ -37,24 +35,22 @@ public final class DriveTrain extends SubsystemBaseWrapper {
      * little flap thing on the bottom of the joystick, Joystick rawAxis 3)
      */
     public void cheesyDrive(final double moveValue, final double rotateValue, final double adjustValue) {
+        final double actualAdjustValue = ((-adjustValue + 1) / 2);
         this.robotDrive.arcadeDrive(
 
             //Deadzone on y axis value
-            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue * inverted() * ((-adjustValue + 1) / 2),
+            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE
+                    ? 0
+                    : moveValue * actualAdjustValue,
 
             //Deadzone on x axis only if y value is small
             Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE
                     && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
-                ? 0 : rotateValue * ((-adjustValue + 1) / 2),
+                    ? 0
+                    : rotateValue * actualAdjustValue,
 
             //idk what this one means lol
             true
         );
-    }
-    public double inverted(){
-        return invert ? -1 : 1;
-    }
-    public void invert(){ 
-        invert = !invert;
     }
 }
