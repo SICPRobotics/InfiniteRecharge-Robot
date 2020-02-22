@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithoutJoystickInverted;
 import frc.robot.controllers.OperatorController;
+import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.PastaPuller;
@@ -47,6 +48,7 @@ public final class RobotContainer {
   // private final ColorWheelPiston colorWheelPiston;
    private final Gate gate;
   private final JoystickButton thumbButton;
+  private final Cameras cameras;
 
   private final Lights lights;
   /**
@@ -67,6 +69,7 @@ public final class RobotContainer {
     lights = new Lights();
     //Sets lights to the alliance's color
     lights.setDefaultCommand(new SetLightsToColor(lights, lights.getColorForAlliance(DriverStation.getInstance().getAlliance())).perpetually());
+    cameras = new Cameras();
     // Configure the button bindings
     configureButtonBindings();
   }
