@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.controllers.OperatorController;
@@ -33,10 +35,13 @@ public final class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    cheesyDriveGetters = new CheesyDriveGetters(this::getJoystickY, this::getJoystickX, this::getJoystickAdjust);
+    thumbButton = new JoystickButton(joystick, 2);
+    cheesyDriveGetters = new CheesyDriveGetters(this::getJoystickY, this::getJoystickX, this::getJoystickAdjust, 
+        /* Dummy command to make a toggle for the invert */
+        () -> thumbButton.toggleWhenPressed(new RunCommand(() -> {})).get());
+
     driveTrain = new DriveTrain();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, cheesyDriveGetters));
-    thumbButton = new JoystickButton(joystick, 2);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -48,7 +53,7 @@ public final class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    thumbButton.toggleWhenActive(new DriveWithJoystick(driveTrain, cheesyDriveGetters, true));
+
   }
 
   public double getJoystickX() {
