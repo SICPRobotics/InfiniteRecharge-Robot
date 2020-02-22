@@ -14,10 +14,10 @@ import frc.robot.SubsystemBaseWrapper;
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
     
-    private final WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
-    private final WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
-    private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
-    private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
+    private final WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.DriveTrain.FRONT_RIGHT_MOTOR_ID);
+    private final WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.DriveTrain.REAR_RIGHT_MOTOR_ID);
+    private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.DriveTrain.FRONT_LEFT_MOTOR_ID);
+    private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.DriveTrain.REAR_LEFT_MOTOR_ID);
 
     public DriveTrain() {
         super();
