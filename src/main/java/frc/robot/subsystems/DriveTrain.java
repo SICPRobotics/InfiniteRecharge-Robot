@@ -14,10 +14,10 @@ import frc.robot.SubsystemBaseWrapper;
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
     
-    private final WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.DriveTrain.FRONT_RIGHT_MOTOR_ID);
-    private final WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.DriveTrain.REAR_RIGHT_MOTOR_ID);
-    private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.DriveTrain.FRONT_LEFT_MOTOR_ID);
-    private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.DriveTrain.REAR_LEFT_MOTOR_ID);
+    private final WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
+    private final WPI_TalonSRX rearRight = new WPI_TalonSRX(1);
+    private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(3);
+    private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(2);
 
     public DriveTrain() {
         super();
@@ -41,22 +41,27 @@ public final class DriveTrain extends SubsystemBaseWrapper {
      * @param scaleValue the amount that everything should be scaled by (usually given by the
      * little flap thing on the bottom of the joystick, Joystick rawAxis 3)
      */
-    public void cheesyDrive(final double moveValue, final double rotateValue) {
+    public void cheesyDrive(final double moveValue, final double rotateValue, final double adjustValue) {
+        final double actualAdjustValue = ((-adjustValue + 1) / 2);
         this.robotDrive.arcadeDrive(
 
             //Deadzone on y axis value
-            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE ? 0 : moveValue,
+            Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE
+                    ? 0
+                    : moveValue * actualAdjustValue,
 
             //Deadzone on x axis only if y value is small
             Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE
                     && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
-                ? 0 : rotateValue,
+                    ? 0
+                    : rotateValue * actualAdjustValue,
 
             //idk what this one means lol
             true
         );
+        //this.robotDrive.tankDrive((moveValue + rotateValue) * adjustValue, (moveValue - rotateValue) * adjustValue);
     }
-
+    
     public void periodic() {
         SmartDashboard.putNumber("TalonSRX 0 (front right) Temperature", frontRight.getTemperature());
         SmartDashboard.putNumber("TalonSRX 1 (rear right) Temperature", rearRight.getTemperature());

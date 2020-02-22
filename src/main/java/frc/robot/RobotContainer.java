@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.DriveWithoutJoystickInverted;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 
@@ -34,7 +33,7 @@ public final class RobotContainer {
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
-    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX));
+    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust));
     thumbButton = new JoystickButton(joystick, 2);
     // Configure the button bindings
     configureButtonBindings();
@@ -47,7 +46,7 @@ public final class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    thumbButton.toggleWhenActive(new DriveWithoutJoystickInverted(driveTrain, this::getJoystickY, this::getJoystickX));
+    thumbButton.toggleWhenActive(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust, true));
   }
 
   public double getJoystickX() {
