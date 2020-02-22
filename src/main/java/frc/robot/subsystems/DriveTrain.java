@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +20,8 @@ public final class DriveTrain extends SubsystemBaseWrapper {
     private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.DriveTrain.FRONT_LEFT_MOTOR_ID);
     private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.DriveTrain.REAR_LEFT_MOTOR_ID);
 
+    private final ADXRS450_Gyro gyro;
+
     public DriveTrain() {
         super();
         // Motors
@@ -31,6 +34,10 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
 
         this.robotDrive = new DifferentialDrive(left, right);
+
+        //Gyros
+        gyro = new ADXRS450_Gyro();
+        gyro.calibrate();
     }
 
     //Mostly taken from last year's robot
@@ -60,6 +67,18 @@ public final class DriveTrain extends SubsystemBaseWrapper {
             true
         );
         //this.robotDrive.tankDrive((moveValue + rotateValue) * adjustValue, (moveValue - rotateValue) * adjustValue);
+    }
+
+    public void calibrateGyro() {
+        gyro.calibrate();
+    }
+
+    public double getGyroRotation() {
+        return gyro.getAngle();
+    }
+
+    public double getGyroVelocity() {
+        return gyro.getRate();
     }
     
     public void periodic() {
