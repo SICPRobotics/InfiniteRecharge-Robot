@@ -28,4 +28,11 @@ public final class Constants {
         public static final int REAR_RIGHT_MOTOR_ID = 1;
         public static final int REAR_LEFT_MOTOR_ID = 2;
     }
+
+    public static final class Joystick {
+        public static final int X_AXIS = 0;
+        public static final int Y_AXIS = 1;
+        public static final int Z_AXIS = 2;
+        public static final int ADJUST_AXIS = 3;
+    }
 }
