@@ -16,7 +16,7 @@ public final class DriveWithJoystick extends CommandBase {
 
     @Override
     public void execute() {
-        this.driveTrain.cheesyDrive(-this.cheesyDriveGetters.getForward() * (isInverted ? -1 : 1), this.cheesyDriveGetters.getRotate(), this.cheesyDriveGetters.getScale());
+        this.driveTrain.cheesyDrive(-this.cheesyDriveGetters.getForward() * (cheesyDriveGetters.getIsInverted() ? -1 : 1), this.cheesyDriveGetters.getRotate(), this.cheesyDriveGetters.getScale());
     }
 
 }
