@@ -89,7 +89,11 @@ public final class RobotContainer {
     
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
-    groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
+    //groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
+    groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
+        operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
+    new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+        new SetMotorContinuous(groundIntake, () -> Math.signum(operatorController.sticks.left.getY()) * Constants.GroundIntake.SNAP_SPEED));
     
     //COLOR WHEEL
     //Rotate to color / rotate a number of times

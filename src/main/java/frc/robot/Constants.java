@@ -19,8 +19,13 @@ package frc.robot;
  */
 public final class Constants {
     public static final class GroundIntake {
-        public static final int MOTOR_ID = 8;
-        public static final double SPEED = 0.5;
+        public static final int MOTOR_ID = 9;
+        public static final double SPEED = 1.0;
+
+        /**
+         * The speed that the motor should go if RT is pressed.
+         */
+        public static final double SNAP_SPEED = 0.5;
     }
     
     public static final class Encoders {
