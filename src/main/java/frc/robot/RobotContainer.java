@@ -13,12 +13,17 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomusCommand;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.SetMotorContinuous;
+import frc.robot.commands.color_wheel.SpinNumberOfTimes;
+import frc.robot.commands.color_wheel.SpinToColor;
 import frc.robot.commands.ExtendPiston;
+import frc.robot.commands.NudgeMotor;
 import frc.robot.subsystems.Compessor;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.Cameras;
+import frc.robot.subsystems.ColorWheelPiston;
+import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.PastaPuller;
@@ -39,13 +44,13 @@ public final class RobotContainer {
   private final Joystick joystick = new Joystick(0);
   private final OperatorController operatorController = new OperatorController(1);
   private final DriveTrain driveTrain;
-   private final GroundIntake groundIntake;
-   private final Compessor compressor;
-  // private final ColorWheelSpinner colorWheelSpinner;
+  private final GroundIntake groundIntake;
+  private final Compessor compressor;
+  private final ColorWheelSpinner colorWheelSpinner;
   // private final Hanger hanger;
-   private final PastaPuller pastaPuller;
-  // private final ColorWheelPiston colorWheelPiston;
-   private final Gate gate;
+  private final PastaPuller pastaPuller;
+  private final ColorWheelPiston colorWheelPiston;
+  private final Gate gate;
   private final JoystickButton thumbButton;
   private final Cameras cameras;
 
@@ -55,12 +60,12 @@ public final class RobotContainer {
    */
   public RobotContainer() {
     driveTrain = new DriveTrain();
-     groundIntake = new GroundIntake();
-    // colorWheelSpinner = new ColorWheelSpinner();
+    groundIntake = new GroundIntake();
+    colorWheelSpinner = new ColorWheelSpinner();
     // hanger = new Hanger();
-     pastaPuller = new PastaPuller();
+    pastaPuller = new PastaPuller();
     compressor = new Compessor();
-    // colorWheelPiston = new ColorWheelPiston();
+    colorWheelPiston = new ColorWheelPiston();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust));
     thumbButton = new JoystickButton(joystick, 2);
     gate = new Gate();
@@ -88,18 +93,18 @@ public final class RobotContainer {
     
     //COLOR WHEEL
     //Rotate to color / rotate a number of times
-    //operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
-    //operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
+    operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
+    operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
     
     //Manual left/right of color wheel
-    //operatorController.buttons.dPad.left
-      //  .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, -1 * Constants.ColorWheel.MANUAL_SPEED).perpetually());
-    //operatorController.buttons.dPad.right
-     //   .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, Constants.ColorWheel.MANUAL_SPEED).perpetually());
+    operatorController.buttons.dPad.left
+        .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, -1 * Constants.ColorWheel.MANUAL_SPEED).perpetually());
+    operatorController.buttons.dPad.right
+        .whileActiveContinuous(new NudgeMotor(colorWheelSpinner, Constants.ColorWheel.MANUAL_SPEED).perpetually());
 
     //Extend up/down (toggle color wheel position)
     //operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
-    //operatorController.buttons.dPad.up.toggleWhenPressed(new ExtendPiston(colorWheelPiston));
+    operatorController.buttons.dPad.up.toggleWhenPressed(new ExtendPiston(colorWheelPiston));
 
     //HANGER
     //operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
