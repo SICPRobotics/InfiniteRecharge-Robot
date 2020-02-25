@@ -18,8 +18,14 @@ package frc.robot;
 public final class Constants {
     public static final class GroundIntake {
         public static final int MOTOR_ID = 9;
-        public static final double SPEED = 0.5;
+        public static final double SPEED = 1.0;
+
+        /**
+         * The speed that the motor should go if RT is pressed.
+         */
+        public static final double SNAP_SPEED = 0.5;
     }
+
     public static final class CheesyDrive {
         public static final double X_AXIS_DEADZONE_RANGE = 0.005;
         public static final double Y_AXIS_DEADZONE_RANGE = 0.005;

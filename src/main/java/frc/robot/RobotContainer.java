@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.SetMotorContinuous;
 import frc.robot.controllers.OperatorController;
@@ -50,7 +51,10 @@ public final class RobotContainer {
   private void configureButtonBindings() {
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
-    groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
+    groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
+        operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
+    new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+        new SetMotorContinuous(groundIntake, () -> Math.signum(operatorController.sticks.left.getY()) * Constants.GroundIntake.SNAP_SPEED));
   }
 
   public double getJoystickX() {
