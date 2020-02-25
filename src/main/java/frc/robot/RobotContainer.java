@@ -15,6 +15,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.PastaPuller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.controllers.OperatorController;
@@ -55,7 +56,11 @@ public final class RobotContainer {
   private void configureButtonBindings() {
     //PASTA PULLER
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
-    pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
+    //pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
+    pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, () -> 
+        operatorController.sticks.right.getY() * Constants.PastaPuller.SPEED));
+    new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+        new SetMotorContinuous(pastaPuller, () -> Math.signum(operatorController.sticks.right.getY()) * Constants.PastaPuller.SNAP_SPEED));
   }
 
   public double getJoystickX() {
