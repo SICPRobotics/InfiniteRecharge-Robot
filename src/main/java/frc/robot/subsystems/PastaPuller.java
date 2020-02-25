@@ -7,11 +7,12 @@ import frc.robot.Constants;
 import frc.robot.SubsystemBaseWrapper;
 
 public final class PastaPuller extends SubsystemBaseWrapper implements MotorSubsystem {
-    private final VictorSPX motorLeft;
+    private final VictorSPX motor;
 
     public PastaPuller() {
         super();
-        motorLeft = new VictorSPX(Constants.PastaPuller.LEFT_MOTOR_ID);
+        
+        motor = new VictorSPX(Constants.PastaPuller.MOTOR_ID);
     }
     
     public void startPulling() {
@@ -23,6 +24,6 @@ public final class PastaPuller extends SubsystemBaseWrapper implements MotorSubs
     }
 
     public void setMotor(final double value) {
-        motorLeft.set(ControlMode.PercentOutput, value * -1);
+        motor.set(ControlMode.PercentOutput, value);
     }
 }
