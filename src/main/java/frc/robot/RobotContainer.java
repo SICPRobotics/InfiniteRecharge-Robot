@@ -7,11 +7,14 @@
 
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomusCommand;
 import frc.robot.commands.DriveWithJoystick;
+//import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.SetMotorContinuous;
 import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 import frc.robot.commands.color_wheel.SpinToColor;
@@ -19,6 +22,8 @@ import frc.robot.commands.ExtendPiston;
 import frc.robot.commands.NudgeMotor;
 import frc.robot.subsystems.Compessor;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.controllers.OperatorController;
@@ -27,7 +32,11 @@ import frc.robot.subsystems.ColorWheelPiston;
 import frc.robot.subsystems.ColorWheelSpinner;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.GroundIntake;
+import frc.robot.subsystems.Hanger;
+import frc.robot.subsystems.HangerArm;
+import frc.robot.subsystems.LeftWinch;
 import frc.robot.subsystems.PastaPuller;
+import frc.robot.subsystems.RightWinch;
 import frc.robot.subsystems.Gate;
 import frc.robot.commands.SetLightsToColor;
 import frc.robot.subsystems.Lights;
@@ -48,14 +57,16 @@ public final class RobotContainer {
   private final GroundIntake groundIntake;
   private final Compessor compressor;
   private final ColorWheelSpinner colorWheelSpinner;
-  // private final Hanger hanger;
+  private final HangerArm hangerArm;
+  private final Hanger hanger;
   private final PastaPuller pastaPuller;
   private final ColorWheelPiston colorWheelPiston;
   private final Gate gate;
   private final JoystickButton thumbButton;
   private final Cameras cameras;
-
   private final Lights lights;
+  private final RightWinch rightWinch;
+  private final LeftWinch leftWinch;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -63,18 +74,20 @@ public final class RobotContainer {
     driveTrain = new DriveTrain();
     groundIntake = new GroundIntake();
     colorWheelSpinner = new ColorWheelSpinner();
-    // hanger = new Hanger();
+    leftWinch = new LeftWinch();
+    rightWinch = new RightWinch();
     pastaPuller = new PastaPuller();
     compressor = new Compessor();
     colorWheelPiston = new ColorWheelPiston();
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust));
     thumbButton = new JoystickButton(joystick, 2);
     gate = new Gate();
-
+    hanger = new Hanger();
     lights = new Lights();
     //Sets lights to the alliance's color
     lights.setDefaultCommand(new SetLightsToColor(lights, lights.getColorForAlliance(DriverStation.getInstance().getAlliance())).perpetually());
     cameras = new Cameras();
+    hangerArm = new HangerArm();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -91,9 +104,13 @@ public final class RobotContainer {
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
     //groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
+    
+
+    //28.2 DISABLED TO TEST WINCH
     groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
         operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
-    new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+    
+        new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
         new SetMotorContinuous(groundIntake, () -> Math.signum(operatorController.sticks.left.getY()) * Constants.GroundIntake.SNAP_SPEED));
     
     //COLOR WHEEL
@@ -111,15 +128,39 @@ public final class RobotContainer {
     //operatorController.buttons.dPad.up.whenPressed(new ExtendPiston(colorWheelSpinner));
     operatorController.buttons.dPad.up.toggleWhenPressed(new ExtendPiston(colorWheelPiston));
 
-    //HANGER
-    //operatorController.buttons.Y.toggleWhenPressed(new PullHangerUp(hanger));
-    //operatorController.buttons.A.toggleWhenPressed(new ExtendHangerArm(hanger));
+    //HANGER ARM
+    operatorController.buttons.Y.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(0.4), () -> hangerArm.setMotor(0)).perpetually());
+    operatorController.buttons.A.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.2), () -> hangerArm.setMotor(0)).perpetually());
     
+    // WHINCH
+    //operatorController.buttons.X.whileActiveContinuous(new ExtendHangerArm(hanger));
+
+    // WINCH  INTAKE/OUTAKE SWITCH
+    operatorController.buttons.back.whenPressed(new RunCommand(() -> { 
+      leftWinch.setDefaultCommand(new SetMotorContinuous(leftWinch, () -> operatorController.sticks.left.getY()));
+      rightWinch.setDefaultCommand(new SetMotorContinuous(rightWinch,() -> operatorController.sticks.right.getY()));
+    }));
+
+    // operatorController.buttons.start.whenPressed(new RunCommand(() -> { 
+    //   groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
+    //   operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
+    //   new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+    //   new SetMotorContinuous(groundIntake, () -> Math.signum(operatorController.sticks.left.getY()) * Constants.GroundIntake.SNAP_SPEED));
+      
+    //   pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, () -> 
+    //   operatorController.sticks.right.getY() * Constants.PastaPuller.SPEED));
+    //   new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+    //   new SetMotorContinuous(pastaPuller, () -> Math.signum(operatorController.sticks.right.getY()) * Constants.PastaPuller.SNAP_SPEED));
+    // }));
+
+
     //PASTA PULLER
     // new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     //pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     //pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
+    
+    //28.2 DISABLED TO TEST WINCH
     pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, () -> 
         operatorController.sticks.right.getY() * Constants.PastaPuller.SPEED));
     new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(

@@ -36,8 +36,10 @@ public final class Constants {
         public static final int ENCODER_ID_A = 0;
         public static final int ENCODER_ID_B = 1;
         public static final int ARM_MOTOR_ID = 4;
-        public static final int RIGHT_WINCH_MOTOR_ID = 2;
-        public static final int LEFT_WINCH_MOTOR_ID = 3;
+        public static final int RIGHT_WINCH_MOTOR_ID = 12;
+        public static final int LEFT_WINCH_MOTOR_ID = 11;
+        public static final int MAX = 11180;
+        public static final double WINCH_SPEED_ADJUST = 1;
     }
     
     public final class Sensors{
@@ -62,7 +64,7 @@ public final class Constants {
         public static final int SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION = 50;
         public static final int MIN_SPINS = 3 * 8;
         public static final int MAX_SPINS = 5 * 8;
-        public static final int SPINS_TARGET = MIN_SPINS + 2;
+        public static final int SPINS_TARGET = MIN_SPINS + 8;
         
         public static final double SPEED = 1.0;
         public static final double MANUAL_SPEED = 0.5;

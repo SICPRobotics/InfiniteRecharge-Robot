@@ -19,12 +19,12 @@ public final class SpinNumberOfTimes extends CommandBase {
 
     @Override
     public void execute() {
-        this.spinner.setMotor(1.1 - (this.spinner.getSlicesSpun() / (Constants.ColorWheel.SPINS_TARGET)));
+        this.spinner.setMotor(1.4 - (this.spinner.getSlicesSpun() / (Constants.ColorWheel.SPINS_TARGET)));
     }
 
     @Override
     public boolean isFinished() {
-        return this.spinner.getSlicesSpun() > Constants.ColorWheel.MIN_SPINS;
+        return this.spinner.getSlicesSpun() >= Constants.ColorWheel.SPINS_TARGET;
     }
 
     @Override

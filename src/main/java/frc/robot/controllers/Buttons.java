@@ -5,17 +5,18 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class Buttons {
-    public final Button A         ;
-    public final Button B         ;
-    public final Button X         ;
-    public final Button Y         ;
-    public final Button LB        ;
-    public final Button RB        ;
-    public final Button back      ;
-    public final Button start     ;
-    public final Button LS        ;
-    public final Button RS        ;
+    public final Button A;         
+    public final Button B;         
+    public final Button X;         
+    public final Button Y;         
+    public final Button LB; 
+    public final Button RB;
+    public final Button back;
+    public final Button start;
+    public final Button LS;
+    public final Button RS;
     public final DPad dPad;
+    
     public Buttons(GenericHID controller) {
         A               = new JoystickButton(controller, 1); 
         B               = new JoystickButton(controller, 2); 
