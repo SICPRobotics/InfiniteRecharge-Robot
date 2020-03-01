@@ -21,6 +21,18 @@ public final class HangerArm extends SubsystemBaseWrapper implements MotorSubsys
       
         motor.set(ControlMode.PercentOutput, value);
     }
+    public void slowDrive(){
+        motor.set(ControlMode.PercentOutput, 0.1);
+    }
+    public void stop(){
+        motor.set(ControlMode.PercentOutput, 0);
+    }
+    public int getEncoderVale(){
+        return motor.getSelectedSensorPosition();
+    }
+    public void setEncoderValue(int value){
+        motor.setSelectedSensorPosition(value);
+    }
 
     public void periodic() {
         if (motor.getSelectedSensorPosition() > 22000.0) {

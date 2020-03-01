@@ -11,6 +11,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomusCommand;
 import frc.robot.commands.DriveWithJoystick;
@@ -89,9 +90,9 @@ public final class RobotContainer {
     cameras = new Cameras();
     hangerArm = new HangerArm();
     // Configure the button bindings
-    configureButtonBindings();
+    configureButtonBindings();  
+    SmartDashboard.putNumber("Auton Chooser", 0);
   }
-
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by instantiating a {@link GenericHID} or one of its subclasses
@@ -106,7 +107,6 @@ public final class RobotContainer {
     //groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
     
 
-    //28.2 DISABLED TO TEST WINCH
     groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
         operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
     
@@ -160,7 +160,6 @@ public final class RobotContainer {
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     //pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
     
-    //28.2 DISABLED TO TEST WINCH
     pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, () -> 
         operatorController.sticks.right.getY() * Constants.PastaPuller.SPEED));
     new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
@@ -192,7 +191,7 @@ public final class RobotContainer {
   // * @return the command to run in autonomous
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutonomusCommand(driveTrain, gate, pastaPuller);
+    return new AutonomusCommand(driveTrain, gate, pastaPuller, hangerArm);
   }
   
 }

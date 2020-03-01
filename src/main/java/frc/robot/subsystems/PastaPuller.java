@@ -16,7 +16,7 @@ public final class PastaPuller extends SubsystemBaseWrapper implements MotorSubs
     }
     
     public void startPulling() {
-        setMotor(1);
+        setMotor(-1);
     }
 
     public void stopPulling() {

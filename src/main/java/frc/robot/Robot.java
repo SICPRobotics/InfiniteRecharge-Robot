@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +29,8 @@ public class Robot extends TimedRobot {
   private RangeFinder ultrasonic = new RangeFinder();
   private RobotContainer robotContainer;
   private DecimalFormat distanceInCm = new DecimalFormat("#.00");
+ 
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -41,7 +44,8 @@ public class Robot extends TimedRobot {
   //   UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture(1);
   //   cam2.setResolution(320, 320);
   //   cam1.setResolution(320, 320);
-   }
+    
+}
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
@@ -77,8 +81,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //autonomousCommand = robotContainer.getAutonomousCommand();
-
+    autonomousCommand = robotContainer.getAutonomousCommand();
+    System.out.println("auton init robot");
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
@@ -90,6 +94,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+  System.out.println("Auton periodic in Robot" );
   }
 
   @Override
@@ -108,6 +113,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    System.out.println("Telyop periodic");
   }
 
   @Override
