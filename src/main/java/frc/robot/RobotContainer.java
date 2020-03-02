@@ -132,6 +132,7 @@ public final class RobotContainer {
     //HANGER ARM
     operatorController.buttons.Y.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(0.4), () -> hangerArm.setMotor(0)).perpetually());
     operatorController.buttons.A.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.2), () -> hangerArm.setMotor(0)).perpetually());
+    operatorController.buttons.X.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.1), () -> hangerArm.setMotor(0)).perpetually());
     
     // WHINCH
     //operatorController.buttons.X.whileActiveContinuous(new ExtendHangerArm(hanger));
