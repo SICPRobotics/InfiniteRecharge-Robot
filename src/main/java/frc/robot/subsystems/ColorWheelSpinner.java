@@ -9,8 +9,10 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.hal.sim.DriverStationSim;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 import frc.robot.SubsystemBaseWrapper;
@@ -45,15 +47,18 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
     }
 
     /**
-     * Gets the number of slices between the current color and the closest slice of the target color.
-     * Returns a negative number if the closest slice is down (aka behind).
+     * Gets the number of slices between the current color and the closest slice of
+     * the target color. Returns a negative number if the closest slice is down (aka
+     * behind).
      */
     public int getSlicesTo(final ColorWheelColor targetColor) {
         return ColorWheel.slicesToClosest(getCurrentColor(), targetColor);
     }
 
     /**
-     * Gets the number of slices up (aka in front) from the current color to the targetColor.
+     * Gets the number of slices up (aka in front) from the current color to the
+     * targetColor.
+     * 
      * @return the number of slices up
      */
     public int getSlicesUpTo(final ColorWheelColor targetColor) {
@@ -61,7 +66,9 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
     }
 
     /**
-     * Gets the number of slices down (aka behind) from the current color to the targetColor.
+     * Gets the number of slices down (aka behind) from the current color to the
+     * targetColor.
+     * 
      * @return the number of slices down
      */
     public int getSlicesDownTo(final ColorWheelColor targetColor) {

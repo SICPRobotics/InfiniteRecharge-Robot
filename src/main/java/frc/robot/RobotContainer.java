@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomusCommand;
+import frc.robot.commands.DoNothing;
 import frc.robot.commands.DriveWithJoystick;
 //import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.SetMotorContinuous;
@@ -137,21 +138,25 @@ public final class RobotContainer {
 
     // WINCH  INTAKE/OUTAKE SWITCH
     operatorController.buttons.back.whenPressed(new RunCommand(() -> { 
+      groundIntake.setDefaultCommand(new DoNothing(groundIntake));
+      pastaPuller.setDefaultCommand(new DoNothing(pastaPuller));
       leftWinch.setDefaultCommand(new SetMotorContinuous(leftWinch, () -> operatorController.sticks.left.getY()));
       rightWinch.setDefaultCommand(new SetMotorContinuous(rightWinch,() -> operatorController.sticks.right.getY()));
     }));
 
-    // operatorController.buttons.start.whenPressed(new RunCommand(() -> { 
-    //   groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
-    //   operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
-    //   new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
-    //   new SetMotorContinuous(groundIntake, () -> Math.signum(operatorController.sticks.left.getY()) * Constants.GroundIntake.SNAP_SPEED));
+    operatorController.buttons.start.whenPressed(new RunCommand(() -> { 
+      leftWinch.setDefaultCommand(new DoNothing(leftWinch));
+      rightWinch.setDefaultCommand(new DoNothing(rightWinch));
+      groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
+      operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
+      new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+      new SetMotorContinuous(groundIntake, () -> Math.signum(operatorController.sticks.left.getY()) * Constants.GroundIntake.SNAP_SPEED));
       
-    //   pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, () -> 
-    //   operatorController.sticks.right.getY() * Constants.PastaPuller.SPEED));
-    //   new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
-    //   new SetMotorContinuous(pastaPuller, () -> Math.signum(operatorController.sticks.right.getY()) * Constants.PastaPuller.SNAP_SPEED));
-    // }));
+      pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, () -> 
+      operatorController.sticks.right.getY() * Constants.PastaPuller.SPEED));
+      new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+      new SetMotorContinuous(pastaPuller, () -> Math.signum(operatorController.sticks.right.getY()) * Constants.PastaPuller.SNAP_SPEED));
+    }));
 
 
     //PASTA PULLER
