@@ -138,15 +138,11 @@ public final class RobotContainer {
 
     // WINCH  INTAKE/OUTAKE SWITCH
     operatorController.buttons.back.whenPressed(new RunCommand(() -> { 
-      groundIntake.setDefaultCommand(new DoNothing(groundIntake));
-      pastaPuller.setDefaultCommand(new DoNothing(pastaPuller));
       leftWinch.setDefaultCommand(new SetMotorContinuous(leftWinch, () -> operatorController.sticks.left.getY()));
       rightWinch.setDefaultCommand(new SetMotorContinuous(rightWinch,() -> operatorController.sticks.right.getY()));
     }));
 
     operatorController.buttons.start.whenPressed(new RunCommand(() -> { 
-      leftWinch.setDefaultCommand(new DoNothing(leftWinch));
-      rightWinch.setDefaultCommand(new DoNothing(rightWinch));
       groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
       operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
       new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
