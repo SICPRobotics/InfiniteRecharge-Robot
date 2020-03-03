@@ -115,12 +115,13 @@ public final class RobotContainer {
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
     //groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
-        groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
-        operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
+    /*groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
+    operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
     
-        new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
-        new SetMotorContinuous(groundIntake, () -> Math.signum(operatorController.sticks.left.getY()) * Constants.GroundIntake.SNAP_SPEED));
-    
+    new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
+    new SetMotorContinuous(groundIntake, () -> Math.signum(operatorController.sticks.left.getY()) * Constants.GroundIntake.SNAP_SPEED));
+    */
+
     //COLOR WHEEL
     //Rotate to color / rotate a number of times
     operatorController.buttons.RB.toggleWhenPressed(new SpinNumberOfTimes(colorWheelSpinner));
@@ -169,44 +170,22 @@ public final class RobotContainer {
      * Blockers
      * These block the subsystems to keep other commands from using them
      */
-    Command blockWinches = new RunCommand(() -> {}, leftWinch, rightWinch).perpetually();
     Command blockIntakes = new RunCommand(() -> {}, groundIntake, pastaPuller).perpetually();
     
     /**
      * These commands run the subsystems.
      */
-    Command runPastaPuller = new RunCommand(() -> {
-      double stickValue = operatorController.sticks.right.getY();
-      if (operatorController.triggers.right.get() > 0.1) {
-        pastaPuller.setMotor(Math.signum(stickValue) * Constants.PastaPuller.SNAP_SPEED);
-      } else {
-        pastaPuller.setMotor(stickValue);
-      }
-    }, pastaPuller).perpetually();
-    Command runGroundIntake = new RunCommand(() -> {
-      double stickValue = operatorController.sticks.left.getY();
-      if (operatorController.triggers.right.get() > 0.1) {
-        groundIntake.setMotor(Math.signum(stickValue) * Constants.GroundIntake.SNAP_SPEED);
-      } else {
-        groundIntake.setMotor(stickValue);
-      }
-    }, groundIntake).perpetually();
-
     Command runLeftWinch = new RunCommand(() -> {
       double stickValue = operatorController.sticks.left.getY();
       leftWinch.setMotor(stickValue);
+      System.out.println("Left winch!");
     }).perpetually();
     Command runRightWinch = new RunCommand(() -> {
-      double stickValue = operatorController.sticks.left.getY();
+      double stickValue = operatorController.sticks.right.getY();
       rightWinch.setMotor(stickValue);
     }).perpetually();
 
     //Parallel command groups run different commands at a time.
-    Command intakesEnabled = new ParallelCommandGroup(
-      blockWinches,
-      runPastaPuller,
-      runGroundIntake
-    );
     Command winchesEnabled = new ParallelCommandGroup(
       blockIntakes,
       runLeftWinch,
@@ -214,10 +193,27 @@ public final class RobotContainer {
     );
 
     //Binding these to buttons
-    operatorController.buttons.back.cancelWhenPressed(winchesEnabled).whenPressed(intakesEnabled);
-    operatorController.buttons.start.cancelWhenPressed(intakesEnabled).whenPressed(winchesEnabled);
+    operatorController.buttons.back.cancelWhenPressed(winchesEnabled);
+    operatorController.buttons.start.whenPressed(winchesEnabled);
 
-    CommandScheduler.getInstance().schedule(intakesEnabled);
+    //Setting defaults
+    groundIntake.setDefaultCommand(new RunCommand(() -> {
+      double stickValue = operatorController.sticks.right.getY();
+      if (operatorController.triggers.right.get() > 0.1) {
+        pastaPuller.setMotor(Math.signum(stickValue) * Constants.PastaPuller.SNAP_SPEED);
+      } else {
+        pastaPuller.setMotor(stickValue);
+      }
+    }, groundIntake).perpetually());
+
+    pastaPuller.setDefaultCommand(new RunCommand(() -> {
+      double stickValue = operatorController.sticks.left.getY();
+      if (operatorController.triggers.right.get() > 0.1) {
+        groundIntake.setMotor(Math.signum(stickValue) * Constants.GroundIntake.SNAP_SPEED);
+      } else {
+        groundIntake.setMotor(stickValue);
+      }
+    }, pastaPuller).perpetually());
 
     //PASTA PULLER
     // new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
