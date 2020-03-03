@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomusCommand;
 import frc.robot.commands.Calibrate;
 import frc.robot.commands.DoNothing;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveWithJoystick;
 //import frc.robot.commands.ExtendHangerArm;
 import frc.robot.commands.SetMotorContinuous;
@@ -25,9 +26,15 @@ import frc.robot.commands.ExtendPiston;
 import frc.robot.commands.NudgeMotor;
 import frc.robot.subsystems.Compessor;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.controllers.OperatorController;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.controllers.OperatorController;
+import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.Cameras;
@@ -44,12 +51,12 @@ import frc.robot.subsystems.Gate;
 import frc.robot.commands.SetLightsToColor;
 import frc.robot.subsystems.Lights;
 
-/** 
- *  This class is where the bulk of the robot should be de
- * lared.  Since Command-based is a "declarative" paradigm, very lit
- * le robot logic sh ld actually be handled in the {@lin periodic methods (othe
- *  than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+/**
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -116,8 +123,8 @@ public final class RobotContainer {
     
     //COLOR WHEEL
     //Rotate to color / rotate a number of times
-    operatorController.buttons.RB.whenPressed(new SpinNumberOfTimes(colorWheelSpinner));
-    operatorController.buttons.LB.whenPressed(new SpinToColor(colorWheelSpinner));
+    operatorController.buttons.RB.toggleWhenPressed(new SpinNumberOfTimes(colorWheelSpinner));
+    operatorController.buttons.LB.toggleWhenPressed(new SpinToColor(colorWheelSpinner));
     
     //Manual left/right of color wheel
     operatorController.buttons.dPad.left
@@ -132,12 +139,15 @@ public final class RobotContainer {
     //HANGER ARM
     operatorController.buttons.Y.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(0.4), () -> hangerArm.setMotor(0)).perpetually());
     operatorController.buttons.A.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.2), () -> hangerArm.setMotor(0)).perpetually());
+    operatorController.buttons.X.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.1), () -> hangerArm.setMotor(0)).perpetually());
     
     // WHINCH
     //operatorController.buttons.X.whileActiveContinuous(new ExtendHangerArm(hanger));
 
     // WINCH  INTAKE/OUTAKE SWITCH
-    operatorController.buttons.back.whenPressed(new RunCommand(() -> { 
+    /*operatorController.buttons.back.whenPressed(new RunCommand(() -> { 
+      groundIntake.setDefaultCommand(new DoNothing(groundIntake));
+      pastaPuller.setDefaultCommand(new DoNothing(pastaPuller));
       leftWinch.setDefaultCommand(new SetMotorContinuous(leftWinch, () -> operatorController.sticks.left.getY()));
       rightWinch.setDefaultCommand(new SetMotorContinuous(rightWinch,() -> operatorController.sticks.right.getY()));
     }));
@@ -153,19 +163,75 @@ public final class RobotContainer {
       new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
       new SetMotorContinuous(pastaPuller, () -> Math.signum(operatorController.sticks.right.getY()) * Constants.PastaPuller.SNAP_SPEED));
     }));
+*/
 
+    /**
+     * Blockers
+     * These block the subsystems to keep other commands from using them
+     */
+    Command blockWinches = new RunCommand(() -> {}, leftWinch, rightWinch).perpetually();
+    Command blockIntakes = new RunCommand(() -> {}, groundIntake, pastaPuller).perpetually();
+    
+    /**
+     * These commands run the subsystems.
+     */
+    Command runPastaPuller = new RunCommand(() -> {
+      double stickValue = operatorController.sticks.right.getY();
+      if (operatorController.triggers.right.get() > 0.1) {
+        pastaPuller.setMotor(Math.signum(stickValue) * Constants.PastaPuller.SNAP_SPEED);
+      } else {
+        pastaPuller.setMotor(stickValue);
+      }
+    }, pastaPuller).perpetually();
+    Command runGroundIntake = new RunCommand(() -> {
+      double stickValue = operatorController.sticks.left.getY();
+      if (operatorController.triggers.right.get() > 0.1) {
+        groundIntake.setMotor(Math.signum(stickValue) * Constants.GroundIntake.SNAP_SPEED);
+      } else {
+        groundIntake.setMotor(stickValue);
+      }
+    }, groundIntake).perpetually();
+
+    Command runLeftWinch = new RunCommand(() -> {
+      double stickValue = operatorController.sticks.left.getY();
+      leftWinch.setMotor(stickValue);
+    }).perpetually();
+    Command runRightWinch = new RunCommand(() -> {
+      double stickValue = operatorController.sticks.left.getY();
+      rightWinch.setMotor(stickValue);
+    }).perpetually();
+
+    //Parallel command groups run different commands at a time.
+    Command intakesEnabled = new ParallelCommandGroup(
+      blockWinches,
+      runPastaPuller,
+      runGroundIntake
+    );
+    Command winchesEnabled = new ParallelCommandGroup(
+      blockIntakes,
+      runLeftWinch,
+      runRightWinch
+    );
+
+    //Binding these to buttons
+    operatorController.buttons.back.cancelWhenPressed(winchesEnabled).whenPressed(intakesEnabled);
+    operatorController.buttons.start.cancelWhenPressed(intakesEnabled).whenPressed(winchesEnabled);
+
+    CommandScheduler.getInstance().schedule(intakesEnabled);
 
     //PASTA PULLER
     // new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     //pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     //pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
-    
+    /*
     pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, () -> 
         operatorController.sticks.right.getY() * Constants.PastaPuller.SPEED));
     new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
         new SetMotorContinuous(pastaPuller, () -> Math.signum(operatorController.sticks.right.getY()) * Constants.PastaPuller.SNAP_SPEED));
-    
+    */
+
+
     //GATE
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
     new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));

@@ -11,21 +11,14 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class RangeFinder extends SubsystemBase {
+public final class RangeFinder extends SubsystemBase {
+    private AnalogInput ultrasonicInput = new AnalogInput(Constants.UltrasonicSensor.ULTRASONIC_SENSOR_ID);
     
-    private AnalogInput ultrasonicInput = new AnalogInput(Constants.Sensors.ULTRASONIC);
-   
     public RangeFinder() {
+        
+    }
 
-  }
-
-  @Override
-  public void periodic() {
-
-  }
-
-  public final double getCmDistance()
-  {   
-      return ultrasonicInput.getVoltage() / Constants.UltraSonic.VOLT_TO_CM;
-  }
+    public final double getCmDistance() {   
+        return ultrasonicInput.getVoltage() / Constants.UltrasonicSensor.VOLT_TO_CM;
+    }
 }

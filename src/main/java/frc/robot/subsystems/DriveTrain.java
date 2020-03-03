@@ -23,12 +23,10 @@ public final class DriveTrain extends SubsystemBaseWrapper {
     private final WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.DriveTrain.REAR_RIGHT_MOTOR_ID);
     private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.DriveTrain.FRONT_LEFT_MOTOR_ID);
     private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.DriveTrain.REAR_LEFT_MOTOR_ID);
+
     public DriveTrain() {
         super();
         // Motors
-        //motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
-        //motor.setSelectedSensorPosition(0);
-        //
         frontRight.configFactoryDefault();
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         frontRight.setSelectedSensorPosition(0);
@@ -53,17 +51,16 @@ public final class DriveTrain extends SubsystemBaseWrapper {
     public void cheesyDrive(final double moveValue, final double rotateValue, final double adjustValue) {
         final double actualAdjustValue = ((-adjustValue + 1) / 2);
         final double movevalue = Math.abs(moveValue) < Constants.CheesyDrive.Y_AXIS_DEADZONE_RANGE
-        ? 0
-        : moveValue * actualAdjustValue;
+                ? 0
+                : moveValue * actualAdjustValue;
 
-//Deadzone on x axis only if y value is small
+        //Deadzone on x axis only if y value is small
         final double turnvalue = Math.abs(rotateValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_RANGE
-        && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
-        ? 0
-        : rotateValue * actualAdjustValue;
+                && Math.abs(moveValue) < Constants.CheesyDrive.X_AXIS_DEADZONE_Y_MIN
+                ? 0
+                : rotateValue * actualAdjustValue;
 
-
-        this.robotDrive.arcadeDrive(movevalue, turnvalue,true);
+        this.robotDrive.arcadeDrive(movevalue, turnvalue, true);
         //this.robotDrive.tankDrive((moveValue + rotateValue) * adjustValue, (moveValue - rotateValue) * adjustValue);
     }
     
