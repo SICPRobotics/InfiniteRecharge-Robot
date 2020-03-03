@@ -32,6 +32,13 @@ public final class Constants {
         public static final int ONE_ENCODER_REVOLUTION = 4096;
     }
 
+    public static final class Motors {
+        public static final int FRONT_RIGHT_TALON = 0;
+        public static final int FRONT_LEFT_TALON = 3;
+        public static final int BACK_RIGHT_TALON = 1;
+        public static final int BACK_LEFT_TALON = 2;
+    }
+
     public static final class Hanger {
         public static final int ENCODER_ID_A = 0;
         public static final int ENCODER_ID_B = 1;
@@ -40,10 +47,6 @@ public final class Constants {
         public static final int LEFT_WINCH_MOTOR_ID = 11;
         public static final int MAX = 11180;
         public static final double WINCH_SPEED_ADJUST = 1;
-    }
-    
-    public final class Sensors{
-        public static final int ULTRASONIC = 0;
     }
 
     public static final class CheesyDrive {
@@ -80,9 +83,10 @@ public final class Constants {
         public static final int FORWARD_SOLENOID_ID = 2;
         public static final int REVERSE_SOLENOID_ID = 3;
     }
-        
-    public final class UltraSonic{
-            public static final double VOLT_TO_CM = 0.00977;
+    
+    public final class UltrasonicSensor {
+        public static final int ULTRASONIC_SENSOR_ID = 0;
+        public static final double VOLT_TO_CM = 0.00977;
         public static final double AUTON_STOPPING_DISTANCE = 40;
     }
 
@@ -91,7 +95,6 @@ public final class Constants {
         public static final int FRONT_LEFT_MOTOR_ID = 3;
         public static final int REAR_RIGHT_MOTOR_ID = 1;
         public static final int REAR_LEFT_MOTOR_ID = 2;
-    
     }
 
     public static final class Joystick {
