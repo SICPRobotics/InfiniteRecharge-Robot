@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Constants;
 import frc.robot.SubsystemBaseWrapper;
 
 public final class Lights extends SubsystemBaseWrapper {
@@ -46,7 +47,7 @@ public final class Lights extends SubsystemBaseWrapper {
 
     public Lights() {
         super();
-        lightsFakeMotor = new Spark(0);
+        lightsFakeMotor = new Spark(Constants.Lights.LIGHTS_ID);
     }
 
     public void setColor(final LightsColor color) {
