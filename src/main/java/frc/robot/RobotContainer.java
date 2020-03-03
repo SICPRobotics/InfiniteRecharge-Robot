@@ -25,6 +25,8 @@ import frc.robot.commands.ExtendPiston;
 import frc.robot.commands.NudgeMotor;
 import frc.robot.subsystems.Compessor;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -143,7 +145,7 @@ public final class RobotContainer {
     //operatorController.buttons.X.whileActiveContinuous(new ExtendHangerArm(hanger));
 
     // WINCH  INTAKE/OUTAKE SWITCH
-    operatorController.buttons.back.whenPressed(new RunCommand(() -> { 
+    /*operatorController.buttons.back.whenPressed(new RunCommand(() -> { 
       groundIntake.setDefaultCommand(new DoNothing(groundIntake));
       pastaPuller.setDefaultCommand(new DoNothing(pastaPuller));
       leftWinch.setDefaultCommand(new SetMotorContinuous(leftWinch, () -> operatorController.sticks.left.getY()));
@@ -163,19 +165,75 @@ public final class RobotContainer {
       new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
       new SetMotorContinuous(pastaPuller, () -> Math.signum(operatorController.sticks.right.getY()) * Constants.PastaPuller.SNAP_SPEED));
     }));
+*/
 
+    /**
+     * Blockers
+     * These block the subsystems to keep other commands from using them
+     */
+    Command blockWinches = new RunCommand(() -> {}, leftWinch, rightWinch).perpetually();
+    Command blockIntakes = new RunCommand(() -> {}, groundIntake, pastaPuller).perpetually();
+    
+    /**
+     * These commands run the subsystems.
+     */
+    Command runPastaPuller = new RunCommand(() -> {
+      double stickValue = operatorController.sticks.right.getY();
+      if (operatorController.triggers.right.get() > 0.1) {
+        pastaPuller.setMotor(Math.signum(stickValue) * Constants.PastaPuller.SNAP_SPEED);
+      } else {
+        pastaPuller.setMotor(stickValue);
+      }
+    }, pastaPuller).perpetually();
+    Command runGroundIntake = new RunCommand(() -> {
+      double stickValue = operatorController.sticks.left.getY();
+      if (operatorController.triggers.right.get() > 0.1) {
+        groundIntake.setMotor(Math.signum(stickValue) * Constants.GroundIntake.SNAP_SPEED);
+      } else {
+        groundIntake.setMotor(stickValue);
+      }
+    }, groundIntake).perpetually();
+
+    Command runLeftWinch = new RunCommand(() -> {
+      double stickValue = operatorController.sticks.left.getY();
+      leftWinch.setMotor(stickValue);
+    }).perpetually();
+    Command runRightWinch = new RunCommand(() -> {
+      double stickValue = operatorController.sticks.left.getY();
+      rightWinch.setMotor(stickValue);
+    }).perpetually();
+
+    //Parallel command groups run different commands at a time.
+    Command intakesEnabled = new ParallelCommandGroup(
+      blockWinches,
+      runPastaPuller,
+      runGroundIntake
+    );
+    Command winchesEnabled = new ParallelCommandGroup(
+      blockIntakes,
+      runLeftWinch,
+      runRightWinch
+    );
+
+    //Binding these to buttons
+    operatorController.buttons.back.cancelWhenPressed(winchesEnabled).whenPressed(intakesEnabled);
+    operatorController.buttons.start.cancelWhenPressed(intakesEnabled).whenPressed(winchesEnabled);
+
+    CommandScheduler.getInstance().schedule(intakesEnabled);
 
     //PASTA PULLER
     // new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     //pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
     //new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));
     //pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, operatorController.sticks.right::getY));
-    
+    /*
     pastaPuller.setDefaultCommand(new SetMotorContinuous(pastaPuller, () -> 
         operatorController.sticks.right.getY() * Constants.PastaPuller.SPEED));
     new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
         new SetMotorContinuous(pastaPuller, () -> Math.signum(operatorController.sticks.right.getY()) * Constants.PastaPuller.SNAP_SPEED));
-    
+    */
+
+
     //GATE
     //operatorController.buttons.dPad.down.toggleWhenPressed(new FunctionalCommand(gate::extend, () -> { }, b -> gate.retract(), () -> false, gate));
     new Trigger(() -> operatorController.triggers.left.get() > 0.1).toggleWhenActive(new ExtendPiston(gate));
