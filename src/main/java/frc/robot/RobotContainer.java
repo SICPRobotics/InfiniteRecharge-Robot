@@ -142,6 +142,10 @@ public final class RobotContainer {
     operatorController.buttons.A.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.2), () -> hangerArm.setMotor(0)).perpetually());
     operatorController.buttons.X.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.1), () -> hangerArm.setMotor(0)).perpetually());
     
+    // Calibrate 
+    operatorController.buttons.B.whenPressed(new Calibrate(hangerArm));
+
+
     // WHINCH
     //operatorController.buttons.X.whileActiveContinuous(new ExtendHangerArm(hanger));
 
