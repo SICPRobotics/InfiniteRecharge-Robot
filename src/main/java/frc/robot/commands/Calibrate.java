@@ -14,6 +14,7 @@ public final class Calibrate extends CommandBase {
     private int newReading;
     public Calibrate(final HangerArm hanger) {
         this.hanger = hanger;
+        System.out.println("Calibrate");
         addRequirements(hanger);
         timer = new Timer();
     }
@@ -25,10 +26,11 @@ public final class Calibrate extends CommandBase {
     firstReading = hanger.getEncoderVale();
     hanger.slowDrive();
     nextSec = 1;
+    System.out.println("Calibration init");
     }
+
     @Override
     public void execute() {
-        hanger.slowDrive();
     }
   
     @Override
@@ -39,7 +41,7 @@ public final class Calibrate extends CommandBase {
       else if (timer.get() > nextSec)
       {
         newReading = hanger.getEncoderVale();
-        if (newReading - firstReading < 2000)
+        if (newReading - firstReading < 2500)
           return true;
         firstReading = newReading;
         nextSec++;
@@ -50,6 +52,8 @@ public final class Calibrate extends CommandBase {
     public void end(final boolean interrupted) {
         hanger.stop();
         hanger.setEncoderValue(0);
+        System.out.println("Calibrate ended");
+        timer.reset();
     }
 
 }

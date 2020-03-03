@@ -18,7 +18,6 @@ public class AutonomusCommand extends CommandBase {
   private Gate gate;
   private PastaPuller hopper;
   private HangerArm hanger;
-  private Calibrate calibrate;
   public AutonomusCommand(final DriveTrain drive, final Gate gate, final PastaPuller hopper, final HangerArm hanger) {
     this.drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -34,8 +33,7 @@ public class AutonomusCommand extends CommandBase {
     timer.start();
     gate.pistonReverse();
     hopper.stopPulling();
-    calibrate = new Calibrate(hanger);
-    System.out.println("Auton init");
+    new Calibrate(hanger).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,25 +43,14 @@ public class AutonomusCommand extends CommandBase {
     if(SmartDashboard.getNumber("Auton Chooser", 0) == 0)
     {
      System.out.println("Auton go!!");
-     if (timer.get() < 2.0/*ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE*/) {
+      if (timer.get() < 2.0/*ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE*/) {
       drive.cheesyDrive(-0.6, 0.0, -1);
+      }
+      else{
+        drive.cheesyDrive(0, 0, 0);
+      }
     }
-    else{
-      drive.cheesyDrive(0, 0, 0);
-    }
-     
-     
-     
-      // if (ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE) {
-      //   drive.cheesyDrive(-0.5, 0.0, 1);
-      // }
-      // else {
-      //   drive.cheesyDrive(-0.1, 0.0, 1);
-      //   gate.pistonForward();
-      //   hopper.startPulling();
-      // }
-    }
-    else {
+    else if (SmartDashboard.getNumber("Auton Chooser", 0) == 1){
       if (timer.get() < 4.0/*ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE*/) {
         drive.cheesyDrive(-0.6, 0.0, -1);
       }
@@ -73,18 +60,22 @@ public class AutonomusCommand extends CommandBase {
         hopper.startPulling();
       }
     }
+    else{
+
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(final boolean interrupted) {
     timer.reset();
+    System.out.println("Auton End");
     hopper.setMotor(0);
   }
 
   // Returns true when the command should end.
   @Override
   public final boolean isFinished() {
-    return false;
+    return timer.get() > 15 ? true : false;
   }
 }
