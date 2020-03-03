@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public final class RangeFinder extends SubsystemBase {
-    private AnalogInput ultrasonicInput = new AnalogInput(Constants.UltrasonicSensor.ULTRASONIC_SOUND_ID);
+    private AnalogInput ultrasonicInput = new AnalogInput(Constants.UltrasonicSensor.ULTRASONIC_SENSOR_ID);
     
     public RangeFinder() {
         
