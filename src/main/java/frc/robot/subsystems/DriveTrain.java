@@ -63,8 +63,6 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         : rotateValue * actualAdjustValue;
 
 
-        System.out.println("this.robotDrive.arcadeDrive(" + movevalue + " "+ turnvalue);
-
         this.robotDrive.arcadeDrive(movevalue, turnvalue,true);
         //this.robotDrive.tankDrive((moveValue + rotateValue) * adjustValue, (moveValue - rotateValue) * adjustValue);
     }

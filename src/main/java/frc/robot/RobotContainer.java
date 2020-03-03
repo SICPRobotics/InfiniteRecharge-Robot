@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomusCommand;
+import frc.robot.commands.Calibrate;
 import frc.robot.commands.DoNothing;
 import frc.robot.commands.DriveWithJoystick;
 //import frc.robot.commands.ExtendHangerArm;
@@ -54,6 +55,7 @@ public final class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Joystick joystick = new Joystick(0);
+  
   private final OperatorController operatorController = new OperatorController(1);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
@@ -69,6 +71,7 @@ public final class RobotContainer {
   private final Lights lights;
   private final RightWinch rightWinch;
   private final LeftWinch leftWinch;
+ 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -102,13 +105,10 @@ public final class RobotContainer {
    */
   private void configureButtonBindings() {
     thumbButton.toggleWhenPressed(new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust, true));
-    
     //GROUND INTAKE
     //new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(new Toggle(groundIntake));
     //groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, operatorController.sticks.left::getY));
-    
-
-    groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
+        groundIntake.setDefaultCommand(new SetMotorContinuous(groundIntake, () -> 
         operatorController.sticks.left.getY() * Constants.GroundIntake.SPEED));
     
         new Trigger(() -> operatorController.triggers.right.get() > 0.1).whileActiveContinuous(
