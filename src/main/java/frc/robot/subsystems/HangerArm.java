@@ -22,7 +22,7 @@ public final class HangerArm extends SubsystemBaseWrapper implements MotorSubsys
         motor.set(ControlMode.PercentOutput, value);
     }
     public void slowDrive(){
-        motor.set(ControlMode.PercentOutput, 0.1);
+        motor.set(ControlMode.PercentOutput, 0.05);
     }
     public void stop(){
         motor.set(ControlMode.PercentOutput, 0);
