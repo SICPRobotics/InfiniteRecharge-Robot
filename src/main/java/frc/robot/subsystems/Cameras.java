@@ -10,7 +10,7 @@ public class Cameras extends SubsystemBaseWrapper {
         UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
         //UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture(2);
         cam0.setResolution(160, 120);
-        cam1.setResolution(160, 120);
+        cam1.setResolution(640, 480);
         //cam2.setResolution(320, 240);
         cam0.setFPS(15);
         cam1.setFPS(15);
