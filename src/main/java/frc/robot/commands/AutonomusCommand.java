@@ -15,12 +15,13 @@ import frc.robot.subsystems.RangeFinder;
 
 public class AutonomusCommand extends CommandBase {
   private final DriveTrain drive;
-  private Timer timer = new Timer();
+  private Timer timer;
  // private RangeFinder ultrasonic = new RangeFinder();
   private Gate gate;
   private PastaPuller pastaPuller;
   private HangerArm hanger;
   private int counter = 0;
+  private double delay;
   public AutonomusCommand(final DriveTrain drive, final Gate gate, final PastaPuller hopper, final HangerArm hanger) {
     this.drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,16 +34,23 @@ public class AutonomusCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public final void initialize() {
-    timer.start();
     gate.pistonReverse();
     pastaPuller.stopPulling();
     new Calibrate(hanger).schedule();
+    timer = new Timer();
+    delay = SmartDashboard.getNumber("Autonomous Delay", 0);
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public final void execute() {
     counter++;
+
+    double currentTime = timer.get() - delay;
+    if (0 > currentTime) {
+      return;
+    }
     if(counter % 10 == 0)
       System.out.println("Auton exct");
     
@@ -50,7 +58,7 @@ public class AutonomusCommand extends CommandBase {
     {
       if(counter % 10 == 0)
         System.out.println("Auton go!!");
-      if (timer.get() < 2.0/*ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE*/) {
+      if (currentTime < 2.0/*ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE*/) {
       drive.cheesyDrive(-0.6, 0.0, -1);
       }
       else{
@@ -58,7 +66,7 @@ public class AutonomusCommand extends CommandBase {
       }
     }
     else if (SmartDashboard.getNumber("Auton Chooser", 0) == 1){
-      if (timer.get() < 4.0/*ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE*/) {
+      if (currentTime < 4.0/*ultrasonic.getCmDistance() < Constants.UltraSonic.AUTON_STOPPING_DISTANCE*/) {
         drive.cheesyDrive(-0.6, 0.0, -1);
         if (counter%10==0)
           System.out.println("In Drive Loop");
