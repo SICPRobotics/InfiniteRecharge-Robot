@@ -18,6 +18,7 @@ public final class SpinToColor extends CommandBase {
         this.spinner.resetDistance();
         targetColor = spinner.getTargetColor();
         slicesToSpin = this.spinner.getSlicesUpTo(targetColor);
+        
     }
 
     @Override
@@ -27,7 +28,8 @@ public final class SpinToColor extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(this.slicesToSpin - this.spinner.getSlicesSpun()) > 0.25 && this.spinner.getCurrentColor() == this.spinner.getTargetColor();
+        return this.slicesToSpin - this.spinner.getSlicesSpun() < 0.2;
+        //return Math.abs(this.slicesToSpin - this.spinner.getSlicesSpun()) > 0.2 && this.spinner.getCurrentColor() == this.spinner.getTargetColor();
     }
 
     @Override

@@ -123,8 +123,8 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
      * Gets the distance the encoder has spun.
      */
     private double getEncoderDistance() {
-        System.out.println(spinnerMotor.getSelectedSensorPosition()
-                / Constants.Encoders.ONE_ENCODER_REVOLUTION / Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION);
+        /*System.out.println(spinnerMotor.getSelectedSensorPosition()
+                / Constants.Encoders.ONE_ENCODER_REVOLUTION / Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION);*/
         //return this.encoder.getDistance();
         return spinnerMotor.getSelectedSensorPosition();
     }
