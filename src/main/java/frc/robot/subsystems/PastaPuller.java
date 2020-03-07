@@ -24,6 +24,6 @@ public final class PastaPuller extends SubsystemBaseWrapper implements MotorSubs
     }
 
     public void setMotor(final double value) {
-        motor.set(ControlMode.PercentOutput, value * Constants.PastaPuller.SPEED);
+        motor.set(ControlMode.PercentOutput, value * Constants.PastaPuller.SPEED * (value < 0 ? 0.20 : 1));
     }
 }
