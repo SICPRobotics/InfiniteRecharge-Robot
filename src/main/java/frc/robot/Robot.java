@@ -31,9 +31,7 @@ import frc.robot.subsystems.RangeFinder;
  */
 public class Robot extends TimedRobot {
   private Command autonomousCommand;
-  private RangeFinder ultrasonic = new RangeFinder();
   private RobotContainer robotContainer;
-  private DecimalFormat distanceInCm = new DecimalFormat("#.00");
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -63,7 +61,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("UltraSonic Distance", ultrasonic.getCmDistance());
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or

@@ -9,6 +9,7 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -62,7 +63,7 @@ public final class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Joystick joystick = new Joystick(0);
-  
+
   private final OperatorController operatorController = new OperatorController(1);
   private final DriveTrain driveTrain;
   private final GroundIntake groundIntake;
@@ -74,10 +75,11 @@ public final class RobotContainer {
   private final ColorWheelPiston colorWheelPiston;
   private final Gate gate;
   private final JoystickButton thumbButton;
-  private final Cameras cameras;
+  // private final Cameras cameras;
   private final Lights lights;
   private final RightWinch rightWinch;
   private final LeftWinch leftWinch;
+  private final ADXRS450_Gyro gyro;
  
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -98,8 +100,9 @@ public final class RobotContainer {
     lights = new Lights();
     //Sets lights to the alliance's color
     lights.setDefaultCommand(new SetLightsToColor(lights, lights.getColorForAlliance(DriverStation.getInstance().getAlliance())).perpetually());
-    cameras = new Cameras();
+    //cameras = new Cameras();
     hangerArm = new HangerArm();
+    gyro = new ADXRS450_Gyro();
     // Configure the button bindings
     configureButtonBindings();  
     SmartDashboard.putNumber("Auton Chooser", 0);
@@ -258,7 +261,7 @@ public final class RobotContainer {
   // * @return the command to run in autonomous
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutonomusCommand(driveTrain, gate, pastaPuller, hangerArm);
+    return new AutonomusCommand(driveTrain, gate, pastaPuller, hangerArm, gyro);
   }
   
 }

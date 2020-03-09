@@ -23,12 +23,14 @@ public final class SpinToColor extends CommandBase {
 
     @Override
     public void execute() {
-        this.spinner.setMotor(1.1 - (this.spinner.getSlicesSpun() / slicesToSpin));
+        //this.spinner.setMotor(1.1 - (this.spinner.getSlicesSpun() / slicesToSpin));
+        System.out.println("" + this.spinner.getSlicesSpun() + " of " + slicesToSpin + " (" + (Math.round((this.spinner.getSlicesSpun() / slicesToSpin) * 100) / 10) + "%)");
     }
 
     @Override
     public boolean isFinished() {
-        return this.slicesToSpin - this.spinner.getSlicesSpun() < 0.2;
+        //return this.slicesToSpin - this.spinner.getSlicesSpun() < 0.2;
+        return false;
         //return Math.abs(this.slicesToSpin - this.spinner.getSlicesSpun()) > 0.2 && this.spinner.getCurrentColor() == this.spinner.getTargetColor();
     }
 

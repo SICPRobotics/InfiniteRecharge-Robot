@@ -73,6 +73,7 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SmartDashboard.putNumber("Front Left Motor Position", frontLeft.getSelectedSensorPosition());
         SmartDashboard.putNumber("Front Right Motor Velocity", frontRight.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Front Left Motor Velocity", frontLeft.getSelectedSensorVelocity());
-        SmartDashboard.putNumberArray("test Array", new double[2]);
+        SmartDashboard.putNumber("Gyro Value", new ADXRS450_Gyro().getAngle());
     }
+
 }
