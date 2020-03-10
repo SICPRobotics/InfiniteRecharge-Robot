@@ -71,7 +71,7 @@ public final class Constants {
         public static final int SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION = 50;
         public static final int MIN_SPINS = 3 * 8;
         public static final int MAX_SPINS = 5 * 8;
-        public static final int SPINS_TARGET = MIN_SPINS + 8;
+        public static final int SPINS_TARGET = MIN_SPINS + 6;
         
         public static final double SPEED = 1.0;
         public static final double MANUAL_SPEED = 0.5;

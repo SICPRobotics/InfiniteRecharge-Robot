@@ -34,7 +34,7 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
         frontLeft.configFactoryDefault();
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
-    //    frontLeft.setSelectedSensorPosition(0);
+        frontLeft.setSelectedSensorPosition(0);
         rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
         this.robotDrive = new DifferentialDrive(left, right);
@@ -69,8 +69,10 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SmartDashboard.putNumber("TalonSRX 1 (rear right) Temperature", rearRight.getTemperature());
         SmartDashboard.putNumber("TalonSRX 2 (rear left) Temperature", rearLeft.getTemperature());
         SmartDashboard.putNumber("TalonSRX 3 (front left) Temperature", frontLeft.getTemperature());
-        SmartDashboard.putNumber("Front Right Motor", frontRight.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Front Left Motor", frontLeft.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Front Right Motor Position", frontRight.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Front Left Motor Position", frontLeft.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Front Right Motor Velocity", frontRight.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Front Left Motor Velocity", frontLeft.getSelectedSensorVelocity());
         SmartDashboard.putNumberArray("test Array", new double[2]);
     }
 }

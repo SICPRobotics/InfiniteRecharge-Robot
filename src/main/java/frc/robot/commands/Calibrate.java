@@ -16,17 +16,16 @@ public final class Calibrate extends CommandBase {
         this.hanger = hanger;
         System.out.println("Calibrate");
         addRequirements(hanger);
-        timer = new Timer();
     }
 
     @Override
     public void initialize() {
-    timer.reset();
-    timer.start();
-    firstReading = hanger.getEncoderVale();
-    hanger.slowDrive();
-    nextSec = 1;
-    System.out.println("Calibration init");
+      timer = new Timer();
+      timer.start();
+      firstReading = hanger.getEncoderVale();
+      hanger.slowDrive();
+      nextSec = 1;
+      System.out.println("Calibration init");
     }
 
     @Override
@@ -53,7 +52,6 @@ public final class Calibrate extends CommandBase {
         hanger.stop();
         hanger.setEncoderValue(0);
         System.out.println("Calibrate ended");
-        timer.reset();
     }
 
 }

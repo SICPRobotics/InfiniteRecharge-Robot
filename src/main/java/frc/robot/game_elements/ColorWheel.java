@@ -52,6 +52,7 @@ public class ColorWheel {
      * @return the number of slices (a positive number) that the color is away in one direction
      */
     public static int slicesUp(ColorWheelColor fromColor, ColorWheelColor toColor) {
+        System.out.println(fromColor + " to " + toColor + ": " + (order.indexOf(fromColor) < order.indexOf(toColor) ? order.indexOf(toColor) - order.indexOf(fromColor) : order.size() + order.indexOf(toColor) - order.indexOf(fromColor)));
         return order.indexOf(fromColor) < order.indexOf(toColor) ? order.indexOf(toColor) - order.indexOf(fromColor) : order.size() + order.indexOf(toColor) - order.indexOf(fromColor);
     }
 

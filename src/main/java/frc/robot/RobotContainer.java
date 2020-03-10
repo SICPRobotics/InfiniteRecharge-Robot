@@ -142,6 +142,10 @@ public final class RobotContainer {
     operatorController.buttons.A.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.2), () -> hangerArm.setMotor(0)).perpetually());
     operatorController.buttons.X.whileActiveContinuous(new StartEndCommand(() -> hangerArm.setMotor(-0.1), () -> hangerArm.setMotor(0)).perpetually());
     
+    // Calibrate 
+    operatorController.buttons.B.whenPressed(new Calibrate(hangerArm));
+
+
     // WHINCH
     //operatorController.buttons.X.whileActiveContinuous(new ExtendHangerArm(hanger));
 
@@ -197,23 +201,23 @@ public final class RobotContainer {
     operatorController.buttons.start.whenPressed(winchesEnabled);
 
     //Setting defaults
-    groundIntake.setDefaultCommand(new RunCommand(() -> {
+    pastaPuller.setDefaultCommand(new RunCommand(() -> {
       double stickValue = operatorController.sticks.right.getY();
       if (operatorController.triggers.right.get() > 0.1) {
         pastaPuller.setMotor(Math.signum(stickValue) * Constants.PastaPuller.SNAP_SPEED);
       } else {
         pastaPuller.setMotor(stickValue);
       }
-    }, groundIntake).perpetually());
+    }, pastaPuller).perpetually());
 
-    pastaPuller.setDefaultCommand(new RunCommand(() -> {
+    groundIntake.setDefaultCommand(new RunCommand(() -> {
       double stickValue = operatorController.sticks.left.getY();
       if (operatorController.triggers.right.get() > 0.1) {
         groundIntake.setMotor(Math.signum(stickValue) * Constants.GroundIntake.SNAP_SPEED);
       } else {
         groundIntake.setMotor(stickValue);
       }
-    }, pastaPuller).perpetually());
+    }, groundIntake).perpetually());
 
     //PASTA PULLER
     // new Trigger(() -> operatorController.triggers.left.get() > 0.1).whileActiveContinuous(new PullPasta(pastaPuller));

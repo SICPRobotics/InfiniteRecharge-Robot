@@ -80,12 +80,17 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
      */
     public ColorWheelColor getTargetColor() {
         String color = DriverStation.getInstance().getGameSpecificMessage();
-        ColorWheelColor nextColor = 
+        try {
+            ColorWheelColor nextColor = 
                 Arrays.stream(ColorWheelColor.values())
                 .filter(c -> c.string.equals(color))
                 .toArray(ColorWheelColor[]::new)[0];
-                
-        return nextColor;
+
+            return nextColor;
+        } catch (Exception e) {
+            System.out.println("Couldn't fetch driver station color!");
+            return ColorWheelColor.RED;
+        }
     }
 
     /**
@@ -93,13 +98,19 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
      * @return the color that the field's color sensor is on right now, based on our color sensor.
      */
     public ColorWheelColor getCurrentColor() {
-        Color detectedColor = colorSensor.getColor();
-        ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
-        return ColorWheel.getRelativeColor(
-                Arrays.stream(ColorWheelColor.values())
-                .filter(colorWheelColor -> colorWheelColor.targetColor == match.color)
-                .toArray(ColorWheelColor[]::new)[0],
-        3);
+        try {
+            Color detectedColor = colorSensor.getColor();
+            ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
+            return ColorWheel.getRelativeColor(
+                    Arrays.stream(ColorWheelColor.values())
+                    .filter(colorWheelColor -> colorWheelColor.targetColor == match.color)
+                    .toArray(ColorWheelColor[]::new)[0],
+            3);
+        } catch (Exception e) {
+            System.out.println("Couldn't fetch current seen color!");
+            return ColorWheelColor.RED;
+        }
+        
     }
 
     public double getConfidence() {
@@ -112,8 +123,8 @@ public final class ColorWheelSpinner extends SubsystemBaseWrapper implements Mot
      * Gets the distance the encoder has spun.
      */
     private double getEncoderDistance() {
-        System.out.println(spinnerMotor.getSelectedSensorPosition()
-                / Constants.Encoders.ONE_ENCODER_REVOLUTION / Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION);
+        /*System.out.println(spinnerMotor.getSelectedSensorPosition()
+                / Constants.Encoders.ONE_ENCODER_REVOLUTION / Constants.ColorWheel.SHAFT_REVOLUTIONS_PER_GEARED_MOTOR_REVOLUTION);*/
         //return this.encoder.getDistance();
         return spinnerMotor.getSelectedSensorPosition();
     }
