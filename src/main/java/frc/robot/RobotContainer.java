@@ -12,6 +12,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomusCommand;
@@ -79,7 +80,7 @@ public final class RobotContainer {
   private final Lights lights;
   private final RightWinch rightWinch;
   private final LeftWinch leftWinch;
-  private final ADXRS450_Gyro gyro;
+  private final Gyro gyro;
  
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

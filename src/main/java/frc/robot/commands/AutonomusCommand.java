@@ -5,6 +5,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -22,8 +23,8 @@ public class AutonomusCommand extends CommandBase {
   private PastaPuller pastaPuller;
   private HangerArm hanger;
   private double delay;
-  private ADXRS450_Gyro gyro;
-  public AutonomusCommand(final DriveTrain drive, final Gate gate, final PastaPuller hopper, final HangerArm hanger, final ADXRS450_Gyro gyro) {
+  private Gyro gyro;
+  public AutonomusCommand(final DriveTrain drive, final Gate gate, final PastaPuller hopper, final HangerArm hanger, final Gyro gyro) {
     this.drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
     this.gate = gate;
@@ -49,7 +50,6 @@ public class AutonomusCommand extends CommandBase {
   @Override
   public final void execute() {
     double currentTime = timer.get() - delay;
-
     if(SmartDashboard.getBoolean("DriveForward", false)){
       if(currentTime < 4.0){
         drive.cheesyDrive(-0.6, 0, -1);
