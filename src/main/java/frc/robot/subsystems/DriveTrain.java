@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Distance;
 import frc.robot.SubsystemBaseWrapper;
 
 /**
@@ -27,16 +28,22 @@ public final class DriveTrain extends SubsystemBaseWrapper {
     public DriveTrain() {
         super();
         // Motors
+        //RIGHT
         frontRight.configFactoryDefault();
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         frontRight.setSelectedSensorPosition(0);
+
         rearRight.configFactoryDefault();
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
+
+        //LEFT
         frontLeft.configFactoryDefault();
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         frontLeft.setSelectedSensorPosition(0);
+
         rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
+
         this.robotDrive = new DifferentialDrive(left, right);
     }
 
