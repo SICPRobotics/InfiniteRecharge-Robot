@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.util.Arrays;
+import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -25,7 +26,12 @@ public final class DriveTrain extends SubsystemBaseWrapper {
     private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.DriveTrain.FRONT_LEFT_MOTOR_ID);
     private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.DriveTrain.REAR_LEFT_MOTOR_ID);
 
-    private final Gyro gyro = new ADXRS450_Gyro();
+    private final Gyro gyro;
+
+    private final DoubleSupplier getLeftPosition;
+    private final DoubleSupplier getLeftVelocity;
+    private final DoubleSupplier getRightPosition;
+    private final DoubleSupplier getRightVelocity;
 
     public DriveTrain() {
         super();
@@ -33,14 +39,26 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         frontRight.configFactoryDefault();
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         frontRight.setSelectedSensorPosition(0);
+
         rearRight.configFactoryDefault();
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
+        getRightPosition = frontRight::getSelectedSensorPosition;
+        getRightVelocity = frontRight::getSelectedSensorVelocity;
+
         frontLeft.configFactoryDefault();
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         frontLeft.setSelectedSensorPosition(0);
+
         rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
+        getLeftPosition = frontLeft::getSelectedSensorPosition;
+        getLeftVelocity = frontLeft::getSelectedSensorVelocity;
+
         this.robotDrive = new DifferentialDrive(left, right);
+
+        // Gyro
+        gyro = new ADXRS450_Gyro();
+        gyro.calibrate();
     }
 
     //Mostly taken from last year's robot
@@ -80,4 +98,27 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         
     }
 
+    public double getRotation() {
+        return gyro.getAngle();
+    }
+
+    public void calibrateGyro() {
+        gyro.calibrate();
+    }
+
+    public double getLeftPosition() {
+        return getLeftPosition.getAsDouble();
+    }
+
+    public double getRightPosition() {
+        return getRightPosition.getAsDouble();
+    }
+
+    public double getLeftVelocity() {
+        return getLeftVelocity.getAsDouble();
+    }
+
+    public double getRightVelocity() {
+        return getRightVelocity.getAsDouble();
+    }
 }
