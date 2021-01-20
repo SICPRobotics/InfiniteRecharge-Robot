@@ -41,7 +41,7 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
         frontLeft.configFactoryDefault();
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
-        frontLeft.setSelectedSensorPosition(0);
+        frontLeft.setSelectedSensorPosition(0); // LEFT IS WRONG DIRECTION BY DEFAULT
         rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
         this.robotDrive = new DifferentialDrive(left, right);
@@ -80,18 +80,19 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SmartDashboard.putNumber("TalonSRX 3 (front left) Temperature", frontLeft.getTemperature());
         SmartDashboard.putNumber("Front Right Motor Position", ((double)(frontRight.getSelectedSensorPosition()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE); // 4096 per rotation 8pi circumfrance
         SmartDashboard.putNumber("Front Left Motor Position", ((double)(frontLeft.getSelectedSensorPosition()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE);
-        SmartDashboard.putNumber("Front Right Motor Velocity", frontRight.getSelectedSensorVelocity());
-        SmartDashboard.putNumber("Front Left Motor Velocity", frontLeft.getSelectedSensorVelocity());
+        //SmartDashboard.putNumber("Front Right Motor Velocity", ((double)(frontRight.getSelectedSensorVelocity()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE);
+        //SmartDashboard.putNumber("Front Left Motor Velocity", ((double)(frontLeft.getSelectedSensorVelocity()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE);
         //SmartDashboard.putNumberArray("test Array", new double[2]);
+        //System.out.println(odometry.getPoseMeters().getTranslation().getX());
+        System.out.println(getRadians());
         System.out.println(odometry.getPoseMeters().toString());
-        //System.out.println(getRadians());
         SmartDashboard.putString("Pose2d", odometry.getPoseMeters().toString());
     }
     public double getRightDistanceMeters(){
         return ((double)(frontRight.getSelectedSensorPosition()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE;
     }
     public double getLeftDistanceMeters(){
-        return ((double)(frontLeft.getSelectedSensorPosition()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE;
+        return ((double)(-frontLeft.getSelectedSensorPosition()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE;
     }
     public double getRadians(){
         return Math.toRadians(-gyro.getAngle());
