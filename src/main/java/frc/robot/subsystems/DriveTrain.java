@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,7 +24,7 @@ import frc.robot.SubsystemBaseWrapper;
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDrive robotDrive;
     private final DifferentialDriveOdometry odometry; 
-    private final Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+    private final Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0); //SPI.Port.kMXP ?
     private final WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.DriveTrain.FRONT_RIGHT_MOTOR_ID);
     private final WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.DriveTrain.REAR_RIGHT_MOTOR_ID);
     private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.DriveTrain.FRONT_LEFT_MOTOR_ID);
@@ -32,7 +33,7 @@ public final class DriveTrain extends SubsystemBaseWrapper {
     public DriveTrain() {
         super();
         // Motors
-        odometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(gyro.getAngle())), new Pose2d(0, 0, new Rotation2d()));
+        gyro.calibrate();
         frontRight.configFactoryDefault();
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         frontRight.setSelectedSensorPosition(0);
@@ -44,8 +45,9 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         rearLeft.configFactoryDefault();
         SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
         this.robotDrive = new DifferentialDrive(left, right);
+        odometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(gyro.getAngle())), new Pose2d(0, 0, new Rotation2d()));
+        reset();
     }
-
     //Mostly taken from last year's robot
     /**
      * The method to drive the robot.
@@ -80,7 +82,9 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SmartDashboard.putNumber("Front Left Motor Position", ((double)(frontLeft.getSelectedSensorPosition()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE);
         SmartDashboard.putNumber("Front Right Motor Velocity", frontRight.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Front Left Motor Velocity", frontLeft.getSelectedSensorVelocity());
-        SmartDashboard.putNumberArray("test Array", new double[2]);
+        //SmartDashboard.putNumberArray("test Array", new double[2]);
+        System.out.println(odometry.getPoseMeters().toString());
+        //System.out.println(getRadians());
         SmartDashboard.putString("Pose2d", odometry.getPoseMeters().toString());
     }
     public double getRightDistanceMeters(){
@@ -90,9 +94,14 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         return ((double)(frontLeft.getSelectedSensorPosition()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE;
     }
     public double getRadians(){
-        return Math.toRadians(gyro.getAngle());
+        return Math.toRadians(-gyro.getAngle());
     }
-    public void updatePose(){
+    private void updatePose(){
         odometry.update(new Rotation2d(getRadians()), getLeftDistanceMeters(), getRightDistanceMeters());
+    }
+    public void reset(){
+        frontLeft.setSelectedSensorPosition(0);
+        frontRight.setSelectedSensorPosition(0);
+        odometry.resetPosition(new Pose2d(new Translation2d(0,0), new Rotation2d(getRadians())), new Rotation2d(getRadians()));
     }
 }
