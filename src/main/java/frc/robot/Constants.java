@@ -99,6 +99,8 @@ public final class Constants {
         public static final int FRONT_LEFT_MOTOR_ID = 3;
         public static final int REAR_RIGHT_MOTOR_ID = 1;
         public static final int REAR_LEFT_MOTOR_ID = 2;
+        public static final double COUNTS_PER_ROTAION = 4096;
+        public static final double WHEEL_CIRCUMFRANCE = 0.2032 * Math.PI; // meters
     }
 
     public static final class Joystick {
