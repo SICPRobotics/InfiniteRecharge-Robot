@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -101,6 +103,7 @@ public final class Constants {
         public static final int REAR_LEFT_MOTOR_ID = 2;
         public static final double COUNTS_PER_ROTAION = 4096;
         public static final double WHEEL_CIRCUMFRANCE = 0.2032 * Math.PI; // meters
+        public static final double CHASIS_TRACK_WIDTH = 0.6858; // meters
     }
 
     public static final class Joystick {

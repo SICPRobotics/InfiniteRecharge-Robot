@@ -1,12 +1,9 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="Pose 2D" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="933" y="687"/>
-		<width>550</width>
-		<height>160</height>
-	</widget>
 	<widget field="Pose2d" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="0"/>
+		<location x="1007" y="648"/>
+		<width>481</width>
+		<height>60</height>
 	</widget>
 	<widget field="Odometry" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
 		<location x="25" y="923"/>
@@ -180,7 +177,35 @@
 	<widget field="Inverted?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="154" y="138"/>
 	</widget>
+	<widget field="Linear Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1015" y="710"/>
+	</widget>
+	<widget field="Angular Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1190" y="710"/>
+	</widget>
 </dashboard>
 <live-window>
+	<widget field="DriveTrain" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="18" y="9"/>
+	</widget>
+	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="ADXRS450_Gyro[0]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+			<location x="6" y="16"/>
+			<height>150</height>
+			<width>250</width>
+		</widget>
+		<widget field="AnalogInput[0]" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="166"/>
+			<height>20</height>
+			<width>250</width>
+		</widget>
+		<location x="28" y="13"/>
+		<width>262</width>
+		<height>192</height>
+	</widget>
+	<widget field="RangeFinder" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="4" y="12"/>
+	</widget>
 </live-window>
+	<hidden field="Pose 2D"/>
 </xml>
