@@ -192,16 +192,26 @@
 		<widget field="ADXRS450_Gyro[0]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
 			<location x="6" y="16"/>
 			<height>150</height>
-			<width>250</width>
+			<width>297</width>
 		</widget>
 		<widget field="AnalogInput[0]" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
 			<location x="6" y="166"/>
 			<height>20</height>
-			<width>250</width>
+			<width>297</width>
+		</widget>
+		<widget field="Talon SRX [1]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="186"/>
+			<height>45</height>
+			<width>297</width>
+		</widget>
+		<widget field="Talon SRX [2]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="231"/>
+			<height>45</height>
+			<width>297</width>
 		</widget>
 		<location x="28" y="13"/>
-		<width>262</width>
-		<height>192</height>
+		<width>309</width>
+		<height>282</height>
 	</widget>
 	<widget field="RangeFinder" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
 		<location x="4" y="12"/>

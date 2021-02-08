@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -26,16 +27,17 @@ import frc.robot.SubsystemBaseWrapper;
  * the DriveTrain, aka the thing that moves the robot
  */
 public final class DriveTrain extends SubsystemBaseWrapper {
-    private final DifferentialDrive robotDrive;
     private final DifferentialDriveOdometry odometry;
-    private final DifferentialDriveKinematics kinematics; 
+    public final static DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.VoltageConstants.TRACK_WIDTH);
     private final ChassisSpeeds chassisSpeeds;
     private final Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0); //SPI.Port.kMXP ?
     private final WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.DriveTrain.FRONT_RIGHT_MOTOR_ID);
     private final WPI_TalonSRX rearRight = new WPI_TalonSRX(Constants.DriveTrain.REAR_RIGHT_MOTOR_ID);
     private final WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.DriveTrain.FRONT_LEFT_MOTOR_ID);
     private final WPI_TalonSRX rearLeft = new WPI_TalonSRX(Constants.DriveTrain.REAR_LEFT_MOTOR_ID);
-
+    private final SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
+    private final SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
+    private final DifferentialDrive robotDrive = new DifferentialDrive(left, right);
     public DriveTrain() {
         super();
         // Motors
@@ -44,15 +46,14 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         frontRight.setSelectedSensorPosition(0);
         rearRight.configFactoryDefault();
-        SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
+        //right = new SpeedControllerGroup(frontRight, rearRight);
         frontLeft.configFactoryDefault();
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         frontLeft.setSelectedSensorPosition(0); // LEFT IS WRONG DIRECTION BY DEFAULT
         rearLeft.configFactoryDefault();
-        SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
-        this.robotDrive = new DifferentialDrive(left, right);
+        //left = new SpeedControllerGroup(frontLeft, rearLeft);
+        //this.robotDrive = new DifferentialDrive(left, right);
         odometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(gyro.getAngle())), new Pose2d(0, 0, new Rotation2d()));
-        kinematics = new DifferentialDriveKinematics(Constants.DriveTrain.CHASIS_TRACK_WIDTH);
         chassisSpeeds = new ChassisSpeeds(0,0,0);
         reset();
     }
@@ -79,6 +80,17 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         this.robotDrive.arcadeDrive(movevalue, turnvalue, true);
         //this.robotDrive.tankDrive((moveValue + rotateValue) * adjustValue, (moveValue - rotateValue) * adjustValue);
     }
+    public BiConsumer<Double, Double> tankDriveVolts = (leftVolts, rightVolts) -> {
+        left.setVoltage(leftVolts);
+        right.setVoltage(-rightVolts);
+        this.robotDrive.feed();
+    };
+
+    // public void tankDriveVolts(Double leftVolts, Double rightVolts){
+    //     left.setVoltage(leftVolts);
+    //     right.setVoltage(-rightVolts);
+    //     this.robotDrive.feed();
+    // }
     
     public void periodic() {
         updatePose();
@@ -113,12 +125,18 @@ public final class DriveTrain extends SubsystemBaseWrapper {
     public double getRadians(){
         return Math.toRadians(-gyro.getAngle());
     }
+    public Pose2d getPose(){
+        return odometry.getPoseMeters();
+    }
     private ChassisSpeeds updateVelocity(){
         return kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(getLeftVelocityMeters(),getRightVelocityMeters()));
     }
     public double getLinearVelocity(){
         return updateVelocity().vxMetersPerSecond;
     }
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(getLeftVelocityMeters(),getRightVelocityMeters());
+      }
     /*
         ENCODER MESUREMENTS OFF BY A BIT, encoders display value of 240in, 6.09m when the actual distance is 212in 5.38m
         FIX ASAP CHECK WHEEL CIRCUMFRANCE
