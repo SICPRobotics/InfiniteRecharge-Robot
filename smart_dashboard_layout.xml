@@ -1,5 +1,8 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="TrajectoryGeneration" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="0" y="0"/>
+	</widget>
 	<widget field="Pose2d" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1007" y="648"/>
 		<width>481</width>
@@ -186,36 +189,58 @@
 </dashboard>
 <live-window>
 	<widget field="DriveTrain" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="18" y="9"/>
+		<location x="21" y="4"/>
+	</widget>
+	<widget field="TrajectoryGeneration" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="3" y="14"/>
 	</widget>
 	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
 		<widget field="ADXRS450_Gyro[0]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
 			<location x="6" y="16"/>
 			<height>150</height>
-			<width>297</width>
+			<width>250</width>
 		</widget>
 		<widget field="AnalogInput[0]" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
 			<location x="6" y="166"/>
 			<height>20</height>
-			<width>297</width>
+			<width>250</width>
 		</widget>
-		<widget field="Talon SRX [1]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+		<widget field="PIDController[1]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 			<location x="6" y="186"/>
-			<height>45</height>
-			<width>297</width>
+			<height>155</height>
+			<width>250</width>
 		</widget>
-		<widget field="Talon SRX [2]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="231"/>
-			<height>45</height>
-			<width>297</width>
+		<widget field="PIDController[2]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="341"/>
+			<height>155</height>
+			<width>250</width>
 		</widget>
-		<location x="28" y="13"/>
-		<width>309</width>
-		<height>282</height>
+		<widget field="PIDController[4]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="496"/>
+			<height>155</height>
+			<width>250</width>
+		</widget>
+		<widget field="PIDController[3]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="651"/>
+			<height>155</height>
+			<width>250</width>
+		</widget>
+		<widget field="PIDController[6]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="806"/>
+			<height>155</height>
+			<width>250</width>
+		</widget>
+		<widget field="PIDController[5]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="961"/>
+			<height>155</height>
+			<width>250</width>
+		</widget>
+		<location x="8" y="4"/>
+		<width>262</width>
+		<height>1122</height>
 	</widget>
 	<widget field="RangeFinder" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="4" y="12"/>
+		<location x="26" y="8"/>
 	</widget>
 </live-window>
-	<hidden field="Pose 2D"/>
 </xml>

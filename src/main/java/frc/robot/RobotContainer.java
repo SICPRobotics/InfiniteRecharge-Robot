@@ -39,7 +39,9 @@ import frc.robot.commands.DoNothing;
 // import frc.robot.commands.Calibrate;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExtendPiston;
+import frc.robot.commands.GenerateTragectory;
 import frc.robot.commands.NudgeMotor;
+import frc.robot.commands.ResetPoistion;
 // import frc.robot.commands.SetLightsToColor;
 // import frc.robot.commands.color_wheel.SpinNumberOfTimes;
 // import frc.robot.commands.color_wheel.SpinToColor;
@@ -74,6 +76,7 @@ public final class RobotContainer {
   // private final ColorWheelPiston colorWheelPiston;
   private final Gate gate;
   private final JoystickButton thumbButton;
+  private final JoystickButton twelveButton;
   // private final Cameras cameras;
   // private final Lights lights;
   // private final RightWinch rightWinch;
@@ -85,9 +88,9 @@ public final class RobotContainer {
   public RobotContainer() {
     driveTrain = new DriveTrain();
     trajectoryGeneration = new TrajectoryGeneration(driveTrain.getPose(),
-        new Pose2d(new Translation2d(-1, 0), new Rotation2d(0)),
-        List.of(new Translation2d(2,0)));
-        groundIntake = new GroundIntake();
+        new Pose2d(new Translation2d(5, 0), new Rotation2d(0)), 
+        List.of(new Translation2d(1, 0)), driveTrain);
+    groundIntake = new GroundIntake();
     // colorWheelSpinner = new ColorWheelSpinner();
     // leftWinch = new LeftWinch();
     // rightWinch = new RightWinch();
@@ -97,6 +100,7 @@ public final class RobotContainer {
     driveTrain.setDefaultCommand(
         new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust));
     thumbButton = new JoystickButton(joystick, 2);
+    twelveButton = new JoystickButton(joystick, 12);
     gate = new Gate();
     hanger = new Hanger();
     // lights = new Lights();
@@ -119,6 +123,7 @@ public final class RobotContainer {
   private void configureButtonBindings() {
     thumbButton.toggleWhenPressed(
         new DriveWithJoystick(driveTrain, this::getJoystickY, this::getJoystickX, this::getJoystickAdjust, true));
+    twelveButton.toggleWhenPressed(new ResetPoistion(driveTrain));
   }
   // GROUND INTAKE
   // new Trigger(() -> operatorController.triggers.right.get() >
@@ -291,15 +296,15 @@ public final class RobotContainer {
   public double getJoystickAdjust() {
     return this.joystick.getRawAxis(Constants.Joystick.ADJUST_AXIS);
   }
-
+  public void generateTrajectory(){
+    trajectoryGeneration.generateTrajectory();
+  }
   // * @return the command to run in autonomous
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //return new AutonomusCommand(driveTrain, gate, pastaPuller, hangerArm);
     //PLAN: subsystem to generate trajectory, brings in the tragectory into here and those paramiters, kiniatics is handledd by DriveTrain, 
     //Ramsete Command will be made Here and this method will just return that. 
-    driveTrain.reset();
-    
     return new RamseteCommand(
     trajectoryGeneration.getTrajectory(),
      driveTrain::getPose,

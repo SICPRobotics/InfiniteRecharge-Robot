@@ -28,7 +28,7 @@ import frc.robot.SubsystemBaseWrapper;
  */
 public final class DriveTrain extends SubsystemBaseWrapper {
     private final DifferentialDriveOdometry odometry;
-    public final static DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.VoltageConstants.TRACK_WIDTH);
+    public final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.VoltageConstants.TRACK_WIDTH);
     private final ChassisSpeeds chassisSpeeds;
     private final Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0); //SPI.Port.kMXP ?
     private final WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.DriveTrain.FRONT_RIGHT_MOTOR_ID);
@@ -150,6 +150,7 @@ public final class DriveTrain extends SubsystemBaseWrapper {
     public void reset(){
         frontLeft.setSelectedSensorPosition(0);
         frontRight.setSelectedSensorPosition(0);
+        gyro.calibrate();
         odometry.resetPosition(new Pose2d(new Translation2d(0,0), new Rotation2d(getRadians())), new Rotation2d(getRadians()));
     }
 }
