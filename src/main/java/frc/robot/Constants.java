@@ -103,7 +103,7 @@ public final class Constants {
         public static final int REAR_RIGHT_MOTOR_ID = 1;
         public static final int REAR_LEFT_MOTOR_ID = 2;
         public static final double COUNTS_PER_ROTAION = 4096;
-        public static final double WHEEL_CIRCUMFRANCE = 0.61595; // meters 24 1/4in(tentative)
+        public static final double WHEEL_CIRCUMFRANCE = 0.61595; // meters 24 1/4in(tentative) // 2021 robot 0.4787787204
         public static final double CHASIS_TRACK_WIDTH = 0.6858; // meters
     }
     public final class VoltageConstants { // for 2020 robot update all constants in this class and the Drive Train class for new robot when possible

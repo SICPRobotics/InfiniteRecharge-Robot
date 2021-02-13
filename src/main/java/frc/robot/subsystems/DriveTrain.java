@@ -107,8 +107,8 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         SmartDashboard.putNumber("Angular Velocity", getAngularVelocity());
         //System.out.println(odometry.getPoseMeters().getTranslation().getX());
         //System.out.println(getRadians());
-        System.out.println(odometry.getPoseMeters().toString());
-        SmartDashboard.putString("Pose2d", odometry.getPoseMeters().toString());
+        System.out.println(this.getPose().toString());
+        SmartDashboard.putString("Pose2d", this.getPose().toString());
     }
     public double getRightDistanceMeters(){
         return ((double)(frontRight.getSelectedSensorPosition()) / Constants.DriveTrain.COUNTS_PER_ROTAION) * Constants.DriveTrain.WHEEL_CIRCUMFRANCE;
@@ -126,7 +126,7 @@ public final class DriveTrain extends SubsystemBaseWrapper {
         return Math.toRadians(-gyro.getAngle());
     }
     public Pose2d getPose(){
-        return odometry.getPoseMeters();
+        return odometry.getPoseMeters().relativeTo(new Pose2d(new Translation2d(0,0), new Rotation2d((3*Math.PI)/2)));
     }
     private ChassisSpeeds updateVelocity(){
         return kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(getLeftVelocityMeters(),getRightVelocityMeters()));

@@ -88,8 +88,8 @@ public final class RobotContainer {
   public RobotContainer() {
     driveTrain = new DriveTrain();
     trajectoryGeneration = new TrajectoryGeneration(driveTrain.getPose(),
-        new Pose2d(new Translation2d(5, 0), new Rotation2d(0)), 
-        List.of(new Translation2d(1, 0)), driveTrain);
+        new Pose2d(new Translation2d(0, 2), new Rotation2d(Math.PI/2)), 
+        List.of(new Translation2d(-1,1)), driveTrain);
     groundIntake = new GroundIntake();
     // colorWheelSpinner = new ColorWheelSpinner();
     // leftWinch = new LeftWinch();
